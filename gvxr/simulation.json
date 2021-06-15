@@ -11,25 +11,11 @@
     "Source": {
         "Position": [400, 0.0, 0.0, "mm"],
         "Shape": "PointSource",
-        "Beam": [
-            {
-            "Energy": 33,
-            "Unit": "keV",
-            "PhotonCount": 96
-            },
-
-            {
-            "Energy": 66,
-            "Unit": "keV",
-            "PhotonCount": 3
-            },
-
-            {
-            "Energy": 99,
-            "Unit": "keV",
-            "PhotonCount": 1
-            }
-        ]
+        "Beam": {
+            "kvp": 80,
+            "tube angle": 12,
+            "filter": ["Al", 4.0]
+        }
     },
 
 

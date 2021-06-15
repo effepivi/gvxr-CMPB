@@ -77,8 +77,18 @@ if type(params["Source"]["Beam"]) == list:
 
         gvxr.addEnergyBinToSpectrum(energy, unit, count);
 else:
+    kvp_in_kV = params["Source"]["Beam"]["kvp"];
+    th_in_deg = params["Source"]["Beam"]["tube angle"];
+    filter_material = params["Source"]["Beam"]["filter"][0];
+    filter_thickness_in_mm = params["Source"]["Beam"]["filter"][1];
+
+    import spekpy as sp
+
+    s = sp.Spek(kvp=kvp_in_kV,th=th_in_deg) # Generate a spectrum (80 kV, 12 degree tube angle)
+    s.filter(filter_material, filter_thickness_in_mm) # Filter by 4 mm of Al
+
     exit();
-    
+
 # Set up the detector
 print("Set up the detector");
 detector_position = params["Detector"]["Position"];
