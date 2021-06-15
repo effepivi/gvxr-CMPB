@@ -1,0 +1,144 @@
+{
+    "WindowSize": [512, 512],
+
+    "Detector": {
+        "Position": [-50, 0.0, 0.0, "mm"],
+        "UpVector": [0, 1, 0],
+        "NumberOfPixels": [256, 256],
+        "Spacing": [0.5, 0.5, "mm"]
+    },
+
+    "Source": {
+        "Position": [400, 0.0, 0.0, "mm"],
+        "Shape": "PointSource",
+        "Beam": [
+            {
+            "Energy": 33,
+            "Unit": "keV",
+            "PhotonCount": 96
+            },
+
+            {
+            "Energy": 66,
+            "Unit": "keV",
+            "PhotonCount": 3
+            },
+
+            {
+            "Energy": 99,
+            "Unit": "keV",
+            "PhotonCount": 1
+            }
+        ]
+    },
+
+
+    "Samples": [
+        {
+            "Label": "matrix",
+            "Path": "cube.stl",
+            "Unit": "mm",
+            "Material": ["Compound", "H2O"],
+            "Density": 1,
+            "Type" : "outer"
+        },
+
+        {
+            "Label": "Bone, Cortical (ICRU-44)",
+            "Path": "col_0.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    1, 0.034000,
+                    6, 0.155000,
+                    7, 0.042000,
+                    8, 0.435000,
+                    11, 0.001000,
+                    12, 0.002000,
+                    15, 0.103000,
+                    16, 0.003000,
+                    20, 0.225000
+                ]
+            ],
+            "Density": 1.920E+00,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "Blood, Whole (ICRU-44)",
+            "Path": "col_1.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    1, 0.102000,
+                    6, 0.110000,
+                    7, 0.033000,
+                    8, 0.745000,
+                    11, 0.001000,
+                    15, 0.001000,
+                    16, 0.002000,
+                    17, 0.003000,
+                    19, 0.002000,
+                    26, 0.001000
+                ]
+            ],
+            "Density": 1.060E+00,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "Brain, Grey/White Matter (ICRU-44)",
+            "Path": "col_2.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    1, 0.107000,
+                    6, 0.145000,
+                    7, 0.022000,
+                    8, 0.712000,
+                    11, 0.002000,
+                    15, 0.004000,
+                    16, 0.002000,
+                    17, 0.003000,
+                    19, 0.003000
+                ]
+            ],
+            "Density": 1.040E+00,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "Breast Tissue (ICRU-44)",
+            "Path": "col_3.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    1, 0.106000,
+                    6, 0.332000,
+                    7, 0.030000,
+                    8, 0.527000,
+                    11, 0.001000,
+                    15, 0.001000,
+                    16, 0.002000,
+                    17, 0.001000
+                ]
+            ],
+            "Density": 1.020E+00,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "Adipose Tissue (ICRU-44)",
+            "Path": "col_4.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    1, 0.114000,
+                    6, 0.598000,
+                    7, 0.007000,
+                    8, 0.278000,
+                    11, 0.001000,
+                    16, 0.001000,
+                    17, 0.001000
+                ]
+            ],
+            "Density": 9.500E-01,
+            "Type" : "inner"
+        }
+    ]
+}
