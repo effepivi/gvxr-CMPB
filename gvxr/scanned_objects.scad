@@ -2,16 +2,16 @@
 
 color("red")
 
-//difference() {
+difference() {
     scale([15, 70, 70])
         cube(1, center = true);
-//    make_spheres([2, 3.5, 5], 50, 5, 40, 3, -1);
-//}
+    make_spheres([2, 3.5, 5], 50, 5, 40, 3, -1);
+}
 
-/*
+
 color("blue")
-    make_spheres([2, 3.5, 5], 50, 5, 40, 3, 4);
-*/
+    make_spheres([2, 3.5, 5], 50, 5, 40, 3, -1);
+
 
 module make_column_of(sphere_radius, height, count)
 {
