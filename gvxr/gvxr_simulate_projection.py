@@ -4,6 +4,8 @@
 import numpy as np
 # dir_path = os.path.dirname(os.path.realpath(__file__))
 #
+import sys
+
 import math # for pi
 # import tomopy
 import SimpleITK as sitk # To save the image
@@ -89,14 +91,32 @@ else:
     unit = "keV"
     k, f = s.get_spectrum(edges=True) # Get the spectrum
 
-    for energy, count in zip(k, f):
-        if count >= 1e-6:
-            # if count == 1:
-            #     print("\t", str(count), "photon of", energy, unit);
-            # else:
-            print("\t", str(count), "photons of", energy, unit);
+    min_energy = sys.float_info.max
+    max_energy = -sys.float_info.max
 
-            gvxr.addEnergyBinToSpectrum(energy, unit, count);
+    spectrum = {};
+
+    for energy, count in zip(k, f):
+        count = round(count)
+
+        if count > 0:
+
+            max_energy = max(max_energy, energy)
+            min_energy = min(min_energy, energy)
+
+            if energy in spectrum.keys():
+                spectrum[energy] += count
+            else:
+                spectrum[energy] = count
+
+    print("/gate/source/xraygun/gps/emin", min_energy, "keV")
+    print("/gate/source/xraygun/gps/emax", max_energy, "keV")
+
+    for energy in spectrum.keys():
+        count = spectrum[energy]
+        print("/gate/source/xraygun/gps/histpoint", energy, count)
+        gvxr.addEnergyBinToSpectrum(energy, unit, count);
+
 
     plt.figure()
     plt.plot(k, f) # Plot the spectrum
