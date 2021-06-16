@@ -86,8 +86,23 @@ else:
 
     s = sp.Spek(kvp=kvp_in_kV,th=th_in_deg) # Generate a spectrum (80 kV, 12 degree tube angle)
     s.filter(filter_material, filter_thickness_in_mm) # Filter by 4 mm of Al
+    unit = "keV"
+    k, f = s.get_spectrum(edges=True) # Get the spectrum
 
-    exit();
+    for energy, count in zip(k, f):
+        if count >= 1e-6:
+            # if count == 1:
+            #     print("\t", str(count), "photon of", energy, unit);
+            # else:
+            print("\t", str(count), "photons of", energy, unit);
+
+            gvxr.addEnergyBinToSpectrum(energy, unit, count);
+
+    plt.figure()
+    plt.plot(k, f) # Plot the spectrum
+    plt.xlabel('Energy [keV]')
+    plt.ylabel('Fluence per mAs per unit energy [photons/cm2/mAs/keV]')
+    plt.title('X-ray spectrum')
 
 # Set up the detector
 print("Set up the detector");
@@ -207,11 +222,13 @@ x_ray_image = gvxr.computeXRayImage();
 
 # Update the 3D visualisation
 gvxr.displayScene();
+gvxr.renderLoop();
 
 volume = sitk.GetImageFromArray(x_ray_image);
 sitk.WriteImage(volume, 'projection.mha');
 
 # Plot the projection
+plt.figure()
 plt.subplot(131)
 plt.imshow(x_ray_image, cmap="gray");
 plt.colorbar(orientation='horizontal');
