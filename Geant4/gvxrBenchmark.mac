@@ -1,0 +1,69 @@
+############################
+# VISUALIZATION PARAMETERS #
+############################
+#/control/execute ./visu.mac
+/vis/disable
+
+#########################
+# SET MATERIAL DATABASE #
+#########################
+/gate/geometry/setMaterialDatabase ./GateMaterials.db
+
+#########
+# WORLD #
+#########
+/gate/world/geometry/setXLength 100. cm
+/gate/world/geometry/setYLength 100. cm
+/gate/world/geometry/setZLength 100. cm
+/gate/world/setMaterial Vacuum
+
+#######################################
+# A flat pannel #
+# 512x512 pixels                      #
+# size of pixels : 1.0x0.5x0.5 mm3    #
+# pixels are made up of silicon       #
+#######################################
+/control/execute ./CTScanner.mac
+
+###################################
+# phantom :                       #
+#  * 3 rows of 5 spheres in a box #
+###################################
+/control/execute ./phantom.mac
+
+###########
+# PHYSICS #
+###########
+/control/execute ./physics.mac
+
+#############
+# DIGITIZER #
+#############
+/control/execute ./digitizer.mac
+
+##############
+# SOURCE GPS #
+##############
+/control/execute ./source.mac
+
+##########
+# OUTPUT #
+##########
+/control/execute output.mac
+
+#############
+# VERBOSITY #
+#############
+/control/execute ./verbose.mac
+
+##################
+# INITIALIZATION #
+##################
+/gate/run/initialize
+
+###############
+# ACQUISITION #
+###############
+/control/execute ./acquisition.mac
+
+exit

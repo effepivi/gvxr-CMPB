@@ -1,0 +1,31 @@
+########
+# ROOT #
+########
+/gate/output/root/enable
+#/gate/output/root/disable
+/gate/output/root/setFileName gvxrBenchmark
+/gate/output/root/setRootHitFlag 0
+/gate/output/root/setRootSinglesFlag 1
+/gate/output/root/setRootNtupleFlag 0
+/gate/output/verbose 2
+
+#########
+# ASCII #
+#########
+/gate/output/ascii/setOutFileVoxelFlag false
+/gate/output/ascii/setOutFileHitsFlag false
+
+############
+# CT Image #
+############
+/gate/output/imageCT/enable
+/gate/output/imageCT/verbose 0
+/gate/output/imageCT/setFileName gvxrBenchmark
+#/gate/output/imageCT/vrtFactor 100
+
+# Random number generator
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+/gate/random/verbose 1
+
+#/gate/output/imageCT/setStartSeed 18188
