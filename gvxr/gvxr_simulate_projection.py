@@ -17,6 +17,7 @@ import matplotlib.colors as mcolors
 from matplotlib.colors import LogNorm
 from matplotlib.colors import PowerNorm
 
+import imageio
 
 import json # Load the JSON file
 import gvxrPython3 as gvxr # Simulate X-ray images
@@ -244,6 +245,14 @@ x_ray_image = gvxr.computeXRayImage();
 gvxr.displayScene();
 gvxr.renderLoop();
 
+# Get a screenshot if any
+screenshot = np.array(gvxr.getLatestScreenshot());
+if screenshot.shape[0]:
+    plt.figure()
+    plt.title("Screenshot");
+    plt.imshow(screenshot);
+    plt.axis('off');
+
 volume = sitk.GetImageFromArray(x_ray_image);
 sitk.WriteImage(volume, 'projection.mha');
 
@@ -276,3 +285,8 @@ plt.show();
 # N: display the X-ray image in negative or positive
 # H: display/hide the X-ray detector
 gvxr.renderLoop();
+
+# Update the screenshot if needed
+screenshot = np.array(gvxr.getLatestScreenshot());
+if screenshot.shape[0]:
+    imageio.imwrite('screenshot.jpg', screenshot);
