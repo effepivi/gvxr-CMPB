@@ -64,7 +64,7 @@ Water: d=1.00 g/cm3; n=2 ; state=liquid
         +el: name=Hydrogen   ; n=2
         +el: name=Oxygen     ; n=1
 
-Adipose_Tissue_ICRU_44: d=0.95 g/cm3 ; n=7.0 ; state=solid
+Adipose_Tissue_ICRU_44: d=0.95 g/cm3 ; n=7 ; state=solid
         +el: name=Hydrogen ; f=0.114
         +el: name=Carbon ; f=0.598
         +el: name=Nitrogen ; f=0.007
@@ -128,4 +128,3 @@ Bone_Cortical_ICRU_44: d=1.92 g/cm3 ; n=9 ; state=solid
         +el: name=Phosphor ; f=0.103
         +el: name=Sulfur ; f=0.003
         +el: name=Calcium ; f=0.225
-        
