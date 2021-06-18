@@ -28,7 +28,7 @@ params  = None;
 print (gvxr.getVersionOfSimpleGVXR())
 print (gvxr.getVersionOfCoreGVXR())
 
-def initGVXR(fname):
+def initGVXR(fname, renderer = "OPENGL"):
     global params;
 
     # Load the JSON file
@@ -40,7 +40,7 @@ def initGVXR(fname):
     print("Create an OpenGL context:",
         str(window_size[0]) + "x" + str(window_size[1])
     );
-    gvxr.createWindow();
+    gvxr.createOpenGLContext();
     gvxr.setWindowSize(
         window_size[0],
         window_size[1]
@@ -176,7 +176,18 @@ def initDetector(fname = ""):
         detector_number_of_pixels[1]
     );
 
-    pixel_spacing = params["Detector"]["Spacing"];
+    if "Spacing" in params["Detector"].keys() == list and "Size" in params["Detector"].keys():
+        raise "Cannot use both 'Spacing' and 'Size' for the detector";
+
+    if "Spacing" in params["Detector"].keys():
+        pixel_spacing = params["Detector"]["Spacing"];
+    elif "Size" in params["Detector"].keys():
+        detector_size = params["Detector"]["Size"];
+        pixel_spacing = [];
+        pixel_spacing.append(detector_size[0] / detector_number_of_pixels[0]);
+        pixel_spacing.append(detector_size[1] / detector_number_of_pixels[1]);
+        pixel_spacing.append(detector_size[2]);
+
     print("\tPixel spacing:", pixel_spacing)
     gvxr.setDetectorPixelSize(
         pixel_spacing[0],
@@ -184,7 +195,7 @@ def initDetector(fname = ""):
         pixel_spacing[2]
     );
 
-def initSamples(fname = ""):
+def initSamples(fname = "", verbose = 0):
     global params;
 
     # Load the JSON file
@@ -223,9 +234,20 @@ def initSamples(fname = ""):
             else:
                 elements = [];
                 weights = [];
+
+                if verbose > 0:
+                    print(mesh["Label"] + ":",
+                          "d="+str(mesh["Density"]), "g/cm3 ;",
+                          "n=" + str(len(material[1][0::2])),
+                          "; state=solid");
+
                 for Z, weight in zip(material[1][0::2], material[1][1::2]):
                     elements.append(Z);
                     weights.append(weight);
+
+                    if verbose > 0:
+                        print("        +el: name="+gvxr.getElementName(Z) + " ; f=" +str(weight) )
+
 
                 gvxr.setMixture(
                     mesh["Label"],

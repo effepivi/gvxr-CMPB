@@ -1,20 +1,20 @@
 {
-    "WindowSize": [512, 512],
+    "WindowSize": [800, 450],
 
     "Detector": {
-        "Position": [-50, 0.0, 0.0, "mm"],
+        "Position": [0.0, 0.0, -125.0, "mm"],
         "UpVector": [0, 1, 0],
-        "NumberOfPixels": [256, 256],
-        "Spacing": [0.5, 0.5, "mm"]
+        "NumberOfPixels": [512, 512],
+        "Size": [150, 150, "mm"]
     },
 
     "Source": {
-        "Position": [400, 0.0, 0.0, "mm"],
+        "Position": [0.0, 0.0, 1000.0, "mm"],
         "Shape": "PointSource",
         "Beam": {
-            "kvp": 80,
+            "kvp": 90,
             "tube angle": 12,
-            "filter": ["Al", 4.0]
+            "filter": ["Al", 3.2]
         }
     },
 
@@ -30,7 +30,7 @@
         },
 
         {
-            "Label": "Bone, Cortical (ICRU-44)",
+            "Label": "Bone_Cortical_ICRU_44",
             "Path": "col_0.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
@@ -50,7 +50,7 @@
         },
 
         {
-            "Label": "Blood, Whole (ICRU-44)",
+            "Label": "Blood_Whole_ICRU_44",
             "Path": "col_1.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
@@ -71,7 +71,7 @@
         },
 
         {
-            "Label": "Brain, Grey/White Matter (ICRU-44)",
+            "Label": "Brain_Grey_White_Matter_ICRU_44",
             "Path": "col_2.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
@@ -91,7 +91,7 @@
         },
 
         {
-            "Label": "Breast Tissue (ICRU-44)",
+            "Label": "Breast_Tissue_ICRU_44",
             "Path": "col_3.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
@@ -110,7 +110,7 @@
         },
 
         {
-            "Label": "Adipose Tissue (ICRU-44)",
+            "Label": "Adipose_Tissue_ICRU_44",
             "Path": "col_4.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
