@@ -1,0 +1,79 @@
+#/control/execute mac/visu.mac
+/vis/disable
+
+/control/execute mac/verbose.mac
+
+/gate/geometry/setMaterialDatabase data/GateMaterials.db
+
+# World
+/gate/world/setMaterial            Air
+/gate/world/geometry/setXLength    2.5 m
+/gate/world/geometry/setYLength    2.5 m
+/gate/world/geometry/setZLength    2.5 m
+
+# Physics list
+/gate/physics/addPhysicsList emstandard_opt4
+
+
+###################################
+# phantom :                       #
+#  * 3 rows of 5 spheres in a box #
+###################################
+/control/execute mac/phantom.mac
+
+###################################
+# Detection plane
+# CsI: 4.51 density and 600 microns thickness (for the response)
+###################################
+/gate/world/daughters/name                   DetectorPlane
+/gate/world/daughters/insert                 box
+/gate/DetectorPlane/geometry/setXLength      150 mm
+/gate/DetectorPlane/geometry/setYLength      150 mm
+/gate/DetectorPlane/geometry/setZLength      1 nm
+/gate/DetectorPlane/placement/setTranslation 0 0 -125 mm
+/gate/DetectorPlane/setMaterial              Vacuum
+/gate/DetectorPlane/vis/setVisible           1
+/gate/DetectorPlane/vis/setColor             yellow
+
+/gate/actor/addActor FluenceActor                  DetectorActor
+/gate/actor/DetectorActor/save                     output/energy.mhd
+/gate/actor/DetectorActor/attachTo                 DetectorPlane
+/gate/actor/DetectorActor/stepHitType              pre
+/gate/actor/DetectorActor/setResolution            512 512 1
+/gate/actor/DetectorActor/enableScatter            true
+/gate/actor/DetectorActor/enableSquared            false
+/gate/actor/DetectorActor/enableUncertainty        false
+/gate/actor/DetectorActor/responseDetectorFilename data/responseDetector.txt
+
+# Save particles stats
+/gate/actor/addActor  SimulationStatisticActor stat
+/gate/actor/stat/save output/stats.txt
+
+###################################
+# Init
+###################################
+/gate/run/initialize
+
+###################################
+# Beam
+###################################
+/gate/source/addSource mybeam gps
+/gate/source/mybeam/gps/particle       gamma
+/gate/source/mybeam/gps/ene/type       User
+/gate/source/mybeam/gps/hist/type      energy
+/gate/source/mybeam/gps/pos/halfx      4 mm
+/gate/source/mybeam/gps/pos/halfy      4 mm
+/gate/source/mybeam/gps/pos/rot1       1 0 0
+/gate/source/mybeam/gps/pos/rot2       0 1 0
+/gate/source/mybeam/gps/pos/centre     0 0 1060 mm
+/gate/source/mybeam/gps/pos/type       Plane
+/gate/source/mybeam/gps/pos/shape      Rectangle
+/gate/source/mybeam/gps/ang/type       focused
+/gate/source/mybeam/gps/ang/focuspoint 0 0 1000 mm
+/control/execute mac/spectrum.mac
+
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+/gate/application/setTotalNumberOfPrimaries 1e8
+/gate/application/start
