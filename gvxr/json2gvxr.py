@@ -130,15 +130,15 @@ def initSpectrum(fname = "", verbose = 0):
                     spectrum[energy] = count
 
         if verbose > 0:
-            print("/gate/source/xraygun/gps/emin", min_energy, "keV")
-            print("/gate/source/xraygun/gps/emax", max_energy, "keV")
+            print("/gate/source/mybeam/gps/emin", min_energy, "keV")
+            print("/gate/source/mybeam/gps/emax", max_energy, "keV")
 
         for energy in spectrum.keys():
             count = spectrum[energy]
             gvxr.addEnergyBinToSpectrum(energy, unit, count);
 
             if verbose > 0:
-                print("/gate/source/xraygun/gps/histpoint", energy, count)
+                print("/gate/source/mybeam/gps/histpoint", energy / 1000, count)
 
     return spectrum, unit;
 
@@ -204,13 +204,15 @@ def initSamples(fname = "", verbose = 0):
             params = json.load(f);
 
     # Load the data
-    print("Load the 3D data");
-    colours = list(mcolors.TABLEAU_COLORS);
+    if verbose > 0:
+        print("Load the 3D data\n");
 
+    colours = list(mcolors.TABLEAU_COLORS);
     colour_id = 0;
     for mesh in params["Samples"]:
 
-        print("\tLoad", mesh["Label"], "in", mesh["Path"], "using", mesh["Unit"]);
+        if verbose == 1:
+            print("\tLoad", mesh["Label"], "in", mesh["Path"], "using", mesh["Unit"]);
 
         gvxr.loadMeshFile(
             mesh["Label"],
@@ -235,7 +237,7 @@ def initSamples(fname = "", verbose = 0):
                 elements = [];
                 weights = [];
 
-                if verbose > 0:
+                if verbose == 2:
                     print(mesh["Label"] + ":",
                           "d="+str(mesh["Density"]), "g/cm3 ;",
                           "n=" + str(len(material[1][0::2])),
@@ -245,9 +247,11 @@ def initSamples(fname = "", verbose = 0):
                     elements.append(Z);
                     weights.append(weight);
 
-                    if verbose > 0:
+                    if verbose == 2:
                         print("        +el: name="+gvxr.getElementName(Z) + " ; f=" +str(weight) )
 
+                if verbose == 2:
+                    print()
 
                 gvxr.setMixture(
                     mesh["Label"],
