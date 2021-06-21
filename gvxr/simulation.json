@@ -21,7 +21,7 @@
 
     "Samples": [
         {
-            "Label": "matrix",
+            "Label": "H2O",
             "Path": "cube.stl",
             "Unit": "mm",
             "Material": ["Compound", "H2O"],
