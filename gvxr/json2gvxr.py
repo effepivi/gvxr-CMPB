@@ -140,7 +140,7 @@ def initSpectrum(fname = "", verbose = 0):
             if verbose > 0:
                 print("/gate/source/mybeam/gps/histpoint", energy / 1000, count)
 
-    return spectrum, unit;
+    return spectrum, unit, k, f;
 
 def initDetector(fname = ""):
     global params;
