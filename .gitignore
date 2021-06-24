@@ -1,6 +1,16 @@
 .ipynb_checkpoints
 __pycache__
 *.swp
+*-validation.csv
+
+gvxr/col_0.stl
+gvxr/col_1.stl
+gvxr/col_2.stl
+gvxr/col_3.stl
+gvxr/col_4.stl
+gvxr/json2gvxr.py
+gvxr/matrix.stl
+gvxr/projection.mha
 
 # Prerequisites
 *.d
