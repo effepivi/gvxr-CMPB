@@ -21,15 +21,6 @@
 
     "Samples": [
         {
-            "Label": "H2O",
-            "Path": "cube.stl",
-            "Unit": "mm",
-            "Material": ["Compound", "H2O"],
-            "Density": 1,
-            "Type" : "outer"
-        },
-
-        {
             "Label": "Bone_Cortical_ICRU_44",
             "Path": "col_0.stl",
             "Unit": "mm",
@@ -125,6 +116,15 @@
             ],
             "Density": 9.500E-01,
             "Type" : "inner"
+        },
+
+        {
+            "Label": "H2O",
+            "Path": "cube.stl",
+            "Unit": "mm",
+            "Material": ["Compound", "H2O"],
+            "Density": 1,
+            "Type" : "outer"
         }
     ]
 }
