@@ -284,7 +284,8 @@ def initSamples(fname = "", verbose = 0):
             if mesh["Type"] == "inner":
                 gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
             elif mesh["Type"] == "outer":
-                gvxr.addPolygonMeshAsOuterSurface(mesh["Label"]);
+                gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
+                # gvxr.addPolygonMeshAsOuterSurface(mesh["Label"]);
         else:
             gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
 
