@@ -22,7 +22,7 @@
     "Samples": [
         {
             "Label": "Bone_Cortical_ICRU_44",
-            "Path": "col_0.stl",
+            "Path": "gvxr/input/col_0.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
                     1, 0.034000,
@@ -42,7 +42,7 @@
 
         {
             "Label": "Blood_Whole_ICRU_44",
-            "Path": "col_1.stl",
+            "Path": "gvxr/input/col_1.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
                     1, 0.102000,
@@ -63,7 +63,7 @@
 
         {
             "Label": "Brain_Grey_White_Matter_ICRU_44",
-            "Path": "col_2.stl",
+            "Path": "gvxr/input/col_2.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
                     1, 0.107000,
@@ -83,7 +83,7 @@
 
         {
             "Label": "Breast_Tissue_ICRU_44",
-            "Path": "col_3.stl",
+            "Path": "gvxr/input/col_3.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
                     1, 0.106000,
@@ -102,7 +102,7 @@
 
         {
             "Label": "Adipose_Tissue_ICRU_44",
-            "Path": "col_4.stl",
+            "Path": "gvxr/input/col_4.stl",
             "Unit": "mm",
             "Material": ["Mixture", [
                     1, 0.114000,
@@ -120,7 +120,7 @@
 
         {
             "Label": "H2O",
-            "Path": "cube.stl",
+            "Path": "gvxr/input/cube.stl",
             "Unit": "mm",
             "Material": ["Compound", "H2O"],
             "Density": 1,
