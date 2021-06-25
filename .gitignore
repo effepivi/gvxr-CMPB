@@ -10,7 +10,8 @@ gvxr/col_3.stl
 gvxr/col_4.stl
 gvxr/json2gvxr.py
 gvxr/matrix.stl
-gvxr/projection.mha
+gvxr/*.mha
+gvxr/test.png
 
 # Prerequisites
 *.d
