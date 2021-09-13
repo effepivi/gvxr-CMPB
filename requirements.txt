@@ -1,0 +1,11 @@
+cma
+matplotlib
+numpy
+pandas
+pyvista
+scikit-image
+scikit-learn
+scipy
+SimpleITK
+spekpy
+viewscad
