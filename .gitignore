@@ -3,6 +3,8 @@ __pycache__
 *.swp
 *-validation.csv
 
+1-GATE_vs_gVirtualXRay/outcmaes/
+
 gvxr/col_0.stl
 gvxr/col_1.stl
 gvxr/col_2.stl
