@@ -2,6 +2,7 @@
 __pycache__
 *.swp
 *-validation.csv
+*-crop.pdf
 
 1-GATE_vs_gVirtualXRay/outcmaes/
 
