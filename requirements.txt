@@ -6,6 +6,6 @@ pyvista
 scikit-image
 scikit-learn
 scipy
-SimpleITK
 spekpy
+tifffile
 viewscad
