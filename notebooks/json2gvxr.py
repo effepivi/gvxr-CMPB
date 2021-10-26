@@ -1,7 +1,7 @@
 # #!/usr/bin/env python3
 #
 # # import os, copy
-# import numpy as np
+import numpy as np
 # # dir_path = os.path.dirname(os.path.realpath(__file__))
 # #
 import sys
@@ -86,11 +86,12 @@ def initSpectrum(fname = "", verbose = 0):
             params = json.load(f)
 
     if type(params["Source"]["Beam"]) == list:
+        k = []
+        f = []
         for energy_channel in params["Source"]["Beam"]:
             energy = energy_channel["Energy"];
             unit = energy_channel["Unit"];
             count = energy_channel["PhotonCount"];
-
             spectrum[energy] = count;
 
             if verbose > 0:
@@ -100,6 +101,11 @@ def initSpectrum(fname = "", verbose = 0):
                     print("\t", str(count), "photons of", energy, unit);
 
             gvxr.addEnergyBinToSpectrum(energy, unit, count);
+        k.append(energy)
+        f.append(count)
+
+        k = np.array(k)
+        f = np.array(f)
     else:
         kvp_in_kV = params["Source"]["Beam"]["kvp"];
         th_in_deg = params["Source"]["Beam"]["tube angle"];
