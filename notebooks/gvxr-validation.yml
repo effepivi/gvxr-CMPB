@@ -1,0 +1,15 @@
+name: gvxr-validation
+channels:
+    - conda-forge
+dependencies:
+    - tomopy
+    - numpy
+    - libtiff
+    - pandas
+    - ipykernel
+    - ipython
+    - jupyterlab
+    - scikit-learn
+    - pip
+    - pip:
+        - viewscad
