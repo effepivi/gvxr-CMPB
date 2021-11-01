@@ -1,6 +1,7 @@
 import copy
 
 import matplotlib.pyplot as plt # Plotting
+from matplotlib.colors import PowerNorm # Look up table
 import numpy as np # Who does not use Numpy?
 from skimage.util import compare_images # Checkboard comparison between two images
 from tifffile import imread, imsave # Load/Write TIFF files
@@ -75,7 +76,43 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False) -> np.array:
     # Return the image
     return x_ray_image
 
-def compareImages(gate_image, gvxr_image, caption):
+def displayLinearPowerScales(image: np.array, caption: str, fname: str):
+    plt.figure(figsize= (20,10))
+
+    plt.suptitle(caption, y=1.02)
+
+    plt.subplot(121)
+    plt.imshow(image, cmap="gray")
+    plt.colorbar(orientation='horizontal')
+    plt.title("Using a linear colour scale")
+
+    plt.subplot(122)
+    plt.imshow(image, norm=PowerNorm(gamma=1./0.75), cmap="gray")
+    plt.colorbar(orientation='horizontal')
+    plt.title("Using a Power-law colour scale")
+
+    plt.tight_layout()
+
+    plt.savefig(fname + '.pdf')
+    plt.savefig(fname + '.png')
+
+def plotSpectrum(k, f, fname):
+    
+    plt.figure(figsize= (20,10))
+
+    plt.bar(k, f / f.sum()) # Plot the spectrum
+    plt.xlabel('Energy in keV')
+    plt.ylabel('Probability distribution of photons per keV')
+    plt.title('Photon energy distribution')
+
+    plt.xlim([0, 200])
+
+    plt.tight_layout()
+
+    plt.savefig(fname + '.pdf')
+    plt.savefig(fname + '.png')
+    
+def compareImages(gate_image, gvxr_image, caption, fname):
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 20))
 
     relative_error = 100 * (gate_image - gvxr_image) / gate_image
@@ -107,7 +144,36 @@ def compareImages(gate_image, gvxr_image, caption):
 
     # plt.tight_layout()
     
+    plt.savefig(fname + '.pdf')
+    plt.savefig(fname + '.png')
 
+def fullCompareImages(gate_image, gvxr_image, title, fname):
+    absolute_error = np.abs(gate_image - gvxr_image)
+    comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
+
+    plt.figure(figsize= (20,10))
+
+    plt.subplot(141)
+    plt.imshow(gate_image, cmap="gray")#, vmin=0.25, vmax=1)
+    plt.title("Gate (ground truth)")
+
+    plt.subplot(142)
+    plt.imshow(gvxr_image, cmap="gray")#, vmin=0.25, vmax=1)
+    plt.title(title)
+
+    plt.subplot(143)
+    plt.imshow(comp_equalized, cmap="gray")#, vmin=0.25, vmax=1)
+    plt.title("gVirtualXRay \\& Gate\n (checkerboard comparison)")
+
+    plt.subplot(144)
+    plt.imshow(absolute_error, cmap="gray")#, vmin=0.25, vmax=1)
+    plt.title("Absolute error")
+
+    plt.tight_layout()
+
+    plt.savefig(fname + '.pdf')
+    plt.savefig(fname + '.png')
+    
 def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
 
     plt.figure(figsize= (30,20))
