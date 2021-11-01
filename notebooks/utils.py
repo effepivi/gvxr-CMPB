@@ -8,7 +8,21 @@ from tifffile import imread, imsave # Load/Write TIFF files
 
 import gvxrPython3 as gvxr # Simulate X-ray images
 
-def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False) -> np.array:
+def interpolate(a_low, a_high, a0, b_low, b_high):
+    return b_low + (b_high - b_low) * (a0 - a_low) / (a_high - a_low)
+
+def find_nearest(a, a0, b):
+    "Element in nd array `a` closest to the scalar value `a0`"
+    idx = np.abs(a - a0).argmin()
+    
+    # a[idx] <= a0 <= a[idx+1]
+    if a[idx] < a0:
+        return interpolate(a[idx], a[idx + 1], a0, b[idx], b[idx + 1])
+    # a[idx - 1] <= a0 <= a[idx]
+    else:
+        return interpolate(a[idx - 1], a[idx], a0, b[idx - 1], b[idx])
+
+def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_response: np.array=None) -> np.array:
         
     # Dictionanry to hold the L-buffer of every sample
     L_buffer_set = {}
@@ -60,7 +74,6 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False) -> np.array:
     
     # Compute the polychromatic Beer-Lambert law
     for energy, count in zip(gvxr.getEnergyBins("MeV"), gvxr.getPhotonCountEnergyBins()):
-
         # Create an empty accumulator
         mu_x = np.zeros(image_shape)
 
@@ -71,8 +84,15 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False) -> np.array:
             mu = gvxr.getLinearAttenuationCoefficient(label, energy, "MeV")
             mu_x += L_buffer_set[label] * mu
 
-        x_ray_image += (energy * count) * np.exp(-mu_x)
-    
+        # No energy response provided
+        if detector_response is None:
+            effective_energy = energy
+        # Energy response provided
+        else:
+            effective_energy = find_nearest(detector_response[:,0], energy, detector_response[:,1])
+
+        x_ray_image += (effective_energy * count) * np.exp(-mu_x)
+            
     # Return the image
     return x_ray_image
 

@@ -101,8 +101,8 @@ def initSpectrum(fname = "", verbose = 0):
                     print("\t", str(count), "photons of", energy, unit);
 
             gvxr.addEnergyBinToSpectrum(energy, unit, count);
-        k.append(energy)
-        f.append(count)
+            k.append(energy)
+            f.append(count)
 
         k = np.array(k)
         f = np.array(f)
@@ -193,6 +193,12 @@ def initDetector(fname = ""):
         pixel_spacing.append(detector_size[0] / detector_number_of_pixels[0]);
         pixel_spacing.append(detector_size[1] / detector_number_of_pixels[1]);
         pixel_spacing.append(detector_size[2]);
+        
+    if "Energy response" in params["Detector"].keys():
+        print("\tEnergy response:", params["Detector"]["Energy response"]["File"], "in", params["Detector"]["Energy response"]["Energy"])
+        gvxr.clearDetectorEnergyResponse()
+        gvxr.loadDetectorEnergyResponse(params["Detector"]["Energy response"]["File"],
+                                        params["Detector"]["Energy response"]["Energy"])
 
     print("\tPixel spacing:", pixel_spacing)
     gvxr.setDetectorPixelSize(
@@ -223,7 +229,8 @@ def initSamples(fname = "", verbose = 0):
         gvxr.loadMeshFile(
             mesh["Label"],
             mesh["Path"],
-            mesh["Unit"]
+            mesh["Unit"],
+            False
         );
 
         material = mesh["Material"];
@@ -290,8 +297,8 @@ def initSamples(fname = "", verbose = 0):
             if mesh["Type"] == "inner":
                 gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
             elif mesh["Type"] == "outer":
-                gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
-                # gvxr.addPolygonMeshAsOuterSurface(mesh["Label"]);
+                # gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
+                gvxr.addPolygonMeshAsOuterSurface(mesh["Label"]);
         else:
             gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
 
