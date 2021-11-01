@@ -13,7 +13,7 @@
         "Shape": "PointSource",
         "Beam": [
             {
-                "Energy": 80,
+                "Energy": 20,
                 "Unit": "keV",
                 "PhotonCount": 1.0
             }
