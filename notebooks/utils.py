@@ -22,7 +22,7 @@ def find_nearest(a, a0, b):
     else:
         return interpolate(a[idx - 1], a[idx], a0, b[idx - 1], b[idx])
 
-def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_response: np.array=None) -> np.array:
+def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_response: np.array=None, integrate_energy: bool=True) -> np.array:
         
     # Dictionanry to hold the L-buffer of every sample
     L_buffer_set = {}
@@ -84,13 +84,18 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
             mu = gvxr.getLinearAttenuationCoefficient(label, energy, "MeV")
             mu_x += L_buffer_set[label] * mu
 
-        # No energy response provided
-        if detector_response is None:
-            effective_energy = energy
-        # Energy response provided
+        # Compute the energy fluence
+        if integrate_energy:
+            # No energy response provided
+            if detector_response is None:
+                effective_energy = energy
+            # Energy response provided
+            else:
+                effective_energy = find_nearest(detector_response[:,0], energy, detector_response[:,1])
+        # Compute the number of photons
         else:
-            effective_energy = find_nearest(detector_response[:,0], energy, detector_response[:,1])
-
+            effective_energy = 1.0
+            
         x_ray_image += (effective_energy * count) * np.exp(-mu_x)
             
     # Return the image
