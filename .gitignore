@@ -3,6 +3,7 @@ __pycache__
 *.swp
 *-validation.csv
 *-crop.pdf
+*~
 
 notebooks/VHP
 
