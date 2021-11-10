@@ -13,10 +13,10 @@
     },
 
     "Source": {
-        "Position": [0.0, 0.0, 1000.0, "mm"],
+        "Position": [0.0, 0.0, 100.0, "cm"],
         "Shape": "PointSource",
         "Beam": {
-            "kvp": 90,
+            "kvp": 85,
             "tube angle": 12,
             "filter": ["Al", 3.2]
         }
