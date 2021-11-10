@@ -2,9 +2,13 @@ import copy
 
 import matplotlib.pyplot as plt # Plotting
 from matplotlib.colors import PowerNorm # Look up table
+from matplotlib.colors import LogNorm # Look up table
 import numpy as np # Who does not use Numpy?
 from skimage.util import compare_images # Checkboard comparison between two images
 from tifffile import imread, imsave # Load/Write TIFF files
+
+import SimpleITK as sitk
+import vtk
 
 import gvxrPython3 as gvxr # Simulate X-ray images
 
@@ -22,7 +26,7 @@ def find_nearest(a, a0, b):
     else:
         return interpolate(a[idx - 1], a[idx], a0, b[idx - 1], b[idx])
 
-def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_response: np.array=None, integrate_energy: bool=True) -> np.array:
+def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_response: np.array=None, integrate_energy: bool=True, prefix: str=None) -> np.array:
         
     # Dictionanry to hold the L-buffer of every sample
     L_buffer_set = {}
@@ -55,7 +59,10 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
             
             # Save the L-buffer in an image file
             if verbose:
-                imsave("gVirtualXRay_output_data/l_buffer-" + label + ".tif", L_buffer_set[label].astype(np.single))
+                if prefix is not None:
+                    imsave(prefix + "l_buffer-" + label + ".tif", L_buffer_set[label].astype(np.single))
+                else:
+                    imsave("gVirtualXRay_output_data/l_buffer-" + label + ".tif", L_buffer_set[label].astype(np.single))
 
         # The structure is an outer structure, keep track of its label
         else:
@@ -67,7 +74,10 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
         
         # Save the L-buffer in an image file
         if verbose:
-            imsave("gVirtualXRay_output_data/l_buffer-" + L_buffer_outer + ".tif", L_buffer_set[L_buffer_outer].astype(np.single))
+            if prefix is not None:
+                imsave(prefix + "l_buffer-" + L_buffer_outer + ".tif", L_buffer_set[L_buffer_outer].astype(np.single))
+            else:
+                imsave("gVirtualXRay_output_data/l_buffer-" + L_buffer_outer + ".tif", L_buffer_set[L_buffer_outer].astype(np.single))
         
     # Create an empty X-ray image
     x_ray_image = np.zeros(image_shape)  
@@ -101,7 +111,7 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
     # Return the image
     return x_ray_image
 
-def displayLinearPowerScales(image: np.array, caption: str, fname: str):
+def displayLinearPowerScales(image: np.array, caption: str, fname: str, log: bool=False, vmin=0.01, vmax=1.2):
     plt.figure(figsize= (20,10))
 
     plt.suptitle(caption, y=1.02)
@@ -112,16 +122,20 @@ def displayLinearPowerScales(image: np.array, caption: str, fname: str):
     plt.title("Using a linear colour scale")
 
     plt.subplot(122)
-    plt.imshow(image, norm=PowerNorm(gamma=1./0.75), cmap="gray")
+    if log:
+        plt.imshow(image, norm=LogNorm(vmin=vmin, vmax=vmax), cmap="gray")
+        plt.title("Using a Log scale")
+    else:
+        plt.imshow(image, norm=PowerNorm(gamma=1./0.75), cmap="gray")
+        plt.title("Using a Power-law colour scale")
     plt.colorbar(orientation='horizontal')
-    plt.title("Using a Power-law colour scale")
 
     plt.tight_layout()
 
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
 
-def plotSpectrum(k, f, fname):
+def plotSpectrum(k, f, fname=None):
     
     plt.figure(figsize= (20,10))
 
@@ -134,8 +148,9 @@ def plotSpectrum(k, f, fname):
 
     plt.tight_layout()
 
-    plt.savefig(fname + '.pdf')
-    plt.savefig(fname + '.png')
+    if fname is not None:
+        plt.savefig(fname + '.pdf')
+        plt.savefig(fname + '.png')
     
 def compareImages(gate_image, gvxr_image, caption, fname):
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 20))
@@ -172,27 +187,40 @@ def compareImages(gate_image, gvxr_image, caption, fname):
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
 
-def fullCompareImages(gate_image, gvxr_image, title, fname):
+def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.01, vmax=1.2):
     absolute_error = np.abs(gate_image - gvxr_image)
     comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
 
     plt.figure(figsize= (20,10))
-
+    
     plt.subplot(141)
-    plt.imshow(gate_image, cmap="gray")#, vmin=0.25, vmax=1)
     plt.title("Gate (ground truth)")
+    if not log:
+        plt.imshow(gate_image, cmap="gray")#, vmin=0.25, vmax=1)
+    else:
+        plt.imshow(gate_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
 
     plt.subplot(142)
-    plt.imshow(gvxr_image, cmap="gray")#, vmin=0.25, vmax=1)
     plt.title(title)
+    if not log:
+        plt.imshow(gvxr_image, cmap="gray")#, vmin=0.25, vmax=1)
+    else:
+        plt.imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+
 
     plt.subplot(143)
-    plt.imshow(comp_equalized, cmap="gray")#, vmin=0.25, vmax=1)
     plt.title("gVirtualXRay \\& Gate\n (checkerboard comparison)")
+    if not log:
+        plt.imshow(comp_equalized, cmap="gray")#, vmin=0.25, vmax=1)
+    else:
+        plt.imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
 
     plt.subplot(144)
-    plt.imshow(absolute_error, cmap="gray")#, vmin=0.25, vmax=1)
     plt.title("Absolute error")
+    # if not log:
+    plt.imshow(absolute_error, cmap="gray")#, vmin=0.25, vmax=1)
+    # else:
+    #     plt.imshow(absolute_error, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
 
     plt.tight_layout()
 
@@ -203,8 +231,11 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
 
     plt.figure(figsize= (30,20))
 
-    offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
-
+    if json2gvxr.params["Source"]["Position"][2] > 0.5:
+        offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
+    else:
+        offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
+        
     spacing = json2gvxr.params["Detector"]["Size"][0] / json2gvxr.params["Detector"]["NumberOfPixels"][0]
 
     x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
@@ -357,3 +388,36 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
 
     plt.savefig(fname + ".pdf")
     plt.savefig(fname + ".png")
+
+# A function to extract an isosurface from a binary image
+def extractSurface(vtk_image, isovalue):
+
+    iso = vtk.vtkContourFilter()
+    if vtk.vtkVersion.GetVTKMajorVersion() >= 6:
+        iso.SetInputData(vtk_image)
+    else:
+        iso.SetInput(vtk_image)
+
+    iso.SetValue(0, isovalue)
+    iso.Update()
+    return iso.GetOutput()
+
+# A function to write STL files
+def writeSTL(mesh, name):
+    """Write an STL mesh file."""
+    try:
+        writer = vtk.vtkSTLWriter()
+        if vtk.vtkVersion.GetVTKMajorVersion() >= 6:
+            writer.SetInputData(mesh)
+        else:
+            writer.SetInput(mesh)
+        writer.SetFileTypeToBinary()
+        writer.SetFileName(name)
+        writer.Write()
+        writer = None
+    except BaseException:
+        print("STL mesh writer failed")
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_exception(
+            exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+    return None
