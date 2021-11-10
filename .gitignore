@@ -6,6 +6,10 @@ __pycache__
 *~
 
 notebooks/VHP
+notebooks/pediatric_phantom/
+notebooks/pediatric_phantom_data/Pediatric\ phantom*
+notebooks/pediatric_phantom_data/meshes
+notebooks/pediatric_phantom_data/segmentations
 
 1-GATE_vs_gVirtualXRay/outcmaes/
 
