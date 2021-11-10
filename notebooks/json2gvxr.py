@@ -77,6 +77,8 @@ def initSourceGeometry(fname = ""):
 
 def initSpectrum(fname = "", verbose = 0):
     global params;
+    
+    gvxr.resetBeamSpectrum()
 
     spectrum = {};
 
@@ -85,7 +87,47 @@ def initSpectrum(fname = "", verbose = 0):
         with open(fname) as f:
             params = json.load(f)
 
-    if type(params["Source"]["Beam"]) == list:
+    if params["Source"]["Beam"]["GateMacro"] is not None:
+        k = []
+        f = []
+        unit = params["Source"]["Beam"]["Unit"]
+        
+        # Read the file
+        gate_macro_file = open(params["Source"]["Beam"]["GateMacro"], 'r')
+        lines = gate_macro_file.readlines()
+
+        # Process every line
+        for line in lines:
+            
+            # Check if this is a comment or not
+            comment = True
+            index_first_non_space_character = len(line) - len(line.lstrip())
+            if index_first_non_space_character >= 0 and index_first_non_space_character < len(line):
+                if line[index_first_non_space_character] != '#':
+                    comment = False
+            
+            # This is not a comment
+            if not comment:
+                x = line.split()
+
+            energy = float(x[1])
+            count = float(x[2])
+            spectrum[energy] = count
+
+            if verbose > 0:
+                if count == 1:
+                    print("\t", str(count), "photon of", energy, unit);
+                else:
+                    print("\t", str(count), "photons of", energy, unit);
+
+            gvxr.addEnergyBinToSpectrum(energy, unit, count);
+            k.append(energy)
+            f.append(count)
+
+        k = np.array(k)
+        f = np.array(f)
+        
+    elif type(params["Source"]["Beam"]) == list:
         k = []
         f = []
         for energy_channel in params["Source"]["Beam"]:
@@ -208,8 +250,8 @@ def initDetector(fname = ""):
     );
 
 def initSamples(fname = "", verbose = 0):
-    global params;
-
+    global params; 
+    
     # Load the JSON file
     if fname != "":
         with open(fname) as f:
