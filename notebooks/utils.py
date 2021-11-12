@@ -236,7 +236,7 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     else:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
         
-    spacing = json2gvxr.params["Detector"]["Size"][0] / json2gvxr.params["Detector"]["NumberOfPixels"][0]
+    spacing = json2gvxr.params["Detector"]["Size"][0] / gate_image.shape[0]
 
     x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
 
@@ -269,7 +269,7 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.subplot(311)
     plt.title("Profiles (Top line)")
     # plt.yscale("log")
-    y_coord = round(json2gvxr.params["Detector"]["NumberOfPixels"][0] / 2 - offset_line * json2gvxr.params["Detector"]["NumberOfPixels"][0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = round(gate_image.shape[0] / 2 - offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
 
     i = 0
     for sub_x in x_gate:
@@ -311,7 +311,7 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.subplot(312)
     plt.title("Profiles (Central line)")
     # plt.yscale("log")
-    y_coord = round(json2gvxr.params["Detector"]["NumberOfPixels"][0] / 2)
+    y_coord = round(gate_image.shape[0] / 2)
 
     i = 0
     for sub_x in x_gate:
@@ -349,7 +349,7 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.subplot(313)
     plt.title("Profiles (Bottom line)")
     # plt.yscale("log")
-    y_coord = round(json2gvxr.params["Detector"]["NumberOfPixels"][0] / 2 + offset_line * json2gvxr.params["Detector"]["NumberOfPixels"][0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
 
     i = 0
     for sub_x in x_gate:
