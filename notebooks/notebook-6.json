@@ -4,7 +4,7 @@
     "Detector": {
         "Position": [0.0, 250.0, 0.0, "mm"],        
         "UpVector": [0, 0, -1],
-        "NumberOfPixels": [128, 128],
+        "NumberOfPixels": [384, 384],
         "Size": [500, 500, "mm"],
         "Energy response": {
             "File": "Gate_data/responseDetector.txt",
@@ -13,7 +13,7 @@
     },
 
     "Source": {
-        "Position": [0.0, -1040.0, 0.0, "mm"],
+        "Position": [0.0, -1000.0, 0.0, "mm"],
         "Shape": "PointSource",
         "Beam": {
             "GateMacro": "pediatric_phantom_data/60keV.mac",
