@@ -2,9 +2,9 @@
     "WindowSize": [800, 450],
 
     "Detector": {
-        "Position": [0.0, 0.0, -125.0, "mm"],
+        "Position": [0.0, -25.0, -125.0, "mm"],
         "UpVector": [0, 1, 0],
-        "NumberOfPixels": [512, 512],
+        "NumberOfPixels": [1536, 1248],
         "Size": [150, 150, "mm"],
         "Energy response": {
             "File": "Gate_data/responseDetector.txt",
@@ -13,7 +13,7 @@
     },
 
     "Source": {
-        "Position": [0.0, 0.0, 100.0, "cm"],
+        "Position": [0.0, -25.0, 100.0, "cm"],
         "Shape": "PointSource",
         "Beam": {
             "kvp": 85,
@@ -22,21 +22,46 @@
         }
     },
 
+
     "Samples": [
         {
-            "Label": "Bones",
-            "Path": "VHP/bones.obj",
-            "Unit": "mm",
-            "Material": ["HU", 1000],
+            "Label": "Muscle",
+            "Path": "VHP/meshes/muscles.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                    1, 0.102,
+                    6, 0.143,
+                    7, 0.034,
+                    8, 0.710,
+                    11, 0.001,
+                    15, 0.002,
+                    16, 0.003,
+                    17, 0.001,
+                    19, 0.004
+                ]
+            ],
+            "Density": 1.050,
             "Type" : "inner"
         },
 
         {
-            "Label": "Skin",
-            "Path": "VHP/skin.obj",
-            "Unit": "mm",
-            "Material": ["HU", -100],
-            "Type" : "outer"
+            "Label": "Trachea",
+            "Path": "VHP/meshes/hips.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                    1, 0.105,
+                    6, 0.256,
+                    7, 0.027,
+                    8, 0.602,
+                    11, 0.001,
+                    15, 0.002,
+                    16, 0.003,
+                    17, 0.002,
+                    19, 0.002
+                ]
+            ],
+            "Density": 1.030,
+            "Type" : "inner"
         }
     ]
 }
