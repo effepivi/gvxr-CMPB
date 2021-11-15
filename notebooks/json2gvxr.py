@@ -265,17 +265,33 @@ def initSamples(fname = "", verbose = 0):
 
     colours = list(mcolors.TABLEAU_COLORS);
     colour_id = 0;
+    
     for mesh in params["Samples"]:
 
-        if verbose == 1:
-            print("\tLoad", mesh["Label"], "in", mesh["Path"], "using", mesh["Unit"]);
 
-        gvxr.loadMeshFile(
-            mesh["Label"],
-            mesh["Path"],
-            mesh["Unit"],
-            False
-        );
+        if "Cube" in mesh:
+            if verbose == 1:
+                print(mesh["Label"] + " is a cube")
+            
+            gvxr.makeCube(mesh["Label"], mesh["Cube"][0], mesh["Cube"][1]);
+                
+        elif "Cylinder" in mesh:
+            if verbose == 1:
+                print(mesh["Label"] + " is a cylinder")
+                
+            gvxr.makeCylinder(mesh["Label"], mesh["Cylinder"][0], mesh["Cylinder"][1], mesh["Cylinder"][2], mesh["Cylinder"][3]);
+
+        elif "Path" in mesh:
+            if verbose == 1:
+                print("\tLoad", mesh["Label"], "in", mesh["Path"], "using", mesh["Unit"]);
+            gvxr.loadMeshFile(
+                mesh["Label"],
+                mesh["Path"],
+                mesh["Unit"],
+                False
+            );
+        else:
+            raise IOError("Cannot find the geometry of Mesh " + mesh["Label"])
 
         material = mesh["Material"];
         if material[0] == "Element":
@@ -326,8 +342,14 @@ def initSamples(fname = "", verbose = 0):
                 mesh["Label"],
                 material[1]
             );
+        elif material[0] == "Mu":
+            gvxr.setLinearAttenuationCoefficient(
+                mesh["Label"],
+                material[1],
+                "cm-1"
+            );
         else:
-            raise ("Unknown material type: " + material[0]);
+            raise IOError("Unknown material type: " + material[0]);
 
         if "Density" in mesh.keys():
             gvxr.setDensity(
