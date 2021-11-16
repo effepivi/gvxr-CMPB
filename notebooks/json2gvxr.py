@@ -23,6 +23,7 @@ import gvxrPython3 as gvxr # Simulate X-ray images
 # Define the NoneType
 NoneType = type(None);
 params  = None;
+context_created = False
 
 # Print the libraries' version
 print (gvxr.getVersionOfSimpleGVXR())
@@ -40,7 +41,10 @@ def initGVXR(fname, renderer = "OPENGL"):
     print("Create an OpenGL context:",
         str(window_size[0]) + "x" + str(window_size[1])
     );
-    gvxr.createOpenGLContext();
+    
+    if not context_created:
+        gvxr.createOpenGLContext();
+        
     gvxr.setWindowSize(
         window_size[0],
         window_size[1]
