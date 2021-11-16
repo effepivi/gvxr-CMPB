@@ -1,0 +1,41 @@
+{
+    "WindowSize": [512, 512],
+
+    "Detector": {
+        "Position": [0, 500, 0, "mm"],
+        "UpVector": [0, 0, 1],
+        "NumberOfPixels": [150, 100],
+        "Size": [93.75, 62.5, "cm"]
+    },
+
+    "Source": {
+        "Position": [0, -500, 0, "mm"],
+        "Shape": "ParallelBeam",
+        "Beam": [
+            {
+                "Energy": 20,
+                "Unit": "keV",
+                "PhotonCount": 1.0
+            }
+        ]
+    },
+
+    
+    "Samples": [
+        {
+            "Label": "Cube",
+            "Cube": [150, "mm"],
+            "Unit": "mm",
+            "Material": ["Mu", 0.1],
+            "Type" : "outer"
+        },
+
+        {
+            "Label": "Cylinder",
+            "Cylinder": [60, 60, 50, "mm"],
+            "Unit": "mm",
+            "Material": ["Mu", 0.5],
+            "Type" : "inner"
+        }
+    ]
+}
