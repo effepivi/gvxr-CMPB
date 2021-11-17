@@ -258,6 +258,9 @@ def initDetector(fname = ""):
 def initSamples(fname = "", verbose = 0):
     global params; 
     
+    gvxr.removePolygonMeshesFromXRayRenderer()
+    gvxr.removePolygonMeshesFromSceneGraph()
+    
     # Load the JSON file
     if fname != "":
         with open(fname) as f:
