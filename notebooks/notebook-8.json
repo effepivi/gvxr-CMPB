@@ -2,7 +2,7 @@
     "WindowSize": [800, 450],
 
     "Detector": {
-        "Position": [0.0, -50.0, -125.0, "mm"],
+        "Position": [0.0, -50.0, -12.5, "cm"],
         "UpVector": [0, -1, 0],
         "NumberOfPixels": [1536, 1248],
         "Size": [150, 121.875, "mm"],
