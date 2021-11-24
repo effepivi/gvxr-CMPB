@@ -18,7 +18,9 @@
         "Beam": {
             "kvp": 90,
             "tube angle": 12,
-            "filter": ["Al", 3.2]
+            "filter": [
+                ["Al", 3.2]
+            ]
         }
     },
 
