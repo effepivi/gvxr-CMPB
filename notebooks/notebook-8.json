@@ -5,7 +5,7 @@
         "Position": [0.0, -5.0, -12.5, "cm"],
         "UpVector": [0, -1, 0],
         "NumberOfPixels": [1536, 1248],
-        "Size": [150, 121.875, "mm"],
+        "Size": [40.470040976, 32.881908384, "cm"],
         "Energy response": {
             "File": "Gate_data/responseDetector.txt",
             "Energy": "MeV"
@@ -15,13 +15,13 @@
     "Source": {
         "Position": [0.0, -5.0, 150.0, "cm"],
         "Shape": "PointSource",
-        "Beam": [
-            {
-                "Energy": 60,
-                "Unit": "keV",
-                "PhotonCount": 1.0
-            }
-        ]
+        "Beam": {
+            "kvp": 85,
+            "tube angle": 12,
+            "filter": [
+                ["Al", 3.2]
+            ]
+        }
     },
 
     "Samples": [
