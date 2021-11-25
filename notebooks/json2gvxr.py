@@ -424,6 +424,38 @@ def initSamples(fname = "", verbose = 0):
                 "g/cm3"
             );
 
+        if "Transform" in mesh.keys():
+            for transform in mesh["Transform"]:
+                if transform[0] == "Rotation":
+                    if len(transform) == 5:
+                        gvxr.rotateNode(mesh["Label"],
+                                        transform[1],
+                                        transform[2],
+                                        transform[3],
+                                        transform[4])
+                    else:
+                        raise IOError("Invalid rotation:", transform)
+                elif transform[0] == "Translation":
+                    if len(transform) == 4:
+                        gvxr.translateNode(mesh["Label"],
+                                        transform[1],
+                                        transform[2],
+                                        transform[3])
+                    else:
+                        raise IOError("Invalid translation:", transform)
+                elif transform[0] == "Scaling":
+                    if len(transform) == 4:
+                        gvxr.scaleNode(mesh["Label"],
+                                        transform[1],
+                                        transform[2],
+                                        transform[3])
+                    else:
+                        raise IOError("Invalid scaling:", transform)
+                else:
+                    raise IOError("Invalid transformation:", transform)
+            
+            gvxr.applyCurrentLocalTransformation(mesh["Label"])
+            
         # Add the mesh to the simulation
         if "Type" in mesh.keys():
             if mesh["Type"] == "inner":
