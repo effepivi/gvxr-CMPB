@@ -2,14 +2,14 @@
     "WindowSize": [512, 512],
 
     "Detector": {
-        "Position": [0, 500, 0, "mm"],
-        "UpVector": [0, 0, 1],
+        "Position": [0, 500, 0, "um"],
+        "UpVector": [0, 0, -1],
         "NumberOfPixels": [725, 426],
-		"Spacing": [0.625, 0.625, "mm"]
+		"Spacing": [0.625, 0.7, "um"]
     },
 
     "Source": {
-        "Position": [0, -500, 0, "mm"],
+        "Position": [0, -500, 0, "um"],
         "Shape": "ParallelBeam",
         "Beam": [
             {
@@ -23,115 +23,129 @@
     
     "Samples": [
         {
-            "Label": "100HU_tumours"
+            "Label": "100HU_tumours",
             "Path": "lungman_data/meshes/tumours_100HU.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", 90.3571],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 
         {
-            "Label": "-630HU_tumours"
+            "Label": "-630HU_tumours",
             "Path": "lungman_data/meshes/tumours_-630HU.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -662.072],
-            "Type" : "inner"
+           "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Clavicle"
+            "Label": "Clavicle",
             "Path": "lungman_data/meshes/clavicle.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", 470.215],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Heart"
+            "Label": "Heart",
             "Path": "lungman_data/meshes/heart.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", 28.3208],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Bronchus"
+            "Label": "Bronchus",
             "Path": "lungman_data/meshes/bronchus.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -25.8574],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Diaphram"
+            "Label": "Diaphram",
             "Path": "lungman_data/meshes/diaphram.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -13.2063],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Bronchioles"
+            "Label": "Bronchioles",
             "Path": "lungman_data/meshes/bronchioles.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -463.668],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Sheets_high"
-            "Path": "lungman_data/meshes/sheets-high.stl",
-            "Unit": "mm",
+            "Label": "Scapulas",
+            "Path": "lungman_data/meshes/scapulas.stl",
+            "Unit": "um",
             "Material": ["HU", 417.469],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Sheets_high"
+            "Label": "Sheets_high",
             "Path": "lungman_data/meshes/sheets-high.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", 317.68],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Sheets_low"
+            "Label": "Sheets_low",
             "Path": "lungman_data/meshes/sheets-low.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -277.143],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Sheets_med"
+            "Label": "Sheets_med",
             "Path": "lungman_data/meshes/sheets-med.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", 203.908],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Skin"
+            "Label": "Skin",
             "Path": "lungman_data/meshes/skin.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -11.6906],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Sternum"
+            "Label": "Sternum",
             "Path": "lungman_data/meshes/sternum.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", 426.461],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         },
 		
 		{
-            "Label": "Trachea"
+            "Label": "Trachea",
             "Path": "lungman_data/meshes/trachea.stl",
-            "Unit": "mm",
+            "Unit": "um",
             "Material": ["HU", -915.547],
-            "Type" : "inner"
+            "Type" : "inner",
+			"Position" : [-8, 134, 189]
         }
     ]
 }

@@ -152,75 +152,16 @@ def initSpectrum(fname = "", verbose = 0):
 
             k = np.array(k)
             f = np.array(f)
-        elif "TextFile" in params["Source"]["Beam"]:
-            k = []
-            f = []
-            unit = params["Source"]["Beam"]["Unit"]
-
-            # Read the file
-            gate_macro_file = open(params["Source"]["Beam"]["TextFile"], 'r')
-            lines = gate_macro_file.readlines()
-
-            # Process every line
-            for line in lines:
-
-                # Check if this is a comment or not
-                comment = True
-                index_first_non_space_character = len(line) - len(line.lstrip())
-                if index_first_non_space_character >= 0 and index_first_non_space_character < len(line):
-                    if line[index_first_non_space_character] != '#':
-                        comment = False
-
-                # This is not a comment
-                if not comment:
-                    x = line.split()
-
-                energy = float(x[0])
-                count = float(x[1])
-                spectrum[energy] = count
-
-                if verbose > 0:
-                    if count == 1:
-                        print("\t", str(count), "photon of", energy, unit);
-                    else:
-                        print("\t", str(count), "photons of", energy, unit);
-
-                gvxr.addEnergyBinToSpectrum(energy, unit, count);
-                k.append(energy)
-                f.append(count)
-
-            k = np.array(k)
-            f = np.array(f)
         elif "kvp" in params["Source"]["Beam"]:
             kvp_in_kV = params["Source"]["Beam"]["kvp"];
-            th_in_deg = 12
-            
-            if "tube angle" in params["Source"]["Beam"]:
-                th_in_deg = params["Source"]["Beam"]["tube angle"];
-            
+            th_in_deg = params["Source"]["Beam"]["tube angle"];
+            filter_material = params["Source"]["Beam"]["filter"][0];
+            filter_thickness_in_mm = params["Source"]["Beam"]["filter"][1];
+
             import spekpy as sp
 
-            if verbose > 0:
-                print("kVp (kV):", kvp_in_kV)
-                print("tube angle (degrees):", th_in_deg)
-
-            s = sp.Spek(kvp=kvp_in_kV, th=th_in_deg) # Generate a spectrum (80 kV, 12 degree tube angle)
-
-            if "filter" in params["Source"]["Beam"]:
-                print('params["Source"]["Beam"]', params["Source"]["Beam"])
-                for beam_filter in params["Source"]["Beam"]["filter"]:
-                    print(beam_filter)
-                    
-                    filter_material = beam_filter[0]
-                    filter_thickness_in_mm = beam_filter[1]
-
-                    if verbose > 0:
-                        print("Filter", filter_thickness_in_mm, "mm of", filter_material)
-                    
-                    s.filter(filter_material, filter_thickness_in_mm)
-                    
-
-
+            s = sp.Spek(kvp=kvp_in_kV,th=th_in_deg) # Generate a spectrum (80 kV, 12 degree tube angle)
+            s.filter(filter_material, filter_thickness_in_mm) # Filter by 4 mm of Al
             unit = "keV"
             k, f = s.get_spectrum(edges=True) # Get the spectrum
 
@@ -350,11 +291,12 @@ def initSamples(fname = "", verbose = 0):
         elif "Path" in mesh:
             if verbose == 1:
                 print("\tLoad", mesh["Label"], "in", mesh["Path"], "using", mesh["Unit"]);
+          
             gvxr.loadMeshFile(
                 mesh["Label"],
                 mesh["Path"],
                 mesh["Unit"],
-                False
+               False
             );
         else:
             raise IOError("Cannot find the geometry of Mesh " + mesh["Label"])
@@ -424,38 +366,6 @@ def initSamples(fname = "", verbose = 0):
                 "g/cm3"
             );
 
-        if "Transform" in mesh.keys():
-            for transform in mesh["Transform"]:
-                if transform[0] == "Rotation":
-                    if len(transform) == 5:
-                        gvxr.rotateNode(mesh["Label"],
-                                        transform[1],
-                                        transform[2],
-                                        transform[3],
-                                        transform[4])
-                    else:
-                        raise IOError("Invalid rotation:", transform)
-                elif transform[0] == "Translation":
-                    if len(transform) == 4:
-                        gvxr.translateNode(mesh["Label"],
-                                        transform[1],
-                                        transform[2],
-                                        transform[3])
-                    else:
-                        raise IOError("Invalid translation:", transform)
-                elif transform[0] == "Scaling":
-                    if len(transform) == 4:
-                        gvxr.scaleNode(mesh["Label"],
-                                        transform[1],
-                                        transform[2],
-                                        transform[3])
-                    else:
-                        raise IOError("Invalid scaling:", transform)
-                else:
-                    raise IOError("Invalid transformation:", transform)
-            
-            gvxr.applyCurrentLocalTransformation(mesh["Label"])
-            
         # Add the mesh to the simulation
         if "Type" in mesh.keys():
             if mesh["Type"] == "inner":
@@ -473,3 +383,18 @@ def initSamples(fname = "", verbose = 0):
         colour_id += 1;
         if colour_id == len(colours):
             colour_id = 0;
+        
+        if "Position" in mesh.keys():
+            mesh_position = mesh["Position"];
+            unit = None;
+            if len(mesh_position) > 3:
+                unit = mesh_position[3];
+            else:
+                unit = mesh["Unit"];
+                
+                
+            gvxr.translateNode( mesh["Label"],  
+                                mesh_position[0], #x
+                                mesh_position[1], #y
+                                mesh_position[2], #z
+                                unit);#unit
