@@ -28,7 +28,7 @@
             "Unit": "um",
             "Material": ["HU", 90.3571],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 
         {
@@ -37,7 +37,7 @@
             "Unit": "um",
             "Material": ["HU", -662.072],
            "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -46,7 +46,7 @@
             "Unit": "um",
             "Material": ["HU", 470.215],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -55,7 +55,7 @@
             "Unit": "um",
             "Material": ["HU", 28.3208],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -64,7 +64,7 @@
             "Unit": "um",
             "Material": ["HU", -25.8574],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -73,7 +73,7 @@
             "Unit": "um",
             "Material": ["HU", -13.2063],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -82,7 +82,7 @@
             "Unit": "um",
             "Material": ["HU", -463.668],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -91,7 +91,7 @@
             "Unit": "um",
             "Material": ["HU", 417.469],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -100,7 +100,7 @@
             "Unit": "um",
             "Material": ["HU", 317.68],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -109,7 +109,7 @@
             "Unit": "um",
             "Material": ["HU", -277.143],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -118,7 +118,7 @@
             "Unit": "um",
             "Material": ["HU", 203.908],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -127,7 +127,7 @@
             "Unit": "um",
             "Material": ["HU", -11.6906],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -136,7 +136,7 @@
             "Unit": "um",
             "Material": ["HU", 426.461],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         },
 		
 		{
@@ -145,7 +145,7 @@
             "Unit": "um",
             "Material": ["HU", -915.547],
             "Type" : "inner",
-			"Position" : [-8, 134, 189]
+			"Transform" : [["Translation",-8, 134, 189, "um"]]
         }
     ]
 }
