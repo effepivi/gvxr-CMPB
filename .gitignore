@@ -5,11 +5,18 @@ __pycache__
 *-crop.pdf
 *~
 
+notebooks/outcmaes/
 notebooks/VHP
 notebooks/pediatric_phantom/
 notebooks/pediatric_phantom_data/Pediatric\ phantom*
 notebooks/pediatric_phantom_data/meshes
 notebooks/pediatric_phantom_data/segmentations
+notebooks/gVirtualXRay_output_data/l_buffer-*
+notebooks/XRayAllAnatomy.zip
+notebooks/VHP.zip
+notebooks/gVirtualXRay_output_data/simpleCT_*.mha
+notebooks/gVirtualXRay_output_data/HIPS_screenshot_*.tif
+notebooks/gVirtualXRay_output_data/HIPS_xray_*.tif
 
 1-GATE_vs_gVirtualXRay/outcmaes/
 

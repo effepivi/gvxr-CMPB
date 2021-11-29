@@ -1,0 +1,151 @@
+{
+    "WindowSize": [512, 512],
+
+    "Detector": {
+        "Position": [0, 500, 0, "mm"],
+        "UpVector": [0, 0, -1],
+        "NumberOfPixels": [725, 426],
+		"Spacing": [0.625, 0.7, "mm"]
+    },
+
+    "Source": {
+        "Position": [0, -500, 0, "mm"],
+        "Shape": "ParallelBeam",
+        "Beam": [
+            {
+                "Energy": 100,
+                "Unit": "keV",
+                "PhotonCount": 1.0
+            }
+        ]
+    },
+
+    
+    "Samples": [
+        {
+            "Label": "100HU_tumours",
+            "Path": "lungman_data/meshes/tumours_100HU.stl",
+            "Unit": "mm",
+            "Material": ["HU", 90.3571],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+
+        {
+            "Label": "-630HU_tumours",
+            "Path": "lungman_data/meshes/tumours_-630HU.stl",
+            "Unit": "mm",
+            "Material": ["HU", -662.072],
+           "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Clavicle",
+            "Path": "lungman_data/meshes/clavicle.stl",
+            "Unit": "mm",
+            "Material": ["HU", 470.215],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Heart",
+            "Path": "lungman_data/meshes/heart.stl",
+            "Unit": "mm",
+            "Material": ["HU", 28.3208],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Bronchus",
+            "Path": "lungman_data/meshes/bronchus.stl",
+            "Unit": "mm",
+            "Material": ["HU", -25.8574],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Diaphram",
+            "Path": "lungman_data/meshes/diaphram.stl",
+            "Unit": "mm",
+            "Material": ["HU", -13.2063],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Bronchioles",
+            "Path": "lungman_data/meshes/bronchioles.stl",
+            "Unit": "mm",
+            "Material": ["HU", -463.668],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Scapulas",
+            "Path": "lungman_data/meshes/scapulas.stl",
+            "Unit": "mm",
+            "Material": ["HU", 417.469],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Sheets_high",
+            "Path": "lungman_data/meshes/sheets-high.stl",
+            "Unit": "mm",
+            "Material": ["HU", 317.68],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Sheets_low",
+            "Path": "lungman_data/meshes/sheets-low.stl",
+            "Unit": "mm",
+            "Material": ["HU", -277.143],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Sheets_med",
+            "Path": "lungman_data/meshes/sheets-med.stl",
+            "Unit": "mm",
+            "Material": ["HU", 203.908],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Skin",
+            "Path": "lungman_data/meshes/skin.stl",
+            "Unit": "mm",
+            "Material": ["HU", -11.6906],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Sternum",
+            "Path": "lungman_data/meshes/sternum.stl",
+            "Unit": "mm",
+            "Material": ["HU", 426.461],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        },
+		
+		{
+            "Label": "Trachea",
+            "Path": "lungman_data/meshes/trachea.stl",
+            "Unit": "mm",
+            "Material": ["HU", -915.547],
+            "Type" : "inner",
+			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+        }
+    ]
+}

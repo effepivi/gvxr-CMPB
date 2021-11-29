@@ -13,7 +13,7 @@
         "Shape": "ParallelBeam",
         "Beam": [
             {
-                "Energy": 20,
+                "Energy": 80,
                 "Unit": "keV",
                 "PhotonCount": 1.0
             }
@@ -25,15 +25,19 @@
         {
             "Label": "Cube",
             "Cube": [40, "cm"],
-            "Material": ["Mu", 0.1],
+            "Material": ["Compound", "H2O"],
+            "Density": 1,
             "Type" : "outer"
         },
 
         {
             "Label": "Cylinder",
             "Cylinder": [50, 10, 10, "cm"],
-            "Material": ["Mu", 0.5],
-            "Type" : "inner"
+            "Material": ["Element", "C"],
+            "Type" : "inner",
+            "Transform": [
+                ["Rotation", 90, 1, 0, 0]
+            ]
         }
     ]
 }
