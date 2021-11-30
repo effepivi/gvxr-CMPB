@@ -224,10 +224,7 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
     axes.flat[2].set_xticks([])
     axes.flat[2].set_yticks([])
 
-    if not log:
-        im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
-    else:
-        im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", norm=LogNorm(vmin=-5, vmax=5))
+    im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
     axes.flat[3].set_title("Relative error (in \%)")
     axes.flat[3].set_xticks([])
     axes.flat[3].set_yticks([])

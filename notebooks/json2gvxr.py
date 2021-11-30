@@ -71,7 +71,10 @@ def initSourceGeometry(fname = ""):
         
 def initSpectrum(fname = "", verbose = 0):
     global params;
-    
+
+    min_energy = sys.float_info.max
+    max_energy = -sys.float_info.max
+
     gvxr.resetBeamSpectrum()
     spectrum = {};
     # Load the JSON file
@@ -201,8 +204,6 @@ def initSpectrum(fname = "", verbose = 0):
             unit = "keV"
             k, f = s.get_spectrum(edges=True) # Get the spectrum
 
-            min_energy = sys.float_info.max
-            max_energy = -sys.float_info.max
             for energy, count in zip(k, f):
                 count = round(count)
                 if count > 0:
