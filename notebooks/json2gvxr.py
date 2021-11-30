@@ -67,6 +67,8 @@ def initSourceGeometry(fname = ""):
         gvxr.usePointSource();
     else:
         raise "Unknown source shape:" + source_shape;
+        
+        
 def initSpectrum(fname = "", verbose = 0):
     global params;
     
@@ -221,6 +223,8 @@ def initSpectrum(fname = "", verbose = 0):
             if verbose > 0:
                 print("/gate/source/mybeam/gps/histpoint", energy / 1000, count)
     return spectrum, unit, k, f;
+
+
 def initDetector(fname = ""):
     global params;
     # Load the JSON file
@@ -272,6 +276,8 @@ def initDetector(fname = ""):
         pixel_spacing[1],
         pixel_spacing[2]
     );
+    
+    
 def initSamples(fname = "", verbose = 0):
     global params; 
     

@@ -135,7 +135,7 @@ def displayLinearPowerScales(image: np.array, caption: str, fname: str, log: boo
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
 
-def plotSpectrum(k, f, fname=None):
+def plotSpectrum(k, f, fname=None, xlim=[0,200]):
     
     plt.figure(figsize= (20,10))
 
@@ -144,7 +144,7 @@ def plotSpectrum(k, f, fname=None):
     plt.ylabel('Probability distribution of photons per keV')
     plt.title('Photon energy distribution')
 
-    plt.xlim([0, 200])
+    plt.xlim(xlim)
 
     plt.tight_layout()
 
@@ -152,7 +152,7 @@ def plotSpectrum(k, f, fname=None):
         plt.savefig(fname + '.pdf')
         plt.savefig(fname + '.png')
     
-def compareImages(gate_image, gvxr_image, caption, fname):
+def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 20))
 
     relative_error = 100 * (gate_image - gvxr_image) / gate_image
@@ -163,7 +163,7 @@ def compareImages(gate_image, gvxr_image, caption, fname):
     axes.flat[0].set_xticks([])
     axes.flat[0].set_yticks([])
 
-    im2=axes.flat[1].imshow(relative_error, cmap="RdBu", vmin=-3, vmax=3)
+    im2=axes.flat[1].imshow(relative_error, cmap="RdBu", vmin=-threshold, vmax=threshold)
     axes.flat[1].set_title("Relative error (in \%)")
     axes.flat[1].set_xticks([])
     axes.flat[1].set_yticks([])
@@ -187,47 +187,63 @@ def compareImages(gate_image, gvxr_image, caption, fname):
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
 
+
 def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.01, vmax=1.2):
+
     absolute_error = np.abs(gate_image - gvxr_image)
+    relative_error = 100 * (gate_image - gvxr_image) / gate_image
     comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
 
-    plt.figure(figsize= (20,10))
     
-    plt.subplot(141)
-    plt.title("Gate (ground truth)")
+    fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
+
+    relative_error = 100 * (gate_image - gvxr_image) / gate_image
+    comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
+
     if not log:
-        plt.imshow(gate_image, cmap="gray")#, vmin=0.25, vmax=1)
+        im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=0.25, vmax=1)
     else:
-        plt.imshow(gate_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+        im1 = axes.flat[0].imshow(gate_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+    axes.flat[0].set_title("Gate (ground truth)")
+    axes.flat[0].set_xticks([])
+    axes.flat[0].set_yticks([])
 
-    plt.subplot(142)
-    plt.title(title)
     if not log:
-        plt.imshow(gvxr_image, cmap="gray")#, vmin=0.25, vmax=1)
+        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=0.25, vmax=1)
     else:
-        plt.imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+    axes.flat[1].set_title("gVirtualXRay")
+    axes.flat[1].set_xticks([])
+    axes.flat[1].set_yticks([])
 
-
-    plt.subplot(143)
-    plt.title("gVirtualXRay \\& Gate\n (checkerboard comparison)")
     if not log:
-        plt.imshow(comp_equalized, cmap="gray")#, vmin=0.25, vmax=1)
+        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=0.25, vmax=1)
     else:
-        plt.imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+    axes.flat[2].set_title("Checkerboard comparison between\nGate \& gVirtualXRay")
+    axes.flat[2].set_xticks([])
+    axes.flat[2].set_yticks([])
 
-    plt.subplot(144)
-    plt.title("Absolute error")
-    # if not log:
-    plt.imshow(absolute_error, cmap="gray")#, vmin=0.25, vmax=1)
-    # else:
-    #     plt.imshow(absolute_error, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+    if not log:
+        im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
+    else:
+        im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", norm=LogNorm(vmin=-5, vmax=5))
+    axes.flat[3].set_title("Relative error (in \%)")
+    axes.flat[3].set_xticks([])
+    axes.flat[3].set_yticks([])
 
-    plt.tight_layout()
+    fig.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.8,
+                        wspace=0.2, hspace=0.02)
+
+    # add an axes, lower left corner in [0.83, 0.1] measured in figure coordinate with axes width 0.02 and height 0.8
+    cb_ax = fig.add_axes([0.83, 0.425, 0.02, 0.15])
+    cbar = fig.colorbar(im4, cax=cb_ax)
 
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
+
     
-def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
+def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
 
     plt.figure(figsize= (30,20))
 
@@ -270,7 +286,8 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.title("Profiles (Top line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2 - offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
-
+    y_coord = min(y_coord, gate_image.shape[0] - 1)    
+    
     i = 0
     for sub_x in x_gate:
         y = gate_image[y_coord][sub_x]
@@ -312,6 +329,7 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.title("Profiles (Central line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2)
+    y_coord = min(y_coord, gate_image.shape[0] - 1)
 
     i = 0
     for sub_x in x_gate:
@@ -350,6 +368,7 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.title("Profiles (Bottom line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = min(y_coord, gate_image.shape[0] - 1)
 
     i = 0
     for sub_x in x_gate:
@@ -389,6 +408,248 @@ def plotProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image
     plt.savefig(fname + ".pdf")
     plt.savefig(fname + ".png")
 
+    
+def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
+
+    plt.figure(figsize= (20,10))
+
+    if json2gvxr.params["Source"]["Position"][2] > 0.5:
+        offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
+    else:
+        offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
+        
+    spacing = json2gvxr.params["Detector"]["Size"][0] / gate_image.shape[0]
+
+    x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
+
+    x_gate = []
+    x_gvxr_integration_CPU = []
+    x_gvxr_integration_GPU = []
+    temp = []
+
+    use_simulation = 0
+
+    for i in range(x_ray_image_integration_CPU.shape[1]):
+
+        temp.append(i)
+
+        if not i % 5 and i != 0:
+            temp.append(i+1)
+            if use_simulation == 0:
+                x_gate.append(temp)
+                use_simulation += 1
+            elif use_simulation == 1:
+                x_gvxr_integration_CPU.append(temp)
+                use_simulation += 1
+            elif use_simulation == 2:
+                x_gvxr_integration_GPU.append(temp)
+                use_simulation = 0
+
+            temp = []
+            temp.append(i-1)
+
+    plt.subplot(311)
+    plt.title("Profiles (Top line)")
+    # plt.yscale("log")
+    y_coord = round(gate_image.shape[0] / 2 - offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = min(y_coord, gate_image.shape[0] - 1)    
+    
+    i = 0
+    for sub_x in x_gate:
+        y = gate_image[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="Gate (noisy)", color='green')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='green')
+        i += 1
+
+    i = 0
+    for sub_x in x_gvxr_integration_CPU:
+        y = x_ray_image_integration_CPU[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="gVirtualXRay with integration on CPU", color='orange')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='orange')
+        i += 1
+
+    i = 0
+    for sub_x in x_gvxr_integration_GPU:
+        y = x_ray_image_integration_GPU[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="gVirtualXRay with integration on GPU", color='blue')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='blue')
+        i += 1
+
+    if xlimits is not None:
+        plt.xlim(xlimits)
+
+    plt.xlabel("Pixel location (in mm)")
+    plt.ylabel("Pixel intensity")
+    plt.legend()
+
+
+
+
+    plt.subplot(312)
+    plt.title("Profiles (Central line)")
+    # plt.yscale("log")
+    y_coord = round(gate_image.shape[0] / 2)
+    y_coord = min(y_coord, gate_image.shape[0] - 1)
+
+    i = 0
+    for sub_x in x_gate:
+        y = gate_image[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="Gate (noisy)", color='green')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='green')
+        i += 1
+
+    i = 0
+    for sub_x in x_gvxr_integration_CPU:
+        y = x_ray_image_integration_CPU[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="gVirtualXRay with integration on CPU", color='orange')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='orange')
+        i += 1
+
+    i = 0
+    for sub_x in x_gvxr_integration_GPU:
+        y = x_ray_image_integration_GPU[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="gVirtualXRay with integration on GPU", color='blue')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='blue')
+        i += 1
+
+    if xlimits is not None:
+        plt.xlim(xlimits)
+
+    plt.xlabel("Pixel location (in mm)")
+    plt.ylabel("Pixel intensity")
+
+    plt.subplot(313)
+    plt.title("Profiles (Bottom line)")
+    # plt.yscale("log")
+    y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = min(y_coord, gate_image.shape[0] - 1)
+
+    i = 0
+    for sub_x in x_gate:
+        y = gate_image[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="Gate (noisy)", color='green')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='green')
+        i += 1
+
+    i = 0
+    for sub_x in x_gvxr_integration_CPU:
+        y = x_ray_image_integration_CPU[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="gVirtualXRay with integration on CPU", color='orange')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='orange')
+        i += 1
+
+    i = 0
+    for sub_x in x_gvxr_integration_GPU:
+        y = x_ray_image_integration_GPU[y_coord][sub_x]
+        if i == 0:
+            plt.plot(np.array(sub_x) * spacing, y, label="gVirtualXRay with integration on GPU", color='blue')
+        else:
+            plt.plot(np.array(sub_x) * spacing, y, color='blue')
+        i += 1
+
+    if xlimits is not None:
+        plt.xlim(xlimits)
+
+    plt.xlabel("Pixel location (in mm)")
+    plt.ylabel("Pixel intensity")
+
+    plt.tight_layout()
+
+    plt.savefig(fname + ".pdf")
+    plt.savefig(fname + ".png")
+
+def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_GPU, fname, xlimits=None):
+
+    plt.figure(figsize= (30,20))
+
+    if json2gvxr.params["Source"]["Position"][2] > 0.5:
+        offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
+    else:
+        offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
+        
+    spacing = json2gvxr.params["Detector"]["Size"][0] / gate_image.shape[0]
+
+    x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
+
+    plt.subplot(311)
+    plt.title("Profiles (Top line)")
+    # plt.yscale("log")
+    y_coord = round(gate_image.shape[0] / 2 - offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = min(y_coord, gate_image.shape[0] - 1)    
+
+    y = gate_image[y_coord]
+    plt.plot(x, y, label="Gate (noisy)", color='green')
+    
+    y = x_ray_image_integration_GPU[y_coord]
+    plt.plot(x, y, label="gVirtualXRay", color='blue')
+
+    if xlimits is not None:
+        plt.xlim(xlimits)
+
+    plt.xlabel("Pixel location (in mm)")
+    plt.ylabel("Pixel intensity")
+    plt.legend()
+
+
+
+
+    plt.subplot(312)
+    plt.title("Profiles (Central line)")
+    # plt.yscale("log")
+    y_coord = round(gate_image.shape[0] / 2)
+    y_coord = min(y_coord, gate_image.shape[0] - 1)
+
+    y = gate_image[y_coord]
+    plt.plot(x, y, label="Gate (noisy)", color='green')
+    
+    y = x_ray_image_integration_GPU[y_coord]
+    plt.plot(x, y, label="gVirtualXRay", color='blue')
+
+    if xlimits is not None:
+        plt.xlim(xlimits)
+
+    plt.xlabel("Pixel location (in mm)")
+    plt.ylabel("Pixel intensity")
+
+    plt.subplot(313)
+    plt.title("Profiles (Bottom line)")
+    # plt.yscale("log")
+    y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
+    y_coord = min(y_coord, gate_image.shape[0] - 1)
+
+    y = gate_image[y_coord]
+    plt.plot(x, y, label="Gate (noisy)", color='green')
+    
+    y = x_ray_image_integration_GPU[y_coord]
+    plt.plot(x, y, label="gVirtualXRay", color='blue')
+
+    if xlimits is not None:
+        plt.xlim(xlimits)
+
+    plt.xlabel("Pixel location (in mm)")
+    plt.ylabel("Pixel intensity")
+
+    plt.tight_layout()
+
+    plt.savefig(fname + ".pdf")
+    plt.savefig(fname + ".png")
+    
 # A function to extract an isosurface from a binary image
 def extractSurface(vtk_image, isovalue):
 
