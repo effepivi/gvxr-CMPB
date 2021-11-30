@@ -12,6 +12,9 @@ import vtk
 
 import gvxrPython3 as gvxr # Simulate X-ray images
 
+def standardisation(image):
+    return (np.array(image).astype(np.single) - np.mean(image)) / np.std(image);
+
 def interpolate(a_low, a_high, a0, b_low, b_high):
     return b_low + (b_high - b_low) * (a0 - a_low) / (a_high - a_low)
 
@@ -188,7 +191,7 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     plt.savefig(fname + '.png')
 
 
-def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.01, vmax=1.2):
+def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1):
 
     absolute_error = np.abs(gate_image - gvxr_image)
     relative_error = 100 * (gate_image - gvxr_image) / gate_image
@@ -201,25 +204,25 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
     comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
 
     if not log:
-        im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=0.25, vmax=1)
+        im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=vmin, vmax=vmax)
     else:
-        im1 = axes.flat[0].imshow(gate_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
-    axes.flat[0].set_title("Gate (ground truth)")
+        im1 = axes.flat[0].imshow(gate_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+    axes.flat[0].set_title("Ground truth")
     axes.flat[0].set_xticks([])
     axes.flat[0].set_yticks([])
 
     if not log:
-        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=0.25, vmax=1)
+        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=vmin, vmax=vmax)
     else:
-        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
     axes.flat[1].set_title("gVirtualXRay")
     axes.flat[1].set_xticks([])
     axes.flat[1].set_yticks([])
 
     if not log:
-        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=0.25, vmax=1)
+        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax)
     else:
-        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=vmin, vmax=vmax))
+        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
     axes.flat[2].set_title("Checkerboard comparison between\nGate \& gVirtualXRay")
     axes.flat[2].set_xticks([])
     axes.flat[2].set_yticks([])
