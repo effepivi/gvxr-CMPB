@@ -3,7 +3,7 @@
 
     "Detector": {
         "Position": [0, 500, 0, "mm"],
-        "UpVector": [0, 0, -1],
+        "UpVector": [0, 0, 1],
         "NumberOfPixels": [725, 426],
 		"Spacing": [0.625, 0.7, "mm"]
     },
@@ -13,7 +13,7 @@
         "Shape": "ParallelBeam",
         "Beam": [
             {
-                "Energy": 72,
+                "Energy": 68,
                 "Unit": "keV",
                 "PhotonCount": 1.0
             }
@@ -27,7 +27,7 @@
             "Path": "lungman_data/meshes/tumours_100HU.stl",
             "Unit": "mm",
             "Material": ["HU", 90.3571],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 
@@ -36,7 +36,7 @@
             "Path": "lungman_data/meshes/tumours_-630HU.stl",
             "Unit": "mm",
             "Material": ["HU", -662.072],
-           "Type" : "outer",
+           "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -45,7 +45,7 @@
             "Path": "lungman_data/meshes/clavicle.stl",
             "Unit": "mm",
             "Material": ["HU", 470.215],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -54,7 +54,7 @@
             "Path": "lungman_data/meshes/heart.stl",
             "Unit": "mm",
             "Material": ["HU", 28.3208],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -63,7 +63,7 @@
             "Path": "lungman_data/meshes/bronchus.stl",
             "Unit": "mm",
             "Material": ["HU", -25.8574],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -72,7 +72,7 @@
             "Path": "lungman_data/meshes/diaphram.stl",
             "Unit": "mm",
             "Material": ["HU", -13.2063],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -81,7 +81,7 @@
             "Path": "lungman_data/meshes/bronchioles.stl",
             "Unit": "mm",
             "Material": ["HU", -463.668],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -90,7 +90,7 @@
             "Path": "lungman_data/meshes/ribs_spine.stl",
             "Unit": "mm",
             "Material": ["HU", 450.319],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -99,7 +99,7 @@
             "Path": "lungman_data/meshes/scapulas.stl",
             "Unit": "mm",
             "Material": ["HU", 417.469],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -108,7 +108,7 @@
             "Path": "lungman_data/meshes/sheets-high.stl",
             "Unit": "mm",
             "Material": ["HU", 317.68],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -117,7 +117,7 @@
             "Path": "lungman_data/meshes/sheets-low.stl",
             "Unit": "mm",
             "Material": ["HU", -277.143],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -126,7 +126,7 @@
             "Path": "lungman_data/meshes/sheets-med.stl",
             "Unit": "mm",
             "Material": ["HU", 203.908],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -135,7 +135,7 @@
             "Path": "lungman_data/meshes/skin.stl",
             "Unit": "mm",
             "Material": ["HU", -11.6906],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -144,7 +144,7 @@
             "Path": "lungman_data/meshes/sternum.stl",
             "Unit": "mm",
             "Material": ["HU", 426.461],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         },
 		
@@ -153,7 +153,7 @@
             "Path": "lungman_data/meshes/trachea.stl",
             "Unit": "mm",
             "Material": ["HU", -915.547],
-            "Type" : "outer",
+            "Type" : "inner",
 			"Transform" : [["Translation",-8, 134, 189, "mm"]]
         }
     ]
