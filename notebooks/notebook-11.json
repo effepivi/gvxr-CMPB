@@ -33,7 +33,7 @@
 
         {
             "Label": "-630HU_tumours",
-            "Path": "lungman_data/meshes/tumours_-630HU.stl",
+            "Path": "lungman_data/meshes/tumours_630HU.stl",
             "Unit": "mm",
             "Material": ["HU", -662.072],
            "Type" : "outer",
@@ -105,7 +105,7 @@
 		
 		{
             "Label": "Sheets_high",
-            "Path": "lungman_data/meshes/sheets-high.stl",
+            "Path": "lungman_data/meshes/sheets_high.stl",
             "Unit": "mm",
             "Material": ["HU", 317.68],
             "Type" : "outer",
@@ -114,7 +114,7 @@
 		
 		{
             "Label": "Sheets_low",
-            "Path": "lungman_data/meshes/sheets-low.stl",
+            "Path": "lungman_data/meshes/sheets_low.stl",
             "Unit": "mm",
             "Material": ["HU", -277.143],
             "Type" : "outer",
@@ -123,7 +123,7 @@
 		
 		{
             "Label": "Sheets_med",
-            "Path": "lungman_data/meshes/sheets-med.stl",
+            "Path": "lungman_data/meshes/sheets_med.stl",
             "Unit": "mm",
             "Material": ["HU", 203.908],
             "Type" : "outer",
