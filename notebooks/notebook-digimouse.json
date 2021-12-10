@@ -1,0 +1,183 @@
+{
+    "WindowSize": [800, 450],
+
+    "Detector": {
+        "Position": [0.0, -150.0, 0.0, "mm"],        
+        "UpVector": [0, 0, -1],
+        "NumberOfPixels": [512, 512],
+        "Size": [500, 500, "mm"],
+        "Energy response": {
+            "File": "Gate_data/responseDetector.txt",
+            "Energy": "MeV"
+        }
+    },
+
+    "Source": {
+        "Position": [0.0, 1000.0, 0.0, "mm"],
+        "Shape": "ParallelBeam",
+        "Beam": [
+            {
+                "Energy": 511,
+                "Unit": "keV",
+                "PhotonCount": 1.0
+            }
+        ]
+    },
+
+    "Samples": [
+        {
+            "Label": "background",
+            "Path": "digimouse/meshes/background.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0913],
+            "Type": "inner"
+        },
+        {
+            "Label": "skin",
+            "Path": "digimouse/meshes/skin.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "skeleton",
+            "Path": "digimouse/meshes/skeleton.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1717],
+            "Type": "inner"
+        },
+        {
+            "Label": "eye",
+            "Path": "digimouse/meshes/eye.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1012],
+            "Type": "inner"
+        },
+        {
+            "Label": "medulla",
+            "Path": "digimouse/meshes/medulla.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "cerebellum",
+            "Path": "digimouse/meshes/cerebellum.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0994],
+            "Type": "inner"
+        },
+        {
+            "Label": "olfactory_bulbs",
+            "Path": "digimouse/meshes/olfactory_bulbs.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "external_cerebrum",
+            "Path": "digimouse/meshes/external_cerebrum.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0994],
+            "Type": "inner"
+        },
+        {
+            "Label": "striatum",
+            "Path": "digimouse/meshes/striatum.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0994],
+            "Type": "inner"
+        },
+        {
+            "Label": "heart",
+            "Path": "digimouse/meshes/heart.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "rest_of_the_brain",
+            "Path": "digimouse/meshes/rest_of_the_brain.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0994],
+            "Type": "inner"
+        },
+        {
+            "Label": "masseter_muscles",
+            "Path": "digimouse/meshes/masseter_muscles.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0999],
+            "Type": "inner"
+        },
+        {
+            "Label": "lachrymal_glands",
+            "Path": "digimouse/meshes/lachrymal_glands.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "bladder",
+            "Path": "digimouse/meshes/bladder.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "testis",
+            "Path": "digimouse/meshes/testis.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0993],
+            "Type": "inner"
+        },
+        {
+            "Label": "stomach",
+            "Path": "digimouse/meshes/stomach.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "spleen",
+            "Path": "digimouse/meshes/spleen.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "pancreas",
+            "Path": "digimouse/meshes/pancreas.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "liver",
+            "Path": "digimouse/meshes/liver.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "kidneys",
+            "Path": "digimouse/meshes/kidneys.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "adrenal_glands",
+            "Path": "digimouse/meshes/adrenal_glands.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.1008],
+            "Type": "inner"
+        },
+        {
+            "Label": "lungs",
+            "Path": "digimouse/meshes/lungs.stl",
+            "Unit": "mm",
+            "Material": ["Mu", 0.0999],
+            "Type": "inner"
+        }
+    ]
+}
