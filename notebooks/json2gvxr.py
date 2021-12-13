@@ -318,6 +318,7 @@ def initSamples(fname = "", verbose = 0):
             );
         else:
             raise IOError("Cannot find the geometry of Mesh " + mesh["Label"])
+
         material = mesh["Material"];
         if material[0] == "Element":
             gvxr.setElement(
@@ -417,9 +418,16 @@ def initSamples(fname = "", verbose = 0):
                 gvxr.addPolygonMeshAsOuterSurface(mesh["Label"]);
         else:
             gvxr.addPolygonMeshAsInnerSurface(mesh["Label"]);
+        
         # Change the colour
         colour = mcolors.to_rgb(colours[colour_id]);
-        gvxr.setColour(mesh["Label"], colour[0], colour[1], colour[2], 1.0);
+        
+        # Get the opacity
+        opacity = 1.0
+        if "Opacity" in mesh.keys():
+            opacity = mesh["Opacity"]
+        
+        gvxr.setColour(mesh["Label"], colour[0], colour[1], colour[2], opacity);
         colour_id += 1;
         if colour_id == len(colours):
             colour_id = 0;
