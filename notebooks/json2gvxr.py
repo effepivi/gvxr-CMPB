@@ -30,6 +30,7 @@ def initGVXR(fname, renderer = "OPENGL"):
     # Load the JSON file
     with open(fname) as f:
         params = json.load(f)
+        
     # Create an OpenGL context
     window_size = params["WindowSize"];
     print("Create an OpenGL context:",
@@ -37,7 +38,14 @@ def initGVXR(fname, renderer = "OPENGL"):
     );
     
     if not context_created:
-        gvxr.createOpenGLContext();
+        if renderer == "OPENGL":
+            visibility = True
+        else:
+            visibility = False
+
+        gvxr.createWindow(-1,
+            True,
+            renderer)
         
     gvxr.setWindowSize(
         window_size[0],
@@ -320,12 +328,12 @@ def initSamples(fname = "", verbose = 0):
             raise IOError("Cannot find the geometry of Mesh " + mesh["Label"])
 
         material = mesh["Material"];
-        if material[0] == "Element":
+        if material[0].upper() == "ELEMENT":
             gvxr.setElement(
                 mesh["Label"],
                 material[1]
             );
-        elif material[0] == "Mixture":
+        elif material[0].upper() == "MIXTURE":
             if type(material[1]) == str:
                 gvxr.setMixture(
                     mesh["Label"],
@@ -351,17 +359,17 @@ def initSamples(fname = "", verbose = 0):
                     elements,
                     weights
                 );
-        elif material[0] == "Compound":
+        elif material[0].upper() == "COMPOUND":
             gvxr.setCompound(
                 mesh["Label"],
                 material[1]
             );
-        elif material[0] == "HU":
+        elif material[0].upper() == "HU":
             gvxr.setHounsfieldValue(
                 mesh["Label"],
                 material[1]
             );
-        elif material[0] == "Mu":
+        elif material[0].upper() == "MU":
             gvxr.setLinearAttenuationCoefficient(
                 mesh["Label"],
                 material[1],
