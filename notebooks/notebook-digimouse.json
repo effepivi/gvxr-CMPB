@@ -2,14 +2,14 @@
     "WindowSize": [800, 450],
     
     "Detector": {
-        "Position": [0.0, -150.0, 0.0, "mm"],        
-        "UpVector": [0, 0, -1],
-        "NumberOfPixels": [1062, 208 ],
+        "Position": [0.0, 150.0, 0.0, "mm"],        
+        "UpVector": [0, 0, 1],
+        "NumberOfPixels": [1062, 208],        
         "Size": [106.229186197, 20.8, "mm"]
     },
 
     "Source": {
-        "Position": [0.0, 150.0, 0.0, "mm"],
+        "Position": [0.0, -150.0, 0.0, "mm"],
         "Shape": "ParallelBeam",
         "Beam": [
             {
@@ -21,15 +21,6 @@
     },
     
     "Samples": [
-        {
-            "Label": "background",
-            "Path": "digimouse/meshes/background.stl",
-            "Unit": "mm",
-            "Material": ["mu", 0.0913 ],
-            "Type": "inner",
-            "Opacity": 0.2
-        },
-
         {
             "Label": "skin",
             "Path": "digimouse/meshes/skin.stl",
@@ -47,7 +38,7 @@
             "Type": "inner",
             "Opacity": 0.7
         },
-
+        
         {
             "Label": "eye",
             "Path": "digimouse/meshes/eye.stl",
@@ -218,5 +209,6 @@
             "Type": "inner",
             "Opacity": 0.4
         }
+        
     ]
 }
