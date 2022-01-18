@@ -6,6 +6,24 @@ __pycache__
 *~
 
 notebooks/outcmaes/
+
+notebooks/digimouse/atlas.zip
+notebooks/digimouse/atlas/
+notebooks/digimouse/ct_data.zip
+notebooks/digimouse/ct_data/
+notebooks/digimouse/meshes/
+notebooks/digimouse/segmentations/
+notebooks/gVirtualXRay_output_data/digimouse-phantom-mu511keV.mha
+notebooks/gVirtualXRay_output_data/digimouse-phantom-proj-511keV.mha
+notebooks/gVirtualXRay_output_data/digimouse-phantom-sinogram-511keV.mha
+notebooks/gVirtualXRay_output_data/digimouse_flat.mha
+notebooks/gVirtualXRay_output_data/digimouse_ground_truth_CT_recons_in_mu.mha
+notebooks/gVirtualXRay_output_data/digimouse_minus_log_projs.mha
+notebooks/gVirtualXRay_output_data/digimouse_simu_CT_recons_in_mu.mha
+notebooks/gVirtualXRay_output_data/digimouse_sinograms.mha
+notebooks/plots/screenshot-beam-on-digimouse.pdf
+notebooks/plots/screenshot-beam-on-digimouse.png
+
 notebooks/VHP
 notebooks/pediatric_phantom/
 notebooks/pediatric_phantom_data/Pediatric\ phantom*
