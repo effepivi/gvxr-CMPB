@@ -1,4 +1,5 @@
 import copy
+import math
 
 import matplotlib.pyplot as plt # Plotting
 from matplotlib.colors import PowerNorm # Look up table
@@ -10,8 +11,32 @@ from tifffile import imread, imsave # Load/Write TIFF files
 import SimpleITK as sitk
 import vtk
 
+import GPUtil
+from cpuinfo import get_cpu_info
+import platform
+import psutil
+
 import gvxrPython3 as gvxr # Simulate X-ray images
 
+def printSystemInfo():
+    print("OS:")
+    # print("\t" + platform.platform())
+    # print("\t" + platform.version())
+    print("\t" + platform.system(), platform.release())
+    # print("\t" + platform.version())
+    print("\t" + platform.machine() + "\n")
+
+
+    print("CPU:\n", "\t" + get_cpu_info()["brand_raw"] + "\n")
+
+    print("RAM:\n\t" + str(round(psutil.virtual_memory().total / (1024.0 **3))), "GB")
+    
+    print("GPU:")
+    for gpu in GPUtil.getGPUs():
+        print("\tName:", gpu.name)
+        print("\tDrivers:", gpu.driver)
+        print("\tVideo memory:", round(gpu.memoryTotal / 1024), "GB")
+        
 def standardisation(image):
     return (np.array(image).astype(np.single) - np.mean(image)) / np.std(image);
 

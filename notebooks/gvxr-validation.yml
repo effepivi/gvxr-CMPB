@@ -19,7 +19,9 @@ dependencies:
     - SimpleITK
     - k3d
     - numpy-stl
+    - gputil
     - pip
     - pip:
         - viewscad
         - spekpy
+        - py-cpuinfo
