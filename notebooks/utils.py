@@ -16,6 +16,16 @@ from cpuinfo import get_cpu_info
 import platform
 import psutil
 
+tomography_backend="tomopy"
+
+import tigre
+import tigre.algorithms as algs
+
+import tomopy
+
+from skimage.transform import iradon
+from skimage.transform import radon
+
 import gvxrPython3 as gvxr # Simulate X-ray images
 
 def printSystemInfo():
@@ -36,6 +46,230 @@ def printSystemInfo():
         print("\tName:", gpu.name)
         print("\tDrivers:", gpu.driver)
         print("\tVideo memory:", round(gpu.memoryTotal / 1024), "GB")
+
+
+        
+        
+def getGeo(mode, filter_name):
+    # Using TIGRE
+    #Geometry settings
+    source_position = gvxr.getSourcePosition("mm")
+    detector_position = gvxr.getDetectorPosition("mm")
+
+    nDetector = np.array([gvxr.getDetectorNumberOfPixels()[1], gvxr.getDetectorNumberOfPixels()[0]])
+    nVoxel = np.array((nDetector[0], nDetector[1], nDetector[1]))
+
+    print("nDetector", nDetector)
+    print("nVoxel", nVoxel)
+
+    geo = tigre.geometry(mode=mode, nVoxel=nVoxel, default=False)
+
+    # Distance Source Origin        (mm)
+    geo.DSO = math.sqrt(source_position[0] ** 2 + source_position[1] ** 2 + source_position[2] ** 2)
+
+    # Distance Detector Origin        (mm)
+    DDO = math.sqrt(detector_position[0] ** 2 + detector_position[1] ** 2 + detector_position[2] ** 2)
+
+    # Distance Source Detector      (mm)
+    geo.DSD = geo.DSO + DDO
+
+
+    # Detector parameters
+    # number of pixels              (px)
+    geo.nDetector = nDetector
+
+    # total size of the detector    (mm)
+    geo.sDetector = np.array([gvxr.getDetectorSize("mm")[1], gvxr.getDetectorSize("mm")[0]])
+
+    # size of each pixel            (mm)
+    geo.dDetector = geo.sDetector / geo.nDetector
+
+    print("geo.sDetector", geo.sDetector)
+    print("geo.dDetector", geo.dDetector)
+
+    # Image parameters
+    # geo.nVoxel = np.array((geo.nDetector[0], geo.nDetector[1], geo.nDetector[1]))             # number of voxels              (vx)
+    geo.sVoxel = np.array([gvxr.getDetectorSize("mm")[1], gvxr.getDetectorSize("mm")[0], gvxr.getDetectorSize("mm")[0]])             # total size of the image       (mm)
+    geo.dVoxel = geo.sVoxel / geo.nVoxel               # size of each voxel            (mm)
+
+    # Offsets
+    geo.offOrigin = np.array((0, 0, 0))                # Offset of image from origin   (mm)
+    geo.offDetector = np.array((0, 0))                 # Offset of Detector            (mm)
+
+    # Auxiliary
+    geo.accuracy = 0.5                                 # Accuracy of FWD proj          (vx/sample)
+
+    # Mode
+    geo.mode = mode                                  # parallel, cone                ...
+    geo.filter = filter_name                       #  None, shepp_logan, cosine, hamming, hann
+    
+    return geo
+
+
+def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=128, number_of_slices=128, backend=tomography_backend):
+        
+    # Scikit-image
+    if backend == "scikit-image":
+
+        ground_truth_proj = []
+        ground_truth_sino = []
+        
+        # Compute the Radon transform (DRR)
+        for CT_slice in phantom:
+            sinogram = radon(CT_slice, theta=theta_deg, circle=False, preserve_range=False)
+            ground_truth_sino.append(sinogram.T)
+
+        # Make sure this is a Numpy array
+        ground_truth_sino = np.array(ground_truth_sino).astype(np.single)
+
+        # Convert the sinograms into projections
+        ground_truth_proj = np.swapaxes(ground_truth_sino, 0, 1).astype(np.single)
+
+    elif backend == "tomopy":
+        theta_rad = np.array(theta_deg) * math.pi / 180
+        
+        # Compute the Radon transform (DRR)
+        ground_truth_proj = tomopy.project(phantom, theta_rad)
+
+        # Convert the projections into sinograms
+        ground_truth_sino = np.swapaxes(ground_truth_proj, 0, 1).astype(np.single)
+
+    elif backend == "tigre":
+        # theta_rad = np.array(theta_deg) * math.pi / 180
+        # geo = getGeo(mode, "hann")
+        # ground_truth_proj = tigre.Ax(phantom, geo, theta_rad)
+        # print(ground_truth_proj.shape)
+
+        theta_rad = np.array(theta_deg) * math.pi / 180
+        
+        # Compute the Radon transform (DRR)
+        ground_truth_proj = tomopy.project(phantom, theta_rad)
+
+        # Convert the projections into sinograms
+        ground_truth_sino = np.swapaxes(ground_truth_proj, 0, 1).astype(np.single)
+
+    else:
+        raise IOError("No Tomgraphy backend chosen")
+
+    # Crop
+    half_width_delta = round((ground_truth_proj.shape[2] - proj_lenght_in_pixel) / 2)
+    half_height_delta = round((ground_truth_proj.shape[1] - number_of_slices) / 2)
+
+    ground_truth_proj = ground_truth_proj[:,
+              half_height_delta:number_of_slices + half_height_delta,
+              half_width_delta:proj_lenght_in_pixel + half_width_delta]
+
+    ground_truth_sino = ground_truth_sino[half_height_delta:number_of_slices + half_height_delta,
+              :,
+              half_width_delta:proj_lenght_in_pixel + half_width_delta]
+
+    return ground_truth_proj, ground_truth_sino
+
+
+def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend):
+
+    # Scikit-image
+    if backend == "scikit-image":
+
+        CT_volume = []
+
+        for sinogram in proj:
+            CT_volume.append(iradon(sinogram.T, theta=-theta_deg, circle=True, filter_name=filter_name))
+
+        CT_volume = np.array(CT_volume).astype(np.single)
+
+    elif backend == "tomopy":
+
+        theta_rad = np.array(theta_deg) * math.pi / 180
+
+        rot_centre = proj.shape[2] / 2
+        # rot_centre = tomopy.find_center(minus_log_projs, theta_rad, init=rot_centre, ind=0, tol=0.01)
+        CT_volume = tomopy.recon(proj,
+                             theta_rad,
+                             center=rot_centre,
+                             algorithm='gridrec',
+                             sinogram_order=False,
+                             filter_name=filter_name).astype(np.single)
+
+
+    elif backend == "tigre":
+
+        theta_rad = np.array(theta_deg) * math.pi / 180
+
+        geo = getGeo(mode, filter_name)
+        #  None, shepp_logan, cosine, hamming, hann
+
+        #Reconstruction with FDK
+        CT_volume = algs.fdk(proj, geo, -theta_rad)
+                
+        for i, CT_slice in enumerate(CT_volume):
+            CT_volume[i] = np.rot90(CT_slice, 1)
+        
+    else:
+        raise IOError("No Tomgraphy backend chosen")
+
+    # Crop
+    half_slices_delta = round((CT_volume.shape[0] - number_of_slices) / 2)
+    half_rows_delta = round((CT_volume.shape[1] - slice_rows) / 2)
+    half_cols_delta = round((CT_volume.shape[2] - slice_cols) / 2)
+
+    CT_volume = CT_volume[half_slices_delta:number_of_slices + half_slices_delta,
+              half_rows_delta:slice_rows + half_rows_delta,
+              half_cols_delta:slice_cols + half_cols_delta]
+
+    return CT_volume
+
+
+total_energy = None
+
+def flatFieldCorrection(proj):
+    
+    global total_energy
+    
+    if total_energy is None:
+
+        # Retrieve the total energy
+        total_energy = 0.0;
+        energy_bins = gvxr.getEnergyBins("MeV");
+        photon_count_per_bin = gvxr.getPhotonCountEnergyBins();
+
+        for energy, count in zip(energy_bins, photon_count_per_bin):
+            total_energy += energy * count;
+
+    # Create a mock dark field image
+    #dark_field_image = np.zeros(raw_projections.shape);
+    dark_field_image = 0.0
+
+    # Create a mock flat field image
+    #flat_field_image = np.ones(raw_projections.shape);
+    flat_field_image = 1.0
+
+    flat_field_image *= total_energy
+    
+    return (np.array(proj).astype(np.single) - dark_field_image) / (flat_field_image - dark_field_image)
+
+
+def minusLog(proj):
+
+    minus_log_projs = np.copy(proj)
+    
+    # Make sure no value is negative or null (because of the log function)
+    # It should not be the case, however, when the Laplacian is used to simulate
+    # phase contrast, negative values can be generated.
+    threshold = 0.000000001
+    minus_log_projs[minus_log_projs < threshold] = threshold;
+
+    # Apply the minus log normalisation
+    minus_log_projs = -np.log(minus_log_projs);
+
+    # Rescale the data taking into account the pixel size
+    pixel_spacing_in_mm = gvxr.getDetectorSize("mm")[0] / gvxr.getDetectorNumberOfPixels()[0]
+    minus_log_projs /= pixel_spacing_in_mm * (gvxr.getUnitOfLength("mm") / gvxr.getUnitOfLength("cm"));
+
+    # Make sure the data is in single-precision floating-point numbers
+    return minus_log_projs.astype(np.single)
+        
+        
         
 def standardisation(image):
     return (np.array(image).astype(np.single) - np.mean(image)) / np.std(image);
