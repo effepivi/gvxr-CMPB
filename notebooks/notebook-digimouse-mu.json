@@ -22,15 +22,6 @@
     
     "Samples": [
         {
-            "Label": "background",
-            "Path": "digimouse/meshes/background.stl",
-            "Unit": "mm",
-            "Material": ["mu", 0.0913 ],
-            "Type": "inner",
-            "Opacity": 0.2
-        },
-
-        {
             "Label": "skin",
             "Path": "digimouse/meshes/skin.stl",
             "Unit": "mm",
