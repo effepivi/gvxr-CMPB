@@ -1,0 +1,13 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = True
+CompressedData = False
+TransformMatrix = 1 0 0 0 1 0 0 0 1
+Offset = -249.512 -131.836 -309.017
+CenterOfRotation = 0 0 0
+AnatomicalOrientation = RAI
+ElementSpacing = 0.976562 0.976562 3.27002
+DimSize = 512 271 190
+ElementType = MET_USHORT
+ElementDataFile = Pediatric_model_crop.raw

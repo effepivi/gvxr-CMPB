@@ -1,0 +1,82 @@
+#/control/execute mac/visu.mac
+/vis/disable
+
+/control/execute mac/verbose.mac
+
+/gate/geometry/setMaterialDatabase data/ICRP_HUmaterials.db
+
+# World
+/gate/world/setMaterial            Air
+/gate/world/geometry/setXLength    5 m
+/gate/world/geometry/setYLength    5 m
+/gate/world/geometry/setZLength    5 m
+
+# Physics list
+/gate/physics/addPhysicsList emstandard_opt4
+/gate/physics/Gamma/SetCutInRegion      world 5 keV
+/gate/physics/Electron/SetCutInRegion   world 10 keV
+/gate/physics/Positron/SetCutInRegion   world 10 keV
+/gate/physics/SetMaxStepSizeInRegion    world 100 um
+/gate/physics/ActivateStepLimiter       electron
+
+# Insert phantom
+/gate/world/daughters/name                              patient
+/gate/world/daughters/insert                            ImageNestedParametrisedVolume
+/gate/patient/geometry/setHUToMaterialFile              data/ICRP_HU2mat.txt
+/gate/patient/geometry/setImage                         data/Pediatric_model_crop.mhd
+/gate/patient/geometry/TranslateTheImageAtThisIsoCenter 0 0 0 mm
+/gate/patient/geometry/setRotationAroundPixelIsoCenter true
+/gate/patient/placement/setRotationAxis    1. 0. 0.
+/gate/patient/placement/setRotationAngle   -90. deg
+
+#/gate/patient/vis/forceWireframe
+
+# Detection plane 1
+/gate/world/daughters/name                    DetectorPlane1
+/gate/world/daughters/insert                  box
+/gate/DetectorPlane1/geometry/setXLength      500 mm
+/gate/DetectorPlane1/geometry/setYLength      500 mm
+/gate/DetectorPlane1/geometry/setZLength      1 nm
+/gate/DetectorPlane1/placement/setTranslation 0 0 150 mm
+/gate/DetectorPlane1/setMaterial              Vacuum
+/gate/DetectorPlane1/vis/setVisible           1
+/gate/DetectorPlane1/vis/setColor             yellow
+
+/gate/actor/addActor FluenceActor                   DetectorActor1
+/gate/actor/DetectorActor1/save                     output/energy1.mhd
+/gate/actor/DetectorActor1/attachTo                 DetectorPlane1
+/gate/actor/DetectorActor1/stepHitType              pre
+/gate/actor/DetectorActor1/setResolution            128 128 1
+/gate/actor/DetectorActor1/enableScatter            true
+/gate/actor/DetectorActor1/enableSquared            false
+/gate/actor/DetectorActor1/enableUncertainty        false
+/gate/actor/DetectorActor1/responseDetectorFilename data/responseDetector.txt
+
+# Save particles stats
+/gate/actor/addActor  SimulationStatisticActor stat
+/gate/actor/stat/save output/stats.txt
+
+/gate/run/initialize
+
+# Beam
+/gate/source/addSource mybeam gps
+/gate/source/mybeam/gps/particle       gamma
+/gate/source/mybeam/gps/ene/type       User
+/gate/source/mybeam/gps/hist/type      energy
+/gate/source/mybeam/gps/pos/halfx      5 mm
+/gate/source/mybeam/gps/pos/halfy      5 mm
+/gate/source/mybeam/gps/pos/rot1       1 0 0
+/gate/source/mybeam/gps/pos/rot2       0 1 0
+/gate/source/mybeam/gps/pos/centre     0 0 -1023 mm
+/gate/source/mybeam/gps/pos/type       Plane
+/gate/source/mybeam/gps/pos/shape      Rectangle
+/gate/source/mybeam/gps/ang/type       focused
+/gate/source/mybeam/gps/ang/focuspoint 0 0 -1000 mm
+/control/execute mac/85keV.mac
+
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+/gate/application/setTotalNumberOfPrimaries 1e6
+/gate/application/start
+
