@@ -25,3 +25,4 @@ dependencies:
         - viewscad
         - spekpy
         - py-cpuinfo
+        - pymoo
