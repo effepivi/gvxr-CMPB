@@ -2,18 +2,14 @@
     "WindowSize": [800, 450],
 
     "Detector": {
-        "Position": [0.0, -16.5, -12.5, "cm"],
+        "Position": [0.0, -30.5, -20.5, "cm"],
         "UpVector": [0, -1, 0],
         "NumberOfPixels": [1536, 1248],
-        "Size": [40.470040976, 32.881908384, "cm"],
-        "Energy response": {
-            "File": "Gate_data/responseDetector.txt",
-            "Energy": "MeV"
-        }
+        "Size": [40.470040976, 32.881908384, "cm"]
     },
 
     "Source": {
-        "Position": [0.0, -16.5, 150.0, "cm"],
+        "Position": [0.0, -30.5, 150.0, "cm"],
         "Shape": "PointSource",
         "Beam": {
             "kvp": 85,
@@ -25,6 +21,7 @@
     },
 
     "Samples": [
+
         {
             "Label": "armR",
             "Path": "VHP/meshes/armR.stl",
@@ -45,6 +42,25 @@
             "Type" : "inner"
         },
              
+        {
+            "Label": "armL",
+            "Path": "VHP/meshes/armL.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
 
         {
             "Label": "rib cage",
@@ -164,7 +180,7 @@
             "Density": 1.030,
             "Type" : "inner"
         },
-        
+
         {
             "Label": "bronch",
             "Path": "VHP/meshes/bronch.stl",
@@ -328,7 +344,7 @@
              
         {
             "Label": "muscles",
-            "Path": "VHP/meshes/musclesWOarm.stl",
+            "Path": "VHP/meshes/muscles.stl",
             "Unit": "cm",
             "Material": ["Mixture", [
                         1, 0.102,
@@ -408,7 +424,7 @@
              
         {
             "Label": "skin",
-            "Path": "VHP/meshes/skinWOarm.stl",
+            "Path": "VHP/meshes/skin.stl",
             "Unit": "cm",
             "Material": ["Mixture", [
                     1, 0.102,
