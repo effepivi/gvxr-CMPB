@@ -20,9 +20,14 @@ dependencies:
     - k3d
     - numpy-stl
     - gputil
+    - plotly
+    - jupyterlab>=3
+    - ipywidgets>=7.6
+    - python-kaleido
     - pip
     - pip:
         - viewscad
         - spekpy
         - py-cpuinfo
         - pymoo
+        - chart_studio
