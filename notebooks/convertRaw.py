@@ -1,12 +1,16 @@
 import argparse
 import os
 import tempfile
-
+import numpy as np
 import SimpleITK as sitk
+import time
+import threading
 
-
+class staticclass:
+    lock = threading.Lock();
+    g_count_raw = 0;
 def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
-             image_origin=None, big_endian=False):
+             image_origin=None, big_endian=False, verbose=True):
     """
     Read a raw binary scalar image.
 
@@ -59,16 +63,37 @@ def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
               # ElementDataFile must be the last entry in the header
               ('ElementDataFile = ' + os.path.abspath(
                   binary_file_name) + '\n').encode()]
-    fp = tempfile.NamedTemporaryFile(suffix='.mhd', delete=False)
-
-    print(header)
+    if (os.path.exists('temp') == False):
+        os.mkdir('temp')
+    s='temp/rawtmp{fid}.mhd'
+    #fp = tempfile.NamedTemporaryFile(suffix=s.format(name=np.random.randint(1000000)), delete=False)
+ 
+    staticclass.lock.acquire();
+    fname=s.format(fid=np.random.randint(1000000));
+    while(os.path.exists(fname)):
+        time.sleep(0.1);
+        fname=s.format(fid=np.random.randint(1000000));
+   # fname=s.format(fid=staticclass.g_count_raw);
+    staticclass.g_count_raw +=1;
+    
+    #I have no clue why Im still getting a file in use by another process when file names are unique
+    staticclass.lock.release();
+    
+   # os.mknod(fname);
+    fp = open(fname, 'wb');
+    if (verbose == True):
+    	print(header)
 
     # Not using the tempfile with a context manager and auto-delete
     # because on windows we can't open the file a second time for ReadImage.
     fp.writelines(header)
+    fp.flush();
     fp.close()
-    img = sitk.ReadImage(fp.name)
-    os.remove(fp.name)
+    img = sitk.ReadImage(fname)
+    time.sleep(0.3);
+    os.remove(fname)
+    
+    
     return img
 
 
