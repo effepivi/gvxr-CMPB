@@ -2,6 +2,7 @@ name: gvxr-validation
 channels:
     - conda-forge
 dependencies:
+    - opencv
     - cma
     - tomopy
     - numpy
