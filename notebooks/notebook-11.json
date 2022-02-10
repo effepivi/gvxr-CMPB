@@ -28,7 +28,8 @@
             "Unit": "mm",
             "Material": ["HU", 90.3571],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [255, 85, 0]
         },
 
         {
@@ -37,7 +38,8 @@
             "Unit": "mm",
             "Material": ["HU", -662.072],
            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [138, 0, 0]
         },
 		
 		{
@@ -46,7 +48,8 @@
             "Unit": "mm",
             "Material": ["HU", 470.215],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [38, 38, 19]
         },
 		
 		{
@@ -55,7 +58,8 @@
             "Unit": "mm",
             "Material": ["HU", 28.3208],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [255, 0, 0]
         },
 		
 		{
@@ -64,7 +68,8 @@
             "Unit": "mm",
             "Material": ["HU", -25.8574],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [0, 62, 186]
         },
 		
 		{
@@ -73,7 +78,8 @@
             "Unit": "mm",
             "Material": ["HU", -13.2063],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [255, 85, 127]
         },
 		
 		{
@@ -82,7 +88,8 @@
             "Unit": "mm",
             "Material": ["HU", -463.668],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [0, 240, 240]
         },
 		
 		{
@@ -91,7 +98,8 @@
             "Unit": "mm",
             "Material": ["HU", 450.319],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [255, 255, 127]
         },
 		
 		{
@@ -100,7 +108,8 @@
             "Unit": "mm",
             "Material": ["HU", 417.469],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [190, 190, 95]
         },
 		
 		{
@@ -109,7 +118,8 @@
             "Unit": "mm",
             "Material": ["HU", 317.68],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [193, 193, 193]
         },
 		
 		{
@@ -118,7 +128,8 @@
             "Unit": "mm",
             "Material": ["HU", -277.143],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [193, 193, 193]
         },
 		
 		{
@@ -127,7 +138,8 @@
             "Unit": "mm",
             "Material": ["HU", 203.908],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [193, 193, 193]
         },
 		
 		{
@@ -136,7 +148,8 @@
             "Unit": "mm",
             "Material": ["HU", -11.6906],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [125, 125, 125]
         },
 		
 		{
@@ -145,7 +158,8 @@
             "Unit": "mm",
             "Material": ["HU", 426.461],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [200, 200, 100]
         },
 		
 		{
@@ -154,7 +168,8 @@
             "Unit": "mm",
             "Material": ["HU", -915.547],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]]
+			"Transform" : [["Translation",-8, 134, 189, "mm"]],
+			"Colour" : [170, 85, 255]
         }
     ]
 }
