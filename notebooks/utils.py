@@ -482,12 +482,12 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax)
     else:
         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
-    axes.flat[2].set_title("Checkerboard comparison between\nGround truth & gVirtualXRay")
+    axes.flat[2].set_title("Checkerboard comparison between\nGround truth \& gVirtualXRay")
     axes.flat[2].set_xticks([])
     axes.flat[2].set_yticks([])
 
     im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
-    axes.flat[3].set_title("Relative error (in %)")
+    axes.flat[3].set_title("Relative error (in \%)")
     axes.flat[3].set_xticks([])
     axes.flat[3].set_yticks([])
 
