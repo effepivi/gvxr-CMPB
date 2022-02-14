@@ -7,6 +7,7 @@ from matplotlib.colors import LogNorm # Look up table
 import numpy as np # Who does not use Numpy?
 from skimage.util import compare_images # Checkboard comparison between two images
 from tifffile import imread, imsave # Load/Write TIFF files
+from threading import Thread
 
 import SimpleITK as sitk
 import vtk
@@ -165,19 +166,52 @@ def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=1
 
     return ground_truth_proj, ground_truth_sino
 
-
-def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend):
+def reconScikitImageCallback(sinograms, CT_to_append_to, theta, iStart, iEnd, filter_name):
+    for i in range(iStart, iEnd):
+        CT_slice = iradon(sinograms[i].T, theta=theta, circle=False);
+        CT_to_append_to[i] = CT_slice;
+        
+        
+def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend, NUM_RECON_THREADS=12):
 
     # Scikit-image
     if backend == "scikit-image":
 
         CT_volume = []
 
-        for sinogram in proj:
-            CT_volume.append(iradon(sinogram.T, theta=-theta_deg, circle=True, filter_name=filter_name))
+        num_projections = len(proj);
+        CT_volume = [None] * num_projections;
 
-        CT_volume = np.array(CT_volume).astype(np.single)
+        handle_recon_threads = [];
+        iThreadIdx = 0;
 
+        # The number of slices each thread will reconstruct
+        num_slices_per_thread = (int)(num_projections / NUM_RECON_THREADS)
+
+        for i in range(0, num_projections):
+
+            if i % num_slices_per_thread == 0 and iThreadIdx < NUM_RECON_THREADS:
+
+                # The last thread will have to pick up the remaining slices
+                if (iThreadIdx == NUM_RECON_THREADS - 1): iEnd = len(projection_set); 
+                else:                                     iEnd = i + num_slices_per_thread;
+
+                # Set up the thread
+                handle_recon_threads.append(Thread(target=reconScikitImageCallback, 
+                                                   args=(proj, 
+                                                         CT_volume, 
+                                                         theta_deg, 
+                                                         i, iEnd,
+                                                         filter_name)));
+                handle_recon_threads[iThreadIdx].start()
+                iThreadIdx+=1;
+
+        # Wait for the threads to complete
+        for i in range(len(handle_recon_threads)):
+            handle_recon_threads[i].join()
+
+        CT_volume = np.array(CT_volume).astype(np.single)        
+        
     elif backend == "tomopy":
 
         theta_rad = np.array(theta_deg) * math.pi / 180
@@ -204,7 +238,9 @@ def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128,
                 
         for i, CT_slice in enumerate(CT_volume):
             CT_volume[i] = np.rot90(CT_slice, 1)
-        
+
+        CT_volume = np.array(CT_volume).astype(np.single)        
+
     else:
         raise IOError("No Tomgraphy backend chosen")
 
