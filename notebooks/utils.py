@@ -1,36 +1,41 @@
 import copy
 import math
-
 import matplotlib.pyplot as plt # Plotting
 from matplotlib.colors import PowerNorm # Look up table
 from matplotlib.colors import LogNorm # Look up table
 import numpy as np # Who does not use Numpy?
 from skimage.util import compare_images # Checkboard comparison between two images
 from tifffile import imread, imsave # Load/Write TIFF files
-
-import multiprocessing
 from threading import Thread
 
 import SimpleITK as sitk
-import vtk
 
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -166,51 +168,75 @@ def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=1
+  
+import vtk
 import GPUtil
 from cpuinfo import get_cpu_info
 import platform
 import psutil
-
 tomography_backend="tomopy"
-
 import tigre
 import tigre.algorithms as algs
-
 import tomopy
-
 from skimage.transform import iradon
 from skimage.transform import radon
-
 import gvxrPython3 as gvxr # Simulate X-ray images
-
 def printSystemInfo():
     print("OS:")
     # print("\t" + platform.platform())
@@ -38,10 +43,7 @@ def printSystemInfo():
     print("\t" + platform.system(), platform.release())
     # print("\t" + platform.version())
     print("\t" + platform.machine() + "\n")
-
-
     print("CPU:\n", "\t" + get_cpu_info()["brand_raw"] + "\n")
-
     print("RAM:\n\t" + str(round(psutil.virtual_memory().total / (1024.0 **3))), "GB")
     
     print("GPU:")
@@ -49,8 +51,6 @@ def printSystemInfo():
         print("\tName:", gpu.name)
         print("\tDrivers:", gpu.driver)
         print("\tVideo memory:", round(gpu.memoryTotal / 1024), "GB")
-
-
         
         
 def getGeo(mode, filter_name):
@@ -58,62 +58,44 @@ def getGeo(mode, filter_name):
     #Geometry settings
     source_position = gvxr.getSourcePosition("mm")
     detector_position = gvxr.getDetectorPosition("mm")
-
     nDetector = np.array([gvxr.getDetectorNumberOfPixels()[1], gvxr.getDetectorNumberOfPixels()[0]])
     nVoxel = np.array((nDetector[0], nDetector[1], nDetector[1]))
-
     print("nDetector", nDetector)
     print("nVoxel", nVoxel)
-
     geo = tigre.geometry(mode=mode, nVoxel=nVoxel, default=False)
-
     # Distance Source Origin        (mm)
     geo.DSO = math.sqrt(source_position[0] ** 2 + source_position[1] ** 2 + source_position[2] ** 2)
-
     # Distance Detector Origin        (mm)
     DDO = math.sqrt(detector_position[0] ** 2 + detector_position[1] ** 2 + detector_position[2] ** 2)
-
     # Distance Source Detector      (mm)
     geo.DSD = geo.DSO + DDO
-
-
     # Detector parameters
     # number of pixels              (px)
     geo.nDetector = nDetector
-
     # total size of the detector    (mm)
     geo.sDetector = np.array([gvxr.getDetectorSize("mm")[1], gvxr.getDetectorSize("mm")[0]])
-
     # size of each pixel            (mm)
     geo.dDetector = geo.sDetector / geo.nDetector
-
     print("geo.sDetector", geo.sDetector)
     print("geo.dDetector", geo.dDetector)
-
     # Image parameters
     # geo.nVoxel = np.array((geo.nDetector[0], geo.nDetector[1], geo.nDetector[1]))             # number of voxels              (vx)
     geo.sVoxel = np.array([gvxr.getDetectorSize("mm")[1], gvxr.getDetectorSize("mm")[0], gvxr.getDetectorSize("mm")[0]])             # total size of the image       (mm)
     geo.dVoxel = geo.sVoxel / geo.nVoxel               # size of each voxel            (mm)
-
     # Offsets
     geo.offOrigin = np.array((0, 0, 0))                # Offset of image from origin   (mm)
     geo.offDetector = np.array((0, 0))                 # Offset of Detector            (mm)
-
     # Auxiliary
     geo.accuracy = 0.5                                 # Accuracy of FWD proj          (vx/sample)
-
     # Mode
     geo.mode = mode                                  # parallel, cone                ...
     geo.filter = filter_name                       #  None, shepp_logan, cosine, hamming, hann
     
     return geo
-
-
 def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=128, number_of_slices=128, backend=tomography_backend):
         
     # Scikit-image
     if backend == "scikit-image":
-
         ground_truth_proj = []
         ground_truth_sino = []
         
@@ -121,127 +103,106 @@ def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=1
         for CT_slice in phantom:
             sinogram = radon(CT_slice, theta=theta_deg, circle=False, preserve_range=False)
             ground_truth_sino.append(sinogram.T)
-
         # Make sure this is a Numpy array
         ground_truth_sino = np.array(ground_truth_sino).astype(np.single)
-
         # Convert the sinograms into projections
         ground_truth_proj = np.swapaxes(ground_truth_sino, 0, 1).astype(np.single)
-
     elif backend == "tomopy":
         theta_rad = np.array(theta_deg) * math.pi / 180
         
         # Compute the Radon transform (DRR)
         ground_truth_proj = tomopy.project(phantom, theta_rad)
-
         # Convert the projections into sinograms
         ground_truth_sino = np.swapaxes(ground_truth_proj, 0, 1).astype(np.single)
-
     elif backend == "tigre":
         # theta_rad = np.array(theta_deg) * math.pi / 180
         # geo = getGeo(mode, "hann")
         # ground_truth_proj = tigre.Ax(phantom, geo, theta_rad)
         # print(ground_truth_proj.shape)
-
         theta_rad = np.array(theta_deg) * math.pi / 180
         
         # Compute the Radon transform (DRR)
         ground_truth_proj = tomopy.project(phantom, theta_rad)
-
         # Convert the projections into sinograms
         ground_truth_sino = np.swapaxes(ground_truth_proj, 0, 1).astype(np.single)
-
     else:
         raise IOError("No Tomgraphy backend chosen")
-
     # Crop
     half_width_delta = round((ground_truth_proj.shape[2] - proj_lenght_in_pixel) / 2)
     half_height_delta = round((ground_truth_proj.shape[1] - number_of_slices) / 2)
-
     ground_truth_proj = ground_truth_proj[:,
               half_height_delta:number_of_slices + half_height_delta,
               half_width_delta:proj_lenght_in_pixel + half_width_delta]
-
     ground_truth_sino = ground_truth_sino[half_height_delta:number_of_slices + half_height_delta,
               :,
               half_width_delta:proj_lenght_in_pixel + half_width_delta]
 
     return ground_truth_proj, ground_truth_sino
 
-
-def reconsScikitImage(sinograms, CT_to_append_to, theta, filter_name, iStart, iEnd):
+def reconScikitImageCallback(sinograms, CT_to_append_to, theta, iStart, iEnd, filter_name):
     for i in range(iStart, iEnd):
-        CT_to_append_to[i] = iradon(sinograms[i].T, theta=theta, circle=False, filter_name=filter_name);
-        
-def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend):
+        CT_slice = iradon(sinograms[i].T, theta=theta, circle=False);
+        CT_to_append_to[i] = CT_slice;
+
+
+def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend, NUM_RECON_THREADS=12):
 
     # Scikit-image
     if backend == "scikit-image":
 
-#         CT_volume = []
+        CT_volume = []
 
-#         for sinogram in proj:
-#             CT_volume.append(iradon(sinogram.T, theta=-theta_deg, circle=True, filter_name=filter_name))
-
-#         CT_volume = np.array(CT_volume).astype(np.single)
-
-        
         num_projections = len(proj);
         CT_volume = [None] * num_projections;
+
         handle_recon_threads = [];
+        iThreadIdx = 0;
 
         # The number of slices each thread will reconstruct
-        num_slices_per_thread = num_projections // multiprocessing.cpu_count()
-        remainder = num_projections % multiprocessing.cpu_count()
-        first_slice = 0
-        last_slice = first_slice + num_slices_per_thread
-        
-        for i in range(multiprocessing.cpu_count()):
+        num_slices_per_thread = (int)(num_projections / NUM_RECON_THREADS)
 
-            if remainder > 0:
-                last_slice += 1
-                remainder -= 1
+        for i in range(0, num_projections):
 
-            # Set up the thread
-            handle_recon_threads.append(Thread(target=reconsScikitImage, 
-                                               args=(proj, 
-                                                     CT_volume, 
-                                                     theta_deg, 
-                                                     filter_name,
-                                                     first_slice, last_slice)));
+            if i % num_slices_per_thread == 0 and iThreadIdx < NUM_RECON_THREADS:
 
-            # Start the thread
-            handle_recon_threads[-1].start()
-            
-            first_slice = last_slice
-            last_slice = first_slice + num_slices_per_thread
+                # The last thread will have to pick up the remaining slices
+                if (iThreadIdx == NUM_RECON_THREADS - 1): iEnd = len(projection_set); 
+                else:                                     iEnd = i + num_slices_per_thread;
 
-#             if i % num_slices_per_thread == 0 and iThreadIdx < multiprocessing.cpu_count():
-
-#                 # The last thread will have to pick up the remaining slices
-#                 if (iThreadIdx == multiprocessing.cpu_count() - 1): iEnd = num_projections; 
-#                 else: iEnd = i + num_slices_per_thread;
-
-#                 # Set up the thread
-#                 handle_recon_threads.append(Thread(target=reconsScikitImage, 
-#                                                    args=(proj, 
-#                                                          CT_volume, 
-#                                                          theta_deg, 
-#                                                          filter_name,
-#                                                          i, iEnd)));
-#                 iThreadIdx+=1;
+                # Set up the thread
+                handle_recon_threads.append(Thread(target=reconScikitImageCallback, 
+                                                   args=(proj, 
+                                                         CT_volume, 
+                                                         theta_deg, 
+                                                         i, iEnd,
+                                                         filter_name)));
+                handle_recon_threads[iThreadIdx].start()
+                iThreadIdx+=1;
 
         # Wait for the threads to complete
         for i in range(len(handle_recon_threads)):
             handle_recon_threads[i].join()
 
-        CT_volume = np.array(CT_volume).astype(np.single)
-  
-        
+        CT_volume = np.array(CT_volume).astype(np.single)        
+
     elif backend == "tomopy":
 
-        theta_rad = np.array(theta_deg) * math.pi / 180
 
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -238,9 +264,7 @@ def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128,
+  
+        theta_rad = np.array(theta_deg) * math.pi / 180
         rot_centre = proj.shape[2] / 2
         # rot_centre = tomopy.find_center(minus_log_projs, theta_rad, init=rot_centre, ind=0, tol=0.01)
         CT_volume = tomopy.recon(proj,
@@ -250,67 +211,66 @@ def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128,
                              algorithm='gridrec',
                              sinogram_order=False,
                              filter_name=filter_name).astype(np.single)
-
-
     elif backend == "tigre":
-
         theta_rad = np.array(theta_deg) * math.pi / 180
-
         geo = getGeo(mode, filter_name)
         #  None, shepp_logan, cosine, hamming, hann
-
         #Reconstruction with FDK
         CT_volume = algs.fdk(proj, geo, -theta_rad)
-                
+
         for i, CT_slice in enumerate(CT_volume):
             CT_volume[i] = np.rot90(CT_slice, 1)
-        
+
+        CT_volume = np.array(CT_volume).astype(np.single)        
+
     else:
         raise IOError("No Tomgraphy backend chosen")
 
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -462,7 +486,7 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
+  
     # Crop
     half_slices_delta = round((CT_volume.shape[0] - number_of_slices) / 2)
     half_rows_delta = round((CT_volume.shape[1] - slice_rows) / 2)
     half_cols_delta = round((CT_volume.shape[2] - slice_cols) / 2)
-
     CT_volume = CT_volume[half_slices_delta:number_of_slices + half_slices_delta,
               half_rows_delta:slice_rows + half_rows_delta,
               half_cols_delta:slice_cols + half_cols_delta]
-
     return CT_volume
-
-
 total_energy = None
-
 def flatFieldCorrection(proj):
     
     global total_energy
     
     if total_energy is None:
-
         # Retrieve the total energy
         total_energy = 0.0;
         energy_bins = gvxr.getEnergyBins("MeV");
         photon_count_per_bin = gvxr.getPhotonCountEnergyBins();
-
         for energy, count in zip(energy_bins, photon_count_per_bin):
             total_energy += energy * count;
-
     # Create a mock dark field image
     #dark_field_image = np.zeros(raw_projections.shape);
     dark_field_image = 0.0
-
     # Create a mock flat field image
     #flat_field_image = np.ones(raw_projections.shape);
     flat_field_image = 1.0
-
     flat_field_image *= total_energy
     
     return (np.array(proj).astype(np.single) - dark_field_image) / (flat_field_image - dark_field_image)
-
-
 def minusLog(proj):
-
     minus_log_projs = np.copy(proj)
     
     # Make sure no value is negative or null (because of the log function)
@@ -318,14 +278,11 @@ def minusLog(proj):
     # phase contrast, negative values can be generated.
     threshold = 0.000000001
     minus_log_projs[minus_log_projs < threshold] = threshold;
-
     # Apply the minus log normalisation
     minus_log_projs = -np.log(minus_log_projs);
-
     # Rescale the data taking into account the pixel size
     pixel_spacing_in_mm = gvxr.getDetectorSize("mm")[0] / gvxr.getDetectorNumberOfPixels()[0]
     minus_log_projs /= pixel_spacing_in_mm * (gvxr.getUnitOfLength("mm") / gvxr.getUnitOfLength("cm"));
-
     # Make sure the data is in single-precision floating-point numbers
     return minus_log_projs.astype(np.single)
         
@@ -333,10 +290,8 @@ def minusLog(proj):
         
 def standardisation(image):
     return (np.array(image).astype(np.single) - np.mean(image)) / np.std(image);
-
 def interpolate(a_low, a_high, a0, b_low, b_high):
     return b_low + (b_high - b_low) * (a0 - a_low) / (a_high - a_low)
-
 def find_nearest(a, a0, b):
     "Element in nd array `a` closest to the scalar value `a0`"
     idx = np.abs(a - a0).argmin()
@@ -347,31 +302,26 @@ def find_nearest(a, a0, b):
     # a[idx - 1] <= a0 <= a[idx]
     else:
         return interpolate(a[idx - 1], a[idx], a0, b[idx - 1], b[idx])
-
 def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_response: np.array=None, integrate_energy: bool=True, prefix: str=None) -> np.array:
         
     # Dictionanry to hold the L-buffer of every sample
     L_buffer_set = {}
-
     # Do not register any outer shell
     L_buffer_accumulator = None
     L_buffer_outer = None
     
     image_shape = None
-
     # Compute the L-buffer of every sample and store it in the dictionary
     for sample in json2gvxr.params["Samples"]:
         
         # Get the label of the sample
         label = sample["Label"]
-
         # Compute its L-buffer and copy it in the dictionary
         L_buffer_set[label] = np.array(gvxr.computeLBuffer(label))
         image_shape = L_buffer_set[label].shape
         
         # If it is an inner structure, add the L-buffer in the accummulator
         if sample["Type"] == "inner":
-
             # The accumulator does not exist, create it and copy the L-buffer in the accumulator
             if L_buffer_accumulator is None:
                 L_buffer_accumulator = copy.deepcopy(L_buffer_set[label])
@@ -385,11 +335,9 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
                     imsave(prefix + "l_buffer-" + label + ".tif", L_buffer_set[label].astype(np.single))
                 else:
                     imsave("gVirtualXRay_output_data/l_buffer-" + label + ".tif", L_buffer_set[label].astype(np.single))
-
         # The structure is an outer structure, keep track of its label
         else:
             L_buffer_outer = label
-
     # There is an outer structure, subtract the accumulator from its L-buffer
     if L_buffer_outer is not None:
         L_buffer_set[L_buffer_outer] -= L_buffer_accumulator
@@ -408,14 +356,11 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
     for energy, count in zip(gvxr.getEnergyBins("MeV"), gvxr.getPhotonCountEnergyBins()):
         # Create an empty accumulator
         mu_x = np.zeros(image_shape)
-
         # Accumulate mu * x for every sample
         for sample in json2gvxr.params["Samples"]:
             label = sample["Label"]
-
             mu = gvxr.getLinearAttenuationCoefficient(label, energy, "MeV")
             mu_x += L_buffer_set[label] * mu
-
         # Compute the energy fluence
         if integrate_energy:
             # No energy response provided
@@ -432,17 +377,13 @@ def computeXRayImageFromLBuffers(json2gvxr, verbose: bool=False, detector_respon
             
     # Return the image
     return x_ray_image
-
 def displayLinearPowerScales(image: np.array, caption: str, fname: str, log: bool=False, vmin=0.01, vmax=1.2):
     plt.figure(figsize= (20,10))
-
     plt.suptitle(caption, y=1.02)
-
     plt.subplot(121)
     plt.imshow(image, cmap="gray")
     plt.colorbar(orientation='horizontal')
     plt.title("Using a linear colour scale")
-
     plt.subplot(122)
     if log:
         plt.imshow(image, norm=LogNorm(vmin=vmin, vmax=vmax), cmap="gray")
@@ -451,77 +392,72 @@ def displayLinearPowerScales(image: np.array, caption: str, fname: str, log: boo
         plt.imshow(image, norm=PowerNorm(gamma=1./0.75), cmap="gray")
         plt.title("Using a Power-law colour scale")
     plt.colorbar(orientation='horizontal')
-
     plt.tight_layout()
-
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
-
 def plotSpectrum(k, f, fname=None, xlim=[0,200]):
     
     plt.figure(figsize= (20,10))
-
     plt.bar(k, f / f.sum()) # Plot the spectrum
     plt.xlabel('Energy in keV')
     plt.ylabel('Probability distribution of photons per keV')
     plt.title('Photon energy distribution')
-
     plt.xlim(xlim)
-
     plt.tight_layout()
-
     if fname is not None:
         plt.savefig(fname + '.pdf')
         plt.savefig(fname + '.png')
     
 def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 20))
-
     relative_error = 100 * (gate_image - gvxr_image) / gate_image
     comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
-
     im1=axes.flat[0].imshow(comp_equalized, cmap="gray", vmin=0.25, vmax=1)
     axes.flat[0].set_title(caption)
     axes.flat[0].set_xticks([])
     axes.flat[0].set_yticks([])
 
     im2=axes.flat[1].imshow(relative_error, cmap="RdBu", vmin=-threshold, vmax=threshold)
-    axes.flat[1].set_title("Relative error (in %)")
+    axes.flat[1].set_title("Relative error (in \%)")
     axes.flat[1].set_xticks([])
     axes.flat[1].set_yticks([])
 
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -518,12 +542,12 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
+  
     fig.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.8,
                         wspace=0.2, hspace=0.02)
-
     # add an axes, lower left corner in [0.83, 0.1] measured in figure coordinate with axes width 0.02 and height 0.8
-
     cb_ax = fig.add_axes([0.83, 0.425, 0.02, 0.15])
     cbar = fig.colorbar(im2, cax=cb_ax)
-
     # set the colorbar ticks and tick labels
     # cbar.set_ticks(np.arange(0, 1.1, 0.5))
     # cbar.set_ticklabels(['low', 'medium', 'high'])
-
     # plt.show()
-
     # plt.tight_layout()
     
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
-
-
 def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1):
-
     absolute_error = np.abs(gate_image - gvxr_image)
     relative_error = 100 * (gate_image - gvxr_image) / gate_image
     comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
-
     
     fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
-
     relative_error = 100 * (gate_image - gvxr_image) / gate_image
     comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
-
     if not log:
         im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=vmin, vmax=vmax)
     else:
@@ -529,7 +465,6 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
     axes.flat[0].set_title("Ground truth")
     axes.flat[0].set_xticks([])
     axes.flat[0].set_yticks([])
-
     if not log:
         im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=vmin, vmax=vmax)
     else:
@@ -537,55 +472,58 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
     axes.flat[1].set_title("gVirtualXRay")
     axes.flat[1].set_xticks([])
     axes.flat[1].set_yticks([])
-
     if not log:
         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax)
     else:
         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
-    axes.flat[2].set_title("Checkerboard comparison between\nGround truth & gVirtualXRay")
+    axes.flat[2].set_title("Checkerboard comparison between\nGround truth \& gVirtualXRay")
     axes.flat[2].set_xticks([])
     axes.flat[2].set_yticks([])
 
     im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
-    axes.flat[3].set_title("Relative error (in %)")
+    axes.flat[3].set_title("Relative error (in \%)")
     axes.flat[3].set_xticks([])
     axes.flat[3].set_yticks([])
 
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -948,7 +972,7 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_GPU, fname, x
+  
     fig.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.8,
                         wspace=0.2, hspace=0.02)
-
     # add an axes, lower left corner in [0.83, 0.1] measured in figure coordinate with axes width 0.02 and height 0.8
     cb_ax = fig.add_axes([0.83, 0.425, 0.02, 0.15])
     cbar = fig.colorbar(im4, cax=cb_ax)
-
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
-
     
 def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
-
     plt.figure(figsize= (30,20))
-
     if json2gvxr.params["Source"]["Position"][2] > 0.5:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
     else:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
         
     spacing = json2gvxr.params["Detector"]["Size"][0] / gate_image.shape[0]
-
     x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
-
     x_gate = []
     x_gvxr_integration_CPU = []
     x_gvxr_integration_GPU = []
     temp = []
-
     use_simulation = 0
-
     for i in range(x_ray_image_integration_CPU.shape[1]):
-
         temp.append(i)
-
         if not i % 5 and i != 0:
             temp.append(i+1)
             if use_simulation == 0:
@@ -597,10 +535,8 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
             elif use_simulation == 2:
                 x_gvxr_integration_GPU.append(temp)
                 use_simulation = 0
-
             temp = []
             temp.append(i-1)
-
     plt.subplot(311)
     plt.title("Profiles (Top line)")
     # plt.yscale("log")
@@ -615,7 +551,6 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='green')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_CPU:
         y = x_ray_image_integration_CPU[y_coord][sub_x]
@@ -624,7 +559,6 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='orange')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_GPU:
         y = x_ray_image_integration_GPU[y_coord][sub_x]
@@ -633,23 +567,16 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='blue')
         i += 1
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
     plt.legend()
-
-
-
-
     plt.subplot(312)
     plt.title("Profiles (Central line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2)
     y_coord = min(y_coord, gate_image.shape[0] - 1)
-
     i = 0
     for sub_x in x_gate:
         y = gate_image[y_coord][sub_x]
@@ -658,7 +585,6 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='green')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_CPU:
         y = x_ray_image_integration_CPU[y_coord][sub_x]
@@ -667,7 +593,6 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='orange')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_GPU:
         y = x_ray_image_integration_GPU[y_coord][sub_x]
@@ -676,19 +601,15 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='blue')
         i += 1
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
-
     plt.subplot(313)
     plt.title("Profiles (Bottom line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
     y_coord = min(y_coord, gate_image.shape[0] - 1)
-
     i = 0
     for sub_x in x_gate:
         y = gate_image[y_coord][sub_x]
@@ -697,7 +618,6 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='green')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_CPU:
         y = x_ray_image_integration_CPU[y_coord][sub_x]
@@ -706,7 +626,6 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='orange')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_GPU:
         y = x_ray_image_integration_GPU[y_coord][sub_x]
@@ -715,43 +634,30 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='blue')
         i += 1
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
-
     plt.tight_layout()
-
     plt.savefig(fname + ".pdf")
     plt.savefig(fname + ".png")
-
     
 def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
-
     plt.figure(figsize= (20,10))
-
     if json2gvxr.params["Source"]["Position"][2] > 0.5:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
     else:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
         
     spacing = json2gvxr.params["Detector"]["Size"][0] / gate_image.shape[0]
-
     x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
-
     x_gate = []
     x_gvxr_integration_CPU = []
     x_gvxr_integration_GPU = []
     temp = []
-
     use_simulation = 0
-
     for i in range(x_ray_image_integration_CPU.shape[1]):
-
         temp.append(i)
-
         if not i % 5 and i != 0:
             temp.append(i+1)
             if use_simulation == 0:
@@ -763,10 +669,8 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
             elif use_simulation == 2:
                 x_gvxr_integration_GPU.append(temp)
                 use_simulation = 0
-
             temp = []
             temp.append(i-1)
-
     plt.subplot(311)
     plt.title("Profiles (Top line)")
     # plt.yscale("log")
@@ -781,7 +685,6 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='green')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_CPU:
         y = x_ray_image_integration_CPU[y_coord][sub_x]
@@ -790,7 +693,6 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='orange')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_GPU:
         y = x_ray_image_integration_GPU[y_coord][sub_x]
@@ -799,23 +701,16 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='blue')
         i += 1
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
     plt.legend()
-
-
-
-
     plt.subplot(312)
     plt.title("Profiles (Central line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2)
     y_coord = min(y_coord, gate_image.shape[0] - 1)
-
     i = 0
     for sub_x in x_gate:
         y = gate_image[y_coord][sub_x]
@@ -824,7 +719,6 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='green')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_CPU:
         y = x_ray_image_integration_CPU[y_coord][sub_x]
@@ -833,7 +727,6 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='orange')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_GPU:
         y = x_ray_image_integration_GPU[y_coord][sub_x]
@@ -842,19 +735,15 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='blue')
         i += 1
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
-
     plt.subplot(313)
     plt.title("Profiles (Bottom line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
     y_coord = min(y_coord, gate_image.shape[0] - 1)
-
     i = 0
     for sub_x in x_gate:
         y = gate_image[y_coord][sub_x]
@@ -863,7 +752,6 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='green')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_CPU:
         y = x_ray_image_integration_CPU[y_coord][sub_x]
@@ -872,7 +760,6 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='orange')
         i += 1
-
     i = 0
     for sub_x in x_gvxr_integration_GPU:
         y = x_ray_image_integration_GPU[y_coord][sub_x]
@@ -881,91 +768,66 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
         else:
             plt.plot(np.array(sub_x) * spacing, y, color='blue')
         i += 1
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
-
     plt.tight_layout()
-
     plt.savefig(fname + ".pdf")
     plt.savefig(fname + ".png")
-
 def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_GPU, fname, xlimits=None):
-
     plt.figure(figsize= (30,20))
-
     if json2gvxr.params["Source"]["Position"][2] > 0.5:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][2] - json2gvxr.params["Detector"]["Position"][2]) / json2gvxr.params["Source"]["Position"][2]
     else:
         offset_line = 20 * (json2gvxr.params["Source"]["Position"][1] - json2gvxr.params["Detector"]["Position"][1]) / json2gvxr.params["Source"]["Position"][1]
         
     spacing = json2gvxr.params["Detector"]["Size"][0] / gate_image.shape[0]
-
     x = np.arange(0.0, json2gvxr.params["Detector"]["Size"][0], spacing)
-
     plt.subplot(311)
     plt.title("Profiles (Top line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2 - offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
     y_coord = min(y_coord, gate_image.shape[0] - 1)    
-
     y = gate_image[y_coord]
     plt.plot(x, y, label="Gate (noisy)", color='green')
     
     y = x_ray_image_integration_GPU[y_coord]
     plt.plot(x, y, label="gVirtualXRay", color='blue')
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
     plt.legend()
-
-
-
-
     plt.subplot(312)
     plt.title("Profiles (Central line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2)
     y_coord = min(y_coord, gate_image.shape[0] - 1)
-
     y = gate_image[y_coord]
     plt.plot(x, y, label="Gate (noisy)", color='green')
     
     y = x_ray_image_integration_GPU[y_coord]
     plt.plot(x, y, label="gVirtualXRay", color='blue')
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
-
     plt.subplot(313)
     plt.title("Profiles (Bottom line)")
     # plt.yscale("log")
     y_coord = round(gate_image.shape[0] / 2 + offset_line * gate_image.shape[0] / json2gvxr.params["Detector"]["Size"][0])
     y_coord = min(y_coord, gate_image.shape[0] - 1)
-
     y = gate_image[y_coord]
     plt.plot(x, y, label="Gate (noisy)", color='green')
     
     y = x_ray_image_integration_GPU[y_coord]
     plt.plot(x, y, label="gVirtualXRay", color='blue')
-
     if xlimits is not None:
         plt.xlim(xlimits)
-
     plt.xlabel("Pixel location (in mm)")
     plt.ylabel("Pixel intensity")
-
     plt.tight_layout()
-
     plt.savefig(fname + ".pdf")
     plt.savefig(fname + ".png")
     
@@ -976,12 +838,25 @@ def extractSurface(vtk_image, isovalue):
     if vtk.vtkVersion.GetVTKMajorVersion() >= 6:
         iso.SetInputData(vtk_image)
     else:
-        iso.SetInput(vtk_image)
 
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -977,3 +1001,26 @@ def writeSTL(mesh, name):
+  
+        iso.SetInput(vtk_image)
     iso.SetValue(0, isovalue)
     iso.Update()
     return iso.GetOutput()
-
 # A function to write STL files
 def writeSTL(mesh, name):
     """Write an STL mesh file."""
@@ -1001,26 +876,3 @@ def writeSTL(mesh, name):
         traceback.print_exception(
             exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
     return None
-
-
-def quickCompare(truth, truth_caption, predict, predict_caption, bDoCheckerboard = False):
-    nPlots = 2;
-    if (bDoCheckerboard): nPlots = 3;
-    
-    fig, axes = plt.subplots(1, nPlots);
-    
-    modeCMap = "gray";
-    axes[0].imshow(truth, cmap=modeCMap);
-    axes[0].set_title(label=truth_caption);
-    axes[1].imshow(predict, cmap=modeCMap);
-    axes[1].set_title(label=predict_caption);
-    
-    if (bDoCheckerboard):
-        
-        imCheck =   compare_images(truth, predict, method='checkerboard', n_tiles=(20,20))
-                    #userCheckerboard(truth, predict, 20);
-                    
-        axes[2].imshow(imCheck, cmap=modeCMap);
-        axes[2].set_title(label="Checkerboard comparison");
-    
-    fig.set_size_inches(20, 20)
