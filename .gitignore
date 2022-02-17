@@ -13,6 +13,7 @@ notebooks/digimouse/ct_data.zip
 notebooks/digimouse/ct_data/
 notebooks/digimouse/meshes/
 notebooks/digimouse/segmentations/
+notebooks/gVirtualXRay_output_data/
 notebooks/gVirtualXRay_output_data/digimouse-phantom-mu511keV.mha
 notebooks/gVirtualXRay_output_data/digimouse-phantom-proj-511keV.mha
 notebooks/gVirtualXRay_output_data/digimouse-phantom-sinogram-511keV.mha
