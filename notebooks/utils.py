@@ -9,6 +9,9 @@ from skimage.util import compare_images # Checkboard comparison between two imag
 from tifffile import imread, imsave # Load/Write TIFF files
 from threading import Thread
 
+import multiprocessing
+from threading import Thread
+
 import SimpleITK as sitk
 import vtk
 
@@ -166,51 +169,76 @@ def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=1
 
     return ground_truth_proj, ground_truth_sino
 
-def reconScikitImageCallback(sinograms, CT_to_append_to, theta, iStart, iEnd, filter_name):
+def reconsScikitImage(sinograms, CT_to_append_to, theta, filter_name, iStart, iEnd):
     for i in range(iStart, iEnd):
-        CT_slice = iradon(sinograms[i].T, theta=theta, circle=False);
-        CT_to_append_to[i] = CT_slice;
+        CT_to_append_to[i] = iradon(sinograms[i].T, theta=theta, circle=False, filter_name=filter_name);
         
-        
-def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend, NUM_RECON_THREADS=12):
+def recons(proj, theta_deg, mode="parallel", filter_name="hann", slice_cols=128, slice_rows=128, number_of_slices=128, backend=tomography_backend):
 
     # Scikit-image
     if backend == "scikit-image":
 
-        CT_volume = []
+#         CT_volume = []
 
+#         for sinogram in proj:
+#             CT_volume.append(iradon(sinogram.T, theta=-theta_deg, circle=True, filter_name=filter_name))
+
+#         CT_volume = np.array(CT_volume).astype(np.single)
+
+        
         num_projections = len(proj);
         CT_volume = [None] * num_projections;
-
         handle_recon_threads = [];
-        iThreadIdx = 0;
 
         # The number of slices each thread will reconstruct
-        num_slices_per_thread = (int)(num_projections / NUM_RECON_THREADS)
+        num_slices_per_thread = num_projections // multiprocessing.cpu_count()
+        remainder = num_projections % multiprocessing.cpu_count()
+        first_slice = 0
+        last_slice = first_slice + num_slices_per_thread
+        
+        for i in range(multiprocessing.cpu_count()):
 
-        for i in range(0, num_projections):
+            if remainder > 0:
+                last_slice += 1
+                remainder -= 1
+                
+            print("Thread", i + 1, "From slice (inclusive)", first_slice, "to", last_slice - 1)
 
-            if i % num_slices_per_thread == 0 and iThreadIdx < NUM_RECON_THREADS:
+            # Set up the thread
+            handle_recon_threads.append(Thread(target=reconsScikitImage, 
+                                               args=(proj, 
+                                                     CT_volume, 
+                                                     theta_deg, 
+                                                     filter_name,
+                                                     first_slice, last_slice)));
 
-                # The last thread will have to pick up the remaining slices
-                if (iThreadIdx == NUM_RECON_THREADS - 1): iEnd = len(projection_set); 
-                else:                                     iEnd = i + num_slices_per_thread;
+            # Start the thread
+            handle_recon_threads[-1].start()
+            
+            first_slice = last_slice
+            last_slice = first_slice + num_slices_per_thread
 
-                # Set up the thread
-                handle_recon_threads.append(Thread(target=reconScikitImageCallback, 
-                                                   args=(proj, 
-                                                         CT_volume, 
-                                                         theta_deg, 
-                                                         i, iEnd,
-                                                         filter_name)));
-                handle_recon_threads[iThreadIdx].start()
-                iThreadIdx+=1;
+#             if i % num_slices_per_thread == 0 and iThreadIdx < multiprocessing.cpu_count():
+
+#                 # The last thread will have to pick up the remaining slices
+#                 if (iThreadIdx == multiprocessing.cpu_count() - 1): iEnd = num_projections; 
+#                 else: iEnd = i + num_slices_per_thread;
+
+#                 # Set up the thread
+#                 handle_recon_threads.append(Thread(target=reconsScikitImage, 
+#                                                    args=(proj, 
+#                                                          CT_volume, 
+#                                                          theta_deg, 
+#                                                          filter_name,
+#                                                          i, iEnd)));
+#                 iThreadIdx+=1;
 
         # Wait for the threads to complete
         for i in range(len(handle_recon_threads)):
             handle_recon_threads[i].join()
 
-        CT_volume = np.array(CT_volume).astype(np.single)        
+        CT_volume = np.array(CT_volume).astype(np.single)
+
         
     elif backend == "tomopy":
 
@@ -462,7 +490,7 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     axes.flat[0].set_yticks([])
 
     im2=axes.flat[1].imshow(relative_error, cmap="RdBu", vmin=-threshold, vmax=threshold)
-    axes.flat[1].set_title("Relative error (in \%)")
+    axes.flat[1].set_title("Relative error (in %)")
     axes.flat[1].set_xticks([])
     axes.flat[1].set_yticks([])
 
@@ -518,12 +546,12 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax)
     else:
         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
-    axes.flat[2].set_title("Checkerboard comparison between\nGround truth \& gVirtualXRay")
+    axes.flat[2].set_title("Checkerboard comparison between\nGround truth & gVirtualXRay")
     axes.flat[2].set_xticks([])
     axes.flat[2].set_yticks([])
 
     im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
-    axes.flat[3].set_title("Relative error (in \%)")
+    axes.flat[3].set_title("Relative error (in %)")
     axes.flat[3].set_xticks([])
     axes.flat[3].set_yticks([])
 
@@ -948,7 +976,7 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_GPU, fname, x
 # A function to extract an isosurface from a binary image
 def extractSurface(vtk_image, isovalue):
 
-    iso = vtk.vtkDiscreteMarchingCubes()
+    iso = vtk.vtkContourFilter()
     if vtk.vtkVersion.GetVTKMajorVersion() >= 6:
         iso.SetInputData(vtk_image)
     else:
