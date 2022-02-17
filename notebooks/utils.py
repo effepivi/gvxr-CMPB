@@ -517,14 +517,15 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
 def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1):
 
     absolute_error = np.abs(gate_image - gvxr_image)
-    relative_error = 100 * (gate_image - gvxr_image) / gate_image
-    comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
-
     
-    fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
+    offset1 = min(gate_image.min(), gvxr_image.min())
+    offset2 = 0.01 * (gate_image.max() - gate_image.min())
+    offset = offset2 - offset1
+    
+    relative_error = 100 * ((gate_image + offset) - (gvxr_image + offset)) / (gate_image + offset)
+    comp_equalized = compare_images(gate_image.astype(np.single), gvxr_image.astype(np.single), method='checkerboard', n_tiles=(15,15))
 
-    relative_error = 100 * (gate_image - gvxr_image) / gate_image
-    comp_equalized = compare_images(gate_image, gvxr_image, method='checkerboard', n_tiles=(15,15))
+    fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
 
     if not log:
         im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=vmin, vmax=vmax)
