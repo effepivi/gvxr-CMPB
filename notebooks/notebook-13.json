@@ -24,156 +24,141 @@
         }
     },
 
-    
     "Samples": [
         {
-            "Label": "100HU_tumours",
-            "Path": "lungman_data/meshes/tumours_100HU.stl",
+            "Label": "Bronchioles",
+            "Path": "lungman_data/meshes/bronchioles.stl",
             "Unit": "mm",
-            "Material": ["HU", 90.3571],
+            "Material": ["HU", -419.57144],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [255, 85, 0]
+            "Colour" : [0, 240, 240]
         },
 
+        {
+            "Label": "Bronchus",
+            "Path": "lungman_data/meshes/bronchus.stl",
+            "Unit": "mm",
+            "Material": ["HU", -40.36795],
+            "Type" : "inner",
+            "Colour" : [0, 62, 186]
+        },
+
+
+        {
+            "Label": "Trachea",
+            "Path": "lungman_data/meshes/trachea.stl",
+            "Unit": "mm",
+            "Material": ["HU", -914.32916],
+            "Type" : "inner",
+            "Colour" : [170, 85, 255]
+        },
+
+        {
+            "Label": "Diaphram",
+            "Path": "lungman_data/meshes/diaphram.stl",
+            "Unit": "mm",
+            "Material": ["HU", -12.778751],
+            "Type" : "inner",
+            "Colour" : [255, 85, 127]
+        },
+
+        {
+            "Label": "Skin",
+            "Path": "lungman_data/meshes/skin.stl",
+            "Unit": "mm",
+            "Material": ["HU", -12.121676],
+            "Type" : "inner",
+            "Colour" : [125, 125, 125]
+        },
+
+        {
+            "Label": "Heart",
+            "Path": "lungman_data/meshes/heart.stl",
+            "Unit": "mm",
+            "Material": ["HU", 28.384626],
+            "Type" : "inner",
+            "Colour" : [255, 0, 0]
+        },
+        
+        {
+            "Label": "Ribs_Spine",
+            "Path": "lungman_data/meshes/ribs_spine.stl",
+            "Unit": "mm",
+            "Material": ["HU", 436.18988],
+            "Type" : "inner",
+            "Colour" : [255, 255, 127]
+        },
+
+        {
+            "Label": "Scapulas",
+            "Path": "lungman_data/meshes/scapulas.stl",
+            "Unit": "mm",
+            "Material": ["HU", 412.4266],
+            "Type" : "inner",
+            "Colour" : [190, 190, 95]
+        },
+
+        {
+            "Label": "Sternum",
+            "Path": "lungman_data/meshes/sternum.stl",
+            "Unit": "mm",
+            "Material": ["HU", 443.5759],
+            "Type" : "inner",
+            "Colour" : [200, 200, 100]
+        },
+
+        {
+            "Label": "Clavicle",
+            "Path": "lungman_data/meshes/clavicle.stl",
+            "Unit": "mm",
+            "Material": ["HU", 618.27954],
+            "Type" : "inner",
+            "Colour" : [38, 38, 19]
+        },
+
+        {
+            "Label": "Sheets_low",
+            "Path": "lungman_data/meshes/sheets_low.stl",
+            "Unit": "mm",
+            "Material": ["HU", -158.2706],
+            "Type" : "inner",
+            "Colour" : [193, 193, 193]
+        },
+        
+        {
+            "Label": "Sheets_med",
+            "Path": "lungman_data/meshes/sheets_med.stl",
+            "Unit": "mm",
+            "Material": ["HU", 203.39578],
+            "Type" : "inner",
+            "Colour" : [193, 193, 193]
+        },
+
+        {
+            "Label": "Sheets_high",
+            "Path": "lungman_data/meshes/sheets_high.stl",
+            "Unit": "mm",
+            "Material": ["HU", 324.9135],
+            "Type" : "inner",
+            "Colour" : [193, 193, 193]
+        },
+        
         {
             "Label": "-630HU_tumours",
             "Path": "lungman_data/meshes/tumours_630HU.stl",
             "Unit": "mm",
-            "Material": ["HU", -662.072],
-           "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [138, 0, 0]
-        },
-		
-		{
-            "Label": "Clavicle",
-            "Path": "lungman_data/meshes/clavicle.stl",
-            "Unit": "mm",
-            "Material": ["HU", 470.215],
+            "Material": ["HU", -658.61346],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [38, 38, 19]
+            "Colour" : [138, 0, 0]
         },
-		
-		{
-            "Label": "Heart",
-            "Path": "lungman_data/meshes/heart.stl",
+        
+        {
+            "Label": "100HU_tumours",
+            "Path": "lungman_data/meshes/tumours_100HU.stl",
             "Unit": "mm",
-            "Material": ["HU", 28.3208],
+            "Material": ["HU", 83.32481],
             "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [255, 0, 0]
-        },
-		
-		{
-            "Label": "Bronchus",
-            "Path": "lungman_data/meshes/bronchus.stl",
-            "Unit": "mm",
-            "Material": ["HU", -25.8574],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [0, 62, 186]
-        },
-		
-		{
-            "Label": "Diaphram",
-            "Path": "lungman_data/meshes/diaphram.stl",
-            "Unit": "mm",
-            "Material": ["HU", -13.2063],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [255, 85, 127]
-        },
-		
-		{
-            "Label": "Bronchioles",
-            "Path": "lungman_data/meshes/bronchioles.stl",
-            "Unit": "mm",
-            "Material": ["HU", -463.668],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [0, 240, 240]
-        },
-		
-		{
-            "Label": "Ribs_Spine",
-            "Path": "lungman_data/meshes/ribs_spine.stl",
-            "Unit": "mm",
-            "Material": ["HU", 450.319],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [255, 255, 127]
-        },
-		
-		{
-            "Label": "Scapulas",
-            "Path": "lungman_data/meshes/scapulas.stl",
-            "Unit": "mm",
-            "Material": ["HU", 417.469],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [190, 190, 95]
-        },
-		
-		{
-            "Label": "Sheets_high",
-            "Path": "lungman_data/meshes/sheets_high.stl",
-            "Unit": "mm",
-            "Material": ["HU", 317.68],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [193, 193, 193]
-        },
-		
-		{
-            "Label": "Sheets_low",
-            "Path": "lungman_data/meshes/sheets_low.stl",
-            "Unit": "mm",
-            "Material": ["HU", -277.143],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [193, 193, 193]
-        },
-		
-		{
-            "Label": "Sheets_med",
-            "Path": "lungman_data/meshes/sheets_med.stl",
-            "Unit": "mm",
-            "Material": ["HU", 203.908],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [193, 193, 193]
-        },
-		
-		{
-            "Label": "Skin",
-            "Path": "lungman_data/meshes/skin.stl",
-            "Unit": "mm",
-            "Material": ["HU", -11.6906],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [125, 125, 125]
-        },
-		
-		{
-            "Label": "Sternum",
-            "Path": "lungman_data/meshes/sternum.stl",
-            "Unit": "mm",
-            "Material": ["HU", 426.461],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [200, 200, 100]
-        },
-		
-		{
-            "Label": "Trachea",
-            "Path": "lungman_data/meshes/trachea.stl",
-            "Unit": "mm",
-            "Material": ["HU", -915.547],
-            "Type" : "inner",
-			"Transform" : [["Translation",-8, 134, 189, "mm"]],
-			"Colour" : [170, 85, 255]
+            "Colour" : [255, 85, 0]
         }
     ]
 }
