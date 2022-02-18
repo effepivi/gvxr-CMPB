@@ -514,15 +514,19 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     plt.savefig(fname + '.png')
 
 
-def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1):
+def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1, avoid_div_0=True):
 
     absolute_error = np.abs(gate_image - gvxr_image)
     
-    offset1 = min(gate_image.min(), gvxr_image.min())
-    offset2 = 0.01 * (gate_image.max() - gate_image.min())
-    offset = offset2 - offset1
-    
-    relative_error = 100 * ((gate_image + offset) - (gvxr_image + offset)) / (gate_image + offset)
+    if avoid_div_0:
+        offset1 = min(gate_image.min(), gvxr_image.min())
+        offset2 = 0.01 * (gate_image.max() - gate_image.min())
+        offset = offset2 - offset1
+
+        relative_error = 100 * ((gate_image + offset) - (gvxr_image + offset)) / (gate_image + offset)
+    else:
+        relative_error = 100 * (gate_image - gvxr_image) / gate_image
+
     comp_equalized = compare_images(gate_image.astype(np.single), gvxr_image.astype(np.single), method='checkerboard', n_tiles=(15,15))
 
     fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
