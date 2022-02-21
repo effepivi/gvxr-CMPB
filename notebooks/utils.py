@@ -8,6 +8,8 @@ import numpy as np # Who does not use Numpy?
 from skimage.util import compare_images # Checkboard comparison between two images
 from tifffile import imread, imsave # Load/Write TIFF files
 from threading import Thread
+import os
+from convertRaw import *
 
 import multiprocessing
 from threading import Thread
@@ -110,6 +112,33 @@ def getGeo(mode, filter_name):
     return geo
 
 
+def readPlastimatchImageAsNumpy(path, width, height):
+    image_DRR = read_raw(binary_file_name=path,
+                 image_size=[width, height],
+                 sitk_pixel_type=sitk.sitkFloat32,
+                 big_endian="false",
+                 verbose=False);
+    if (os.path.exists(path) == False):
+        print(binary_file_name + " does not exist");
+    return np.array(sitk.GetArrayFromImage(image_DRR));
+
+def doLungmanDRRNumpy(iNRMX, iNRMY, iNRMZ,
+                      iCX , iCY , in_drr_out_name, 
+                      iOutW = 725, iOutH = 426, 
+                      iSID = 65535, iSAD = 65535,
+                      iSpacingX = 0.625, iSpacingY = 0.7,
+                      in_lungman_path = "lungman_data/lungman.mha"):
+    format = 'plastimatch drr --nrm "{iNRMX} {iNRMY} {iNRMZ}" --vup "0 0 1" -r "{iWidth} {iHeight}" -c "{iCX} {iCY}" -z "{iZx} {iZy}" -t raw --sid {sid} --sad {sad} --output Plastimatch_data/{out} {src}';
+    iWAdjusted = iOutW * iSpacingX;
+    iHAdjusted = iOutH * iSpacingY;
+    sParam = format.format(sid=iSID,sad=iSAD,iNRMX=iNRMX, iNRMY=iNRMY,iNRMZ = iNRMZ, iCX = iCX, iCY = iCY, iZx = iWAdjusted, iZy = iHAdjusted, iWidth=iOutW, iHeight=iOutH, src=in_lungman_path, out = in_drr_out_name)
+    #print(sParam)
+    os.system(sParam);
+    format = "Plastimatch_data/{in_name}0000.raw";
+    drr= readPlastimatchImageAsNumpy(format.format(in_name = in_drr_out_name), iOutW, iOutH);
+    return drr;
+    
+
 def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=128, number_of_slices=128, backend=tomography_backend):
         
     # Scikit-image
@@ -151,7 +180,9 @@ def projsFromPhantom(phantom, theta_deg, mode="parallel", proj_lenght_in_pixel=1
 
         # Convert the projections into sinograms
         ground_truth_sino = np.swapaxes(ground_truth_proj, 0, 1).astype(np.single)
-
+    
+    #elif backend == "plastimatch":
+        
     else:
         raise IOError("No Tomgraphy backend chosen")
 
