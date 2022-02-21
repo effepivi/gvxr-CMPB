@@ -13,7 +13,7 @@
         "Shape": "ParallelBeam",
         "Beam": [
             {
-                "Energy": 100,
+                "Energy": 72,
                 "Unit": "keV",
                 "PhotonCount": 1.0
             }
