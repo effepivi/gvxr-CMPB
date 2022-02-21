@@ -27,7 +27,7 @@
             "Unit": "mm",
             "Material": ["HU", -419.57144],
             "Type" : "inner",
-            "Colour" : [0, 240, 240]
+            "Colour" : [0, 240, 240, 0.08]
         },
 
         {
@@ -36,7 +36,7 @@
             "Unit": "mm",
             "Material": ["HU", -40.36795],
             "Type" : "inner",
-            "Colour" : [0, 62, 186]
+            "Colour" : [0, 62, 186, 0.4]
         },
 
 
@@ -46,7 +46,7 @@
             "Unit": "mm",
             "Material": ["HU", -914.32916],
             "Type" : "inner",
-            "Colour" : [170, 85, 255]
+            "Colour" : [170, 85, 255, 0.4]
         },
 
         {
@@ -55,7 +55,7 @@
             "Unit": "mm",
             "Material": ["HU", -12.778751],
             "Type" : "inner",
-            "Colour" : [255, 85, 127]
+            "Colour" : [255, 85, 127, 1]
         },
 
         {
@@ -64,7 +64,7 @@
             "Unit": "mm",
             "Material": ["HU", -12.121676],
             "Type" : "inner",
-            "Colour" : [125, 125, 125]
+            "Colour" : [125, 125, 125, 0.17]
         },
 
         {
@@ -73,7 +73,7 @@
             "Unit": "mm",
             "Material": ["HU", 28.384626],
             "Type" : "inner",
-            "Colour" : [255, 0, 0]
+            "Colour" : [255, 0, 0, 1]
         },
         
         {
@@ -82,7 +82,7 @@
             "Unit": "mm",
             "Material": ["HU", 436.18988],
             "Type" : "inner",
-            "Colour" : [255, 255, 127]
+            "Colour" : [255, 255, 127, 1]
         },
 
         {
@@ -91,7 +91,7 @@
             "Unit": "mm",
             "Material": ["HU", 412.4266],
             "Type" : "inner",
-            "Colour" : [190, 190, 95]
+            "Colour" : [190, 190, 95, 1]
         },
 
         {
@@ -100,7 +100,7 @@
             "Unit": "mm",
             "Material": ["HU", 443.5759],
             "Type" : "inner",
-            "Colour" : [200, 200, 100]
+            "Colour" : [200, 200, 100, 0.33]
         },
 
         {
@@ -109,7 +109,7 @@
             "Unit": "mm",
             "Material": ["HU", 618.27954],
             "Type" : "inner",
-            "Colour" : [38, 38, 19]
+            "Colour" : [38, 38, 19, 1]
         },
 
         {
@@ -118,7 +118,7 @@
             "Unit": "mm",
             "Material": ["HU", -158.2706],
             "Type" : "inner",
-            "Colour" : [193, 193, 193]
+            "Colour" : [193, 193, 193, 1]
         },
         
         {
@@ -127,7 +127,7 @@
             "Unit": "mm",
             "Material": ["HU", 203.39578],
             "Type" : "inner",
-            "Colour" : [193, 193, 193]
+            "Colour" : [193, 193, 193, 1]
         },
 
         {
@@ -136,7 +136,7 @@
             "Unit": "mm",
             "Material": ["HU", 324.9135],
             "Type" : "inner",
-            "Colour" : [193, 193, 193]
+            "Colour" : [193, 193, 193, 1]
         },
         
         {
@@ -145,7 +145,7 @@
             "Unit": "mm",
             "Material": ["HU", -658.61346],
             "Type" : "inner",
-            "Colour" : [138, 0, 0]
+            "Colour" : [138, 0, 0, 1]
         },
         
         {
@@ -154,7 +154,7 @@
             "Unit": "mm",
             "Material": ["HU", 83.32481],
             "Type" : "inner",
-            "Colour" : [255, 85, 0]
+            "Colour" : [255, 85, 0, 1]
         }
     ]
 }
