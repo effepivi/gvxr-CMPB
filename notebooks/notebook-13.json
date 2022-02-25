@@ -2,9 +2,9 @@
     "WindowSize": [512, 512],
 
     "Detector": {
-        "Position": [0, -490.6, 0, "mm"],
+        "Position": [0, -190.6, 0, "mm"],
         "UpVector": [0, 0, -1],
-        "NumberOfPixels": [512, 448],
+        "NumberOfPixels": [336, 340],
         "Spacing": [1, 1, "mm"],
         "Energy response": {
             "File": "Gate_data/responseDetector.txt",
