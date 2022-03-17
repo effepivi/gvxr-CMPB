@@ -1,29 +1,4 @@
 {
-    "WindowSize": [512, 512],
-
-    "Detector": {
-        "Position": [0, -190.6, 0, "mm"],
-        "UpVector": [0, 0, -1],
-        "NumberOfPixels": [512, 512],
-        "Spacing": [1, 1, "mm"],
-        "Energy response": {
-            "File": "Gate_data/responseDetector.txt",
-            "Energy": "MeV"
-        }
-    },
-    
-    "Source": {
-        "Position": [0, 595, 0, "mm"],
-        "Shape": "PointSource",
-        "Beam": {
-            "kvp": 120,
-            "tube angle": 12,
-            "filter": [
-                ["Al", 3.2]
-            ]
-        }
-    },
-
     "Samples": [
         {
             "Label": "Bronchioles",
@@ -114,33 +89,6 @@
             "Material": ["HU", 618.27954],
             "Type" : "inner",
             "Colour" : [38, 38, 19]
-        },
-
-        {
-            "Label": "Sheets_low",
-            "Path": "lungman_data/meshes/sheets_low.stl",
-            "Unit": "mm",
-            "Material": ["HU", -158.2706],
-            "Type" : "inner",
-            "Colour" : [193, 193, 193]
-        },
-        
-        {
-            "Label": "Sheets_med",
-            "Path": "lungman_data/meshes/sheets_med.stl",
-            "Unit": "mm",
-            "Material": ["HU", 203.39578],
-            "Type" : "inner",
-            "Colour" : [193, 193, 193]
-        },
-
-        {
-            "Label": "Sheets_high",
-            "Path": "lungman_data/meshes/sheets_high.stl",
-            "Unit": "mm",
-            "Material": ["HU", 324.9135],
-            "Type" : "inner",
-            "Colour" : [193, 193, 193]
         },
         
         {
