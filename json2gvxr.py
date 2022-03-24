@@ -69,9 +69,9 @@ def initSourceGeometry(fname = ""):
     );
     source_shape = params["Source"]["Shape"]
     print("\tSource shape:", source_shape);
-    if source_shape == "ParallelBeam":
+    if source_shape == "ParallelBeam" or source_shape == "Parallel":
         gvxr.useParallelBeam();
-    elif source_shape == "PointSource":
+    elif source_shape == "PointSource" or source_shape == "Point":
         gvxr.usePointSource();
     else:
         raise "Unknown source shape:" + source_shape;
@@ -263,6 +263,10 @@ def initDetector(fname = ""):
         detector_number_of_pixels[0],
         detector_number_of_pixels[1]
     );
+    
+    if "Oversampling" in params["Detector"].keys():
+        gvxr.useLBufferOversamplingFactor(params["Detector"]["Oversampling"])
+    
     if "Spacing" in params["Detector"].keys() == list and "Size" in params["Detector"].keys():
         raise "Cannot use both 'Spacing' and 'Size' for the detector";
     if "Spacing" in params["Detector"].keys():
