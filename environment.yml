@@ -2,33 +2,43 @@ name: gvxr-validation
 channels:
     - conda-forge
 dependencies:
+    # Runtime
+    - python==3.9
     - opencv
-    - cma
-    - tomopy
+    #- cma
+    #- tomopy
     - numpy
     - libtiff
     - pandas
     - ipykernel
     - ipython
+    - ipywidgets
+    - ipympl
     - vtk
     - jupyterlab
-    - pandas
+    - matplotlib
     - scikit-learn
     - scikit-image
-    - scipy
+    #- scipy
     - imageio
     - SimpleITK
     - k3d
     - numpy-stl
     - gputil
+    - py-cpuinfo
+    - tomopy
+    - urllib3
     - plotly
-    - jupyterlab>=3
-    - ipywidgets>=7.6
-    - python-kaleido
+    - pymoo
+    #- jupyterlab>=3
+    #- ipywidgets>=7.6
+    #- python-kaleido
     - pip
     - pip:
+        - svn+https://svn.code.sf.net/p/gvirtualxray/code/branches/use-xraylib
+        - git+https://bitbucket.org/spekpy/spekpy_release.git
         - viewscad
-        - spekpy
-        - py-cpuinfo
-        - pymoo
-        - chart_studio
+        - unlzw3
+    #    - py-cpuinfo
+    #    - pymoo
+    #    - chart_studio

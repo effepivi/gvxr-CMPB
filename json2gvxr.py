@@ -17,7 +17,7 @@ import matplotlib.colors as mcolors
 #
 # import imageio
 import json # Load the JSON file
-import gvxrPython3 as gvxr # Simulate X-ray images
+from gvxrPython3 import gvxr # Simulate X-ray images
 # Define the NoneType
 NoneType = type(None);
 params  = None;

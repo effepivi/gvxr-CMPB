@@ -24,15 +24,15 @@ import psutil
 
 tomography_backend="tomopy"
 
-import tigre
-import tigre.algorithms as algs
+#import tigre
+#import tigre.algorithms as algs
 
 import tomopy
 
 from skimage.transform import iradon
 from skimage.transform import radon
 
-import gvxrPython3 as gvxr # Simulate X-ray images
+from gvxrPython3 import gvxr # Simulate X-ray images
 
 def printSystemInfo():
     print("OS:")
