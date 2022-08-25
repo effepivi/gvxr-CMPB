@@ -9,12 +9,12 @@ from skimage.util import compare_images # Checkboard comparison between two imag
 from tifffile import imread, imsave # Load/Write TIFF files
 from threading import Thread
 import os
-from convertRaw import *
+# from convertRaw import *
 
 import multiprocessing
 from threading import Thread
 
-import SimpleITK as sitk
+# import SimpleITK as sitk
 import vtk
 
 import GPUtil
@@ -24,15 +24,15 @@ import psutil
 
 tomography_backend="tomopy"
 
-import tigre
-import tigre.algorithms as algs
+# import tigre
+# import tigre.algorithms as algs
 
-import tomopy
+# import tomopy
 
-from skimage.transform import iradon
-from skimage.transform import radon
+# from skimage.transform import iradon
+# from skimage.transform import radon
 
-import gvxrPython3 as gvxr # Simulate X-ray images
+from gvxrPython3 import gvxr # Simulate X-ray images
 
 def printSystemInfo():
     print("OS:")
