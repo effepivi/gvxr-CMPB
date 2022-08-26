@@ -545,7 +545,7 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     plt.savefig(fname + '.png')
 
     
-def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1):
+def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, spacing, log: bool=False, vmin=0.25, vmax=1):
     
     comp_equalized = compare_images(gate_image.astype(np.single), gvxr_image.astype(np.single), method='checkerboard', n_tiles=(15,15))
 
