@@ -1,0 +1,505 @@
+{
+    "WindowSize": [800, 450],
+
+    "Detector": {
+        "Position": [0.0, -30.5, -20.5, "cm"],
+        "UpVector": [0, -1, 0],
+        "NumberOfPixels": [1536, 1248],
+        "Size": [40.470040976, 32.881908384, "cm"]
+    },
+
+    "Source": {
+        "Position": [0.0, -30.5, 150.0, "cm"],
+        "Shape": "PointSource",
+        "Beam": {
+            "kvp": 85,
+            "tube angle": 12,
+            "filter": [
+                ["Al", 3.2]
+            ]
+        }
+    },
+
+    "Samples": [
+
+        {
+            "Label": "armR",
+            "Path": "VHP/meshes/armR.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "armL",
+            "Path": "VHP/meshes/armL.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "rib cage",
+            "Path": "VHP/meshes/chest.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "sternum",
+            "Path": "VHP/meshes/chest2.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.096,
+                        6, 0.099,
+                        7, 0.022,
+                        8, 0.744,
+                        11, 0.005,
+                        15, 0.022,
+                        16, 0.009,
+                        17, 0.003
+                ]
+            ],
+            "Density": 1.100,
+            "Type" : "inner"
+        },
+        
+        {
+            "Label": "femurL",
+            "Path": "VHP/meshes/femurL.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "femurR",
+            "Path": "VHP/meshes/femurR.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+       
+        {
+            "Label": "hips",
+            "Path": "VHP/meshes/hips.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+        
+        {
+            "Label": "bladder",
+            "Path": "VHP/meshes/bladder.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.105,
+                        6, 0.256,
+                        7, 0.027,
+                        8, 0.602,
+                        11, 0.001,
+                        15, 0.002,
+                        16, 0.003,
+                        17, 0.002,
+                        19, 0.002
+                ]
+            ],
+            "Density": 1.030,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "bronch",
+            "Path": "VHP/meshes/bronch.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.105,
+                        6, 0.256,
+                        7, 0.027,
+                        8, 0.602,
+                        11, 0.001,
+                        15, 0.002,
+                        16, 0.003,
+                        17, 0.002,
+                        19, 0.002
+                ]
+            ],
+            "Density": 1.030,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "circulatory",
+            "Path": "VHP/meshes/circulatory.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                    1, 0.102,
+                    6, 0.143,
+                    7, 0.034,
+                    8, 0.710,
+                    11, 0.001,
+                    15, 0.002,
+                    16, 0.003,
+                    17, 0.001,
+                    19, 0.004
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "gallbladder",
+            "Path": "VHP/meshes/gallbladder.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.105,
+                        6, 0.256,
+                        7, 0.027,
+                        8, 0.602,
+                        11, 0.001,
+                        15, 0.002,
+                        16, 0.003,
+                        17, 0.002,
+                        19, 0.002
+                ]
+            ],
+            "Density": 1.030,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "heart",
+            "Path": "VHP/meshes/heart.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.104,
+                        6, 0.139,
+                        7, 0.029,
+                        8, 0.718,
+                        11, 0.001,
+                        15, 0.002,
+                        16, 0.002,
+                        17, 0.002,
+                        19, 0.003
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "intestine",
+            "Path": "VHP/meshes/intestine.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.106,
+                        6, 0.115,
+                        7, 0.022,
+                        8, 0.751,
+                        11, 0.001,
+                        15, 0.001,
+                        16, 0.001,
+                        17, 0.002,
+                        19, 0.001
+                ]
+            ],
+            "Density": 1.040,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "kidney",
+            "Path": "VHP/meshes/kidney.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.103,
+                        6, 0.132,
+                        7, 0.030,
+                        8, 0.724,
+                        11, 0.002,
+                        15, 0.002,
+                        16, 0.002,
+                        17, 0.002,
+                        19, 0.002,
+                        20, 0.001
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "liver",
+            "Path": "VHP/meshes/liver.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.103,
+                        6, 0.186,
+                        7, 0.028,
+                        8, 0.671,
+                        11, 0.002,
+                        15, 0.002,
+                        16, 0.003,
+                        17, 0.002,
+                        19, 0.003
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "lungs",
+            "Path": "VHP/meshes/lungs.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.103,
+                        6, 0.105,
+                        7, 0.031,
+                        8, 0.749,
+                        11, 0.002,
+                        15, 0.002,
+                        16, 0.003,
+                        17, 0.003,
+                        19, 0.002
+                ]
+            ],
+            "Density": 0.385,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "muscles",
+            "Path": "VHP/meshes/muscles.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.102,
+                        6, 0.143,
+                        7, 0.034,
+                        8, 0.710,
+                        11, 0.001,
+                        15, 0.002,
+                        16, 0.003,
+                        17, 0.001,
+                        19, 0.004
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "pancreas",
+            "Path": "VHP/meshes/pancreas.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.106,
+                        6, 0.169,
+                        7, 0.022,
+                        8, 0.694,
+                        11, 0.002,
+                        15, 0.002,
+                        16, 0.001,
+                        17, 0.002,
+                        19, 0.002
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "shoulderL",
+            "Path": "VHP/meshes/shoulderL.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "shoulderR",
+            "Path": "VHP/meshes/shoulderR.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+             
+        {
+            "Label": "skin",
+            "Path": "VHP/meshes/skin.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                    1, 0.102,
+                    6, 0.143,
+                    7, 0.034,
+                    8, 0.710,
+                    11, 0.001,
+                    15, 0.002,
+                    16, 0.003,
+                    17, 0.001,
+                    19, 0.004
+                ]
+            ],
+            "Density": 1.050,
+            "Type" : "outer"
+        },
+             
+        {
+            "Label": "spine",
+            "Path": "VHP/meshes/spine.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+        
+        {
+            "Label": "spleen",
+            "Path": "VHP/meshes/spleen.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.103,
+                        6, 0.113,
+                        7, 0.032,
+                        8, 0.741,
+                        11, 0.001,
+                        15, 0.003,
+                        16, 0.002,
+                        17, 0.002,
+                        19, 0.003
+                ]
+            ],
+            "Density": 1.040,
+            "Type" : "inner"
+        },
+        
+        {
+            "Label": "stomach",
+            "Path": "VHP/meshes/stomach.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.106,
+                        6, 0.115,
+                        7, 0.022,
+                        8, 0.751,
+                        11, 0.001,
+                        15, 0.001,
+                        16, 0.001,
+                        17, 0.002,
+                        19, 0.001
+                ]
+            ],
+            "Density": 1.040,
+            "Type" : "inner"
+        }   
+    ]
+}
