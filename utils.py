@@ -544,62 +544,106 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
 
-
-def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1, avoid_div_0=True):
-
-    absolute_error = np.abs(gate_image - gvxr_image)
     
-    if avoid_div_0:
-        offset1 = min(gate_image.min(), gvxr_image.min())
-        offset2 = 0.01 * (gate_image.max() - gate_image.min())
-        offset = offset2 - offset1
-
-        relative_error = 100 * ((gate_image + offset) - (gvxr_image + offset)) / (gate_image + offset)
-    else:
-        relative_error = 100 * (gate_image - gvxr_image) / gate_image
-
+def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1):
+    
     comp_equalized = compare_images(gate_image.astype(np.single), gvxr_image.astype(np.single), method='checkerboard', n_tiles=(15,15))
 
-    fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
+    fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 20))
 
     if not log:
-        im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=vmin, vmax=vmax)
+        im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=vmin, vmax=vmax,
+                                 extent=[0,(gate_image.shape[1]-1)*spacing[0],0,(gate_image.shape[0]-1)*spacing[1]])
     else:
-        im1 = axes.flat[0].imshow(gate_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+        im1 = axes.flat[0].imshow(gate_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2),
+                                 extent=[0,(gate_image.shape[1]-1)*spacing[0],0,(gate_image.shape[0]-1)*spacing[1]])
     axes.flat[0].set_title("Ground truth")
-    axes.flat[0].set_xticks([])
-    axes.flat[0].set_yticks([])
+    # axes.flat[0].set_xticks([])
+    # axes.flat[0].set_yticks([])
+
 
     if not log:
-        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=vmin, vmax=vmax)
+        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=vmin, vmax=vmax,
+                                 extent=[0,(gvxr_image.shape[1]-1)*spacing[0],0,(gvxr_image.shape[0]-1)*spacing[1]])
     else:
-        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+        im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2),
+                                 extent=[0,(gvxr_image.shape[1]-1)*spacing[0],0,(gvxr_image.shape[0]-1)*spacing[1]])
     axes.flat[1].set_title("gVirtualXRay")
-    axes.flat[1].set_xticks([])
-    axes.flat[1].set_yticks([])
+    # axes.flat[1].set_xticks([])
+    # axes.flat[1].set_yticks([])
 
     if not log:
-        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax)
+        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax,
+                                 extent=[0,(comp_equalized.shape[1]-1)*spacing[0],0,(comp_equalized.shape[0]-1)*spacing[1]])
     else:
-        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+        im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2),
+                                 extent=[0,(comp_equalized.shape[1]-1)*spacing[0],0,(comp_equalized.shape[0]-1)*spacing[1]])
     axes.flat[2].set_title("Checkerboard comparison between\nGround truth & gVirtualXRay")
-    axes.flat[2].set_xticks([])
-    axes.flat[2].set_yticks([])
+    # axes.flat[2].set_xticks([])
+    # axes.flat[2].set_yticks([])
 
-    im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
-    axes.flat[3].set_title("Relative error (in %)")
-    axes.flat[3].set_xticks([])
-    axes.flat[3].set_yticks([])
-
-    fig.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.8,
-                        wspace=0.2, hspace=0.02)
-
-    # add an axes, lower left corner in [0.83, 0.1] measured in figure coordinate with axes width 0.02 and height 0.8
-    cb_ax = fig.add_axes([0.83, 0.425, 0.02, 0.15])
-    cbar = fig.colorbar(im4, cax=cb_ax)
+    axes.flat[1].set_xlabel("Pixel position\n(in mm)")
+    axes.flat[0].set_ylabel("Pixel position\n(in mm)")
 
     plt.savefig(fname + '.pdf')
     plt.savefig(fname + '.png')
+
+
+# def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1, avoid_div_0=True):
+
+#     absolute_error = np.abs(gate_image - gvxr_image)
+    
+#     if avoid_div_0:
+#         offset1 = min(gate_image.min(), gvxr_image.min())
+#         offset2 = 0.01 * (gate_image.max() - gate_image.min())
+#         offset = offset2 - offset1
+
+#         relative_error = 100 * ((gate_image + offset) - (gvxr_image + offset)) / (gate_image + offset)
+#     else:
+#         relative_error = 100 * (gate_image - gvxr_image) / gate_image
+
+#     comp_equalized = compare_images(gate_image.astype(np.single), gvxr_image.astype(np.single), method='checkerboard', n_tiles=(15,15))
+
+#     fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(20, 20))
+
+#     if not log:
+#         im1 = axes.flat[0].imshow(gate_image, cmap="gray", vmin=vmin, vmax=vmax)
+#     else:
+#         im1 = axes.flat[0].imshow(gate_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+#     axes.flat[0].set_title("Ground truth")
+#     axes.flat[0].set_xticks([])
+#     axes.flat[0].set_yticks([])
+
+#     if not log:
+#         im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", vmin=vmin, vmax=vmax)
+#     else:
+#         im2 = axes.flat[1].imshow(gvxr_image, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+#     axes.flat[1].set_title("gVirtualXRay")
+#     axes.flat[1].set_xticks([])
+#     axes.flat[1].set_yticks([])
+
+#     if not log:
+#         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", vmin=vmin, vmax=vmax)
+#     else:
+#         im3 = axes.flat[2].imshow(comp_equalized, cmap="gray", norm=LogNorm(vmin=0.01, vmax=1.2))
+#     axes.flat[2].set_title("Checkerboard comparison between\nGround truth & gVirtualXRay")
+#     axes.flat[2].set_xticks([])
+#     axes.flat[2].set_yticks([])
+
+#     im4 = axes.flat[3].imshow(relative_error, cmap="RdBu", vmin=-5, vmax=5)
+#     axes.flat[3].set_title("Relative error (in %)")
+#     axes.flat[3].set_xticks([])
+#     axes.flat[3].set_yticks([])
+
+#     fig.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.8,
+#                         wspace=0.2, hspace=0.02)
+
+#     # add an axes, lower left corner in [0.83, 0.1] measured in figure coordinate with axes width 0.02 and height 0.8
+#     cb_ax = fig.add_axes([0.83, 0.425, 0.02, 0.15])
+#     cbar = fig.colorbar(im4, cax=cb_ax)
+
+#     plt.savefig(fname + '.pdf')
+#     plt.savefig(fname + '.png')
 
     
 def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
