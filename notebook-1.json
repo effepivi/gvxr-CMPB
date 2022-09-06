@@ -4,7 +4,7 @@
     "Detector": {
         "Position": [0.0, -150.0, 0.0, "mm"],        
         "UpVector": [0, 0, -1],
-        "NumberOfPixels": [1024, 1024],
+        "NumberOfPixels": [128, 128],
         "Size": [500, 500, "mm"],
         "Energy response": {
             "File": "Gate_data/responseDetector.txt",
