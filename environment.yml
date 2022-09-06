@@ -28,7 +28,7 @@ dependencies:
     - pip
     - pip:
 #        - viewscad
-        - spekpy
+        - git+https://bitbucket.org/spekpy/spekpy_release.git
         - pymoo
 #        - chart_studio
         - gvxr
