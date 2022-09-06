@@ -25,6 +25,7 @@ dependencies:
     - plotly
     - matplotlib
     - py-cpuinfo
+    - unlzw3
     - pip
     - pip:
 #        - viewscad

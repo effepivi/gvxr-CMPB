@@ -1,25 +1,4 @@
 {
-    "WindowSize": [512, 512],
-
-    "Detector": {
-        "Position": [0, 500, 0, "mm"],
-        "UpVector": [0, 0, 1],
-        "NumberOfPixels": [725, 426],
-        "Spacing": [0.625, 0.7, "mm"]
-    },
-
-    "Source": {
-        "Position": [0, -500, 0, "mm"],
-        "Shape": "ParallelBeam",
-        "Beam": [
-            {
-                "Energy": 72,
-                "Unit": "keV",
-                "PhotonCount": 1.0
-            }
-        ]
-    },
-    
     "Samples": [
         {
             "Label": "Bronchioles",
@@ -27,7 +6,7 @@
             "Unit": "mm",
             "Material": ["HU", -419.57144],
             "Type" : "inner",
-            "Colour" : [0, 240, 240, 0.08]
+            "Colour" : [0, 240, 240]
         },
 
         {
@@ -36,7 +15,7 @@
             "Unit": "mm",
             "Material": ["HU", -40.36795],
             "Type" : "inner",
-            "Colour" : [0, 62, 186, 0.4]
+            "Colour" : [0, 62, 186]
         },
 
 
@@ -46,7 +25,7 @@
             "Unit": "mm",
             "Material": ["HU", -914.32916],
             "Type" : "inner",
-            "Colour" : [170, 85, 255, 0.4]
+            "Colour" : [170, 85, 255]
         },
 
         {
@@ -55,7 +34,7 @@
             "Unit": "mm",
             "Material": ["HU", -12.778751],
             "Type" : "inner",
-            "Colour" : [255, 85, 127, 1]
+            "Colour" : [255, 85, 127]
         },
 
         {
@@ -64,7 +43,7 @@
             "Unit": "mm",
             "Material": ["HU", -12.121676],
             "Type" : "inner",
-            "Colour" : [125, 125, 125, 0.17]
+            "Colour" : [125, 125, 125]
         },
 
         {
@@ -73,7 +52,7 @@
             "Unit": "mm",
             "Material": ["HU", 28.384626],
             "Type" : "inner",
-            "Colour" : [255, 0, 0, 1]
+            "Colour" : [255, 0, 0]
         },
         
         {
@@ -82,7 +61,7 @@
             "Unit": "mm",
             "Material": ["HU", 436.18988],
             "Type" : "inner",
-            "Colour" : [255, 255, 127, 1]
+            "Colour" : [255, 255, 127]
         },
 
         {
@@ -91,7 +70,7 @@
             "Unit": "mm",
             "Material": ["HU", 412.4266],
             "Type" : "inner",
-            "Colour" : [190, 190, 95, 1]
+            "Colour" : [190, 190, 95]
         },
 
         {
@@ -100,7 +79,7 @@
             "Unit": "mm",
             "Material": ["HU", 443.5759],
             "Type" : "inner",
-            "Colour" : [200, 200, 100, 0.33]
+            "Colour" : [200, 200, 100]
         },
 
         {
@@ -109,34 +88,7 @@
             "Unit": "mm",
             "Material": ["HU", 618.27954],
             "Type" : "inner",
-            "Colour" : [38, 38, 19, 1]
-        },
-
-        {
-            "Label": "Sheets_low",
-            "Path": "lungman_data/meshes/sheets_low.stl",
-            "Unit": "mm",
-            "Material": ["HU", -158.2706],
-            "Type" : "inner",
-            "Colour" : [193, 193, 193, 1]
-        },
-        
-        {
-            "Label": "Sheets_med",
-            "Path": "lungman_data/meshes/sheets_med.stl",
-            "Unit": "mm",
-            "Material": ["HU", 203.39578],
-            "Type" : "inner",
-            "Colour" : [193, 193, 193, 1]
-        },
-
-        {
-            "Label": "Sheets_high",
-            "Path": "lungman_data/meshes/sheets_high.stl",
-            "Unit": "mm",
-            "Material": ["HU", 324.9135],
-            "Type" : "inner",
-            "Colour" : [193, 193, 193, 1]
+            "Colour" : [38, 38, 19]
         },
         
         {
@@ -145,7 +97,7 @@
             "Unit": "mm",
             "Material": ["HU", -658.61346],
             "Type" : "inner",
-            "Colour" : [138, 0, 0, 1]
+            "Colour" : [138, 0, 0]
         },
         
         {
@@ -154,7 +106,7 @@
             "Unit": "mm",
             "Material": ["HU", 83.32481],
             "Type" : "inner",
-            "Colour" : [255, 85, 0, 1]
+            "Colour" : [255, 85, 0]
         }
     ]
 }
