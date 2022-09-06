@@ -16,7 +16,7 @@ Single
 6 6255 1305 9045 2880
 4 0 0 49 -1 4 17 0.0000 0 270 2055 6255 1920 - Voltage: 85 kV\001
 4 0 0 49 -1 4 17 0.0000 0 270 1410 6255 1530 X-ray tube:\001
-4 0 0 49 -1 4 17 0.0000 0 210 2280 6255 2250 - Filtation: 0.1 mm\001
+4 0 0 49 -1 4 17 0.0000 0 210 2280 6255 2250 - Filtration: 0.1 mm\001
 4 0 0 49 -1 4 17 0.0000 0 270 2610 6255 2565      - Copper: 0.1 mm\001
 4 0 0 49 -1 4 17 0.0000 0 210 2760 6255 2880      - Aluminium: 1 mm\001
 -6
@@ -33,5 +33,5 @@ Single
 4 1 0 49 -1 4 17 0.0000 0 195 960 3690 3735 100 cm\001
 -6
 2 5 0 1 0 -1 50 -1 20 0.000 0 0 -1 0 0 5
-	0 /home/fpvidal/PROGRAMMING/GitHub/gvxr-validation/notebooks//pediatric_phantom_data/screenshot-cropped.png
+	0 screenshot-cropped.png
 	 0 0 6243 0 6243 3228 0 3228 0 0
