@@ -5,6 +5,12 @@ __pycache__
 *-crop.pdf
 *~
 
+pediatric_phantom_data/Pediatric phantom.zip
+pediatric_phantom_data/Pediatric phantom/
+pediatric_phantom_data/meshes/
+
+notebooks
+
 notebooks/outcmaes/
 
 notebooks/digimouse/atlas.zip
