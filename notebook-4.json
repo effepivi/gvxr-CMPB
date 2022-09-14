@@ -21,7 +21,46 @@
     },
 
     "Samples": [
-             
+         {
+            "Label": "armR",
+            "Path": "VHP/meshes/armR.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+
+        {
+            "Label": "armL",
+            "Path": "VHP/meshes/armL.stl",
+            "Unit": "cm",
+            "Material": ["Mixture", [
+                        1, 0.040,
+                        6, 0.160,
+                        7, 0.045,
+                        8, 0.469,
+                        11, 0.001,
+                        12, 0.002,
+                        15, 0.090,
+                        16, 0.003,
+                        20, 0.190
+                ]
+            ],
+            "Density": 1.920,
+            "Type" : "inner"
+        },
+        
         {
             "Label": "rib cage",
             "Path": "VHP/meshes/chest.stl",
