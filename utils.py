@@ -341,7 +341,7 @@ def flatFieldCorrection(proj):
 
     flat_field_image *= total_energy
 
-    return (np.array(proj).astype(np.single) - dark_field_image) / (flat_field_image - dark_field_image)
+    return ((np.array(proj).astype(np.single) - dark_field_image) / (flat_field_image - dark_field_image)).astype(np.single)
 
 
 def minusLog(proj):
@@ -489,8 +489,8 @@ def displayLinearPowerScales(image: np.array, caption: str, fname: str, log: boo
 
     plt.tight_layout()
 
-    plt.savefig(fname + '.pdf')
-    plt.savefig(fname + '.png')
+    plt.savefig(fname + '.pdf', bbox_inches = 'tight')
+    plt.savefig(fname + '.png', bbox_inches = 'tight')
 
 def plotSpectrum(k, f, fname=None, xlim=[0,200]):
 
@@ -506,8 +506,8 @@ def plotSpectrum(k, f, fname=None, xlim=[0,200]):
     plt.tight_layout()
 
     if fname is not None:
-        plt.savefig(fname + '.pdf')
-        plt.savefig(fname + '.png')
+        plt.savefig(fname + '.pdf', bbox_inches = 'tight')
+        plt.savefig(fname + '.png', bbox_inches = 'tight')
 
 def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 20))
@@ -541,8 +541,8 @@ def compareImages(gate_image, gvxr_image, caption, fname, threshold=3):
 
     # plt.tight_layout()
 
-    plt.savefig(fname + '.pdf')
-    plt.savefig(fname + '.png')
+    plt.savefig(fname + '.pdf', bbox_inches = 'tight')
+    plt.savefig(fname + '.png', bbox_inches = 'tight')
 
 
 def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, spacing, log: bool=False, vmin=0.25, vmax=1):
@@ -600,8 +600,8 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
     axes.flat[1].set_xlabel("Pixel position\n(in mm)")
     axes.flat[0].set_ylabel("Pixel position\n(in mm)")
 
-    plt.savefig(fname + '.pdf')
-    plt.savefig(fname + '.png')
+    plt.savefig(fname + '.pdf', bbox_inches = 'tight')
+    plt.savefig(fname + '.png', bbox_inches = 'tight')
 
 
 # def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fname: str, log: bool=False, vmin=0.25, vmax=1, avoid_div_0=True):
@@ -657,8 +657,8 @@ def fullCompareImages(gate_image: np.array, gvxr_image: np.array, title: str, fn
 #     cb_ax = fig.add_axes([0.83, 0.425, 0.02, 0.15])
 #     cbar = fig.colorbar(im4, cax=cb_ax)
 
-#     plt.savefig(fname + '.pdf')
-#     plt.savefig(fname + '.png')
+#     plt.savefig(fname + '.pdf', bbox_inches = 'tight')
+#     plt.savefig(fname + '.png', bbox_inches = 'tight')
 
 
 def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
@@ -823,8 +823,8 @@ def plotThreeProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_
 
     plt.tight_layout()
 
-    plt.savefig(fname + ".pdf")
-    plt.savefig(fname + ".png")
+    plt.savefig(fname + ".pdf", bbox_inches = 'tight')
+    plt.savefig(fname + ".png", bbox_inches = 'tight')
 
 
 def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_image_integration_GPU, fname, xlimits=None):
@@ -989,8 +989,8 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_CPU, x_ray_im
 
     plt.tight_layout()
 
-    plt.savefig(fname + ".pdf")
-    plt.savefig(fname + ".png")
+    plt.savefig(fname + ".pdf", bbox_inches = 'tight')
+    plt.savefig(fname + ".png", bbox_inches = 'tight')
 
 def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_GPU, fname, xlimits=None):
 
@@ -1065,8 +1065,8 @@ def plotTwoProfiles(json2gvxr, gate_image, x_ray_image_integration_GPU, fname, x
 
     plt.tight_layout()
 
-    plt.savefig(fname + ".pdf")
-    plt.savefig(fname + ".png")
+    plt.savefig(fname + ".pdf", bbox_inches = 'tight')
+    plt.savefig(fname + ".png", bbox_inches = 'tight')
 
 # A function to extract an isosurface from a binary image
 def extractSurface(vtk_image, isovalue):
