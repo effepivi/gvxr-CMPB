@@ -13,6 +13,8 @@ notebooks
 
 notebooks/outcmaes/
 
+2-output_data/*.mha
+
 notebooks/digimouse/atlas.zip
 notebooks/digimouse/atlas/
 notebooks/digimouse/ct_data.zip
