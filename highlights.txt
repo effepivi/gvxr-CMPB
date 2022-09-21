@@ -1,0 +1,4 @@
+- Realistic X-ray simulation from anatomical data
+- Registration of simulated X-ray images on real radiographs
+- Benchmarking using Monte Carlo simulation, real radiographs and real DRRs
+- Superior computational performance for VR and high-throughput data applications
