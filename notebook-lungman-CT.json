@@ -10,18 +10,18 @@
             "Label": "Bronchioles",
             "Path": "lungman_data/meshes/bronchioles.stl",
             "Unit": "mm",
-            "Material": ["HU", -419.57142857142856],
+            "Material": ["HU", -419.57144],
             "Type" : "inner",
-            "Colour" : [0, 240, 240]
+            "Colour" : [0, 240, 240, 0.08]
         },
 
         {
             "Label": "Bronchus",
             "Path": "lungman_data/meshes/bronchus.stl",
             "Unit": "mm",
-            "Material": ["HU", -40.36795166022717],
+            "Material": ["HU", -40.36795],
             "Type" : "inner",
-            "Colour" : [0, 62, 186]
+            "Colour" : [0, 62, 186, 0.4]
         },
 
 
@@ -29,158 +29,158 @@
             "Label": "Trachea",
             "Path": "lungman_data/meshes/trachea.stl",
             "Unit": "mm",
-            "Material": ["HU", -914.3291976283064],
+            "Material": ["HU", -914.32916],
             "Type" : "inner",
-            "Colour" : [170, 85, 255]
+            "Colour" : [170, 85, 255, 0.4]
         },
 
         {
             "Label": "Diaphram",
             "Path": "lungman_data/meshes/diaphram.stl",
             "Unit": "mm",
-            "Material": ["HU", -12.778747026376063],
+            "Material": ["HU", -12.778751],
             "Type" : "inner",
-            "Colour" : [255, 85, 127]
+            "Colour" : [255, 85, 127, 1]
         },
 
         {
             "Label": "Skin",
             "Path": "lungman_data/meshes/skin.stl",
             "Unit": "mm",
-            "Material": ["HU", -12.12168349525765],
+            "Material": ["HU", -12.121676],
             "Type" : "inner",
-            "Colour" : [125, 125, 125]
+            "Colour" : [125, 125, 125, 0.17]
         },
 
         {
             "Label": "Heart",
             "Path": "lungman_data/meshes/heart.stl",
             "Unit": "mm",
-            "Material": ["HU", 28.38463045051699],
+            "Material": ["HU", 28.384626],
             "Type" : "inner",
-            "Colour" : [255, 0, 0]
+            "Colour" : [255, 0, 0, 1]
         },
         
         {
-            "Label": "sheets_low",
+            "Label": "Sheets_low",
             "Path": "lungman_data/meshes/sheets_low.stl",
             "Unit": "mm",
-            "Material": ["HU", -158.27059305007813],
+            "Material": ["HU", -158.2706],
             "Type" : "inner",
-            "Colour" : [255, 240, 240]
+            "Colour" : [193, 193, 193, 1]
         },
-
+        
         {
-            "Label": "sheets_med",
+            "Label": "Sheets_med",
             "Path": "lungman_data/meshes/sheets_med.stl",
             "Unit": "mm",
-            "Material": ["HU", 203.3957953883871],
+            "Material": ["HU", 203.39578],
             "Type" : "inner",
-            "Colour" : [240, 255, 240]
+            "Colour" : [193, 193, 193, 1]
         },
 
         {
-            "Label": "sheets_high",
+            "Label": "Sheets_high",
             "Path": "lungman_data/meshes/sheets_high.stl",
             "Unit": "mm",
-            "Material": ["HU", 324.91353803306265],
+            "Material": ["HU", 324.9135],
             "Type" : "inner",
-            "Colour" : [240, 240, 255]
+            "Colour" : [193, 193, 193, 1]
         },
-
+        
         {
             "Label": "-630HU_tumours",
             "Path": "lungman_data/meshes/tumours_630HU.stl",
             "Unit": "mm",
-            "Material": ["HU", -658.613485280152],
+            "Material": ["HU", -658.61346],
             "Type" : "inner",
-            "Colour" : [138, 0, 0]
+            "Colour" : [138, 0, 0, 1]
         },
         
         {
             "Label": "100HU_tumours",
             "Path": "lungman_data/meshes/tumours_100HU.stl",
             "Unit": "mm",
-            "Material": ["HU", 83.32480818414322],
+            "Material": ["HU", 83.32481],
             "Type" : "inner",
-            "Colour" : [255, 85, 0]
+            "Colour" : [255, 85, 0, 1]
         },
 
         {
-            "Label": "spine-hard-500",
-            "Path": "lungman_data/meshes/spine-hard-500.stl",
+            "Label": "spine-hard-650",
+            "Path": "lungman_data/meshes/spine-hard-650.stl",
             "Unit": "mm",
-            "Material": ["HU", 694.8683558984899],
+            "Material": ["HU", 857.8602],
             "Type" : "inner",
-            "Colour" : [255, 255, 127]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "spine-soft-500",
-            "Path": "lungman_data/meshes/spine-soft-500.stl",
+            "Label": "spine-soft-650",
+            "Path": "lungman_data/meshes/spine-soft-650.stl",
             "Unit": "mm",
-            "Material": ["HU", 360.58021185535495],
+            "Material": ["HU", 375.58865],
             "Type" : "inner",
-            "Colour" : [255, 255, 127]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "scaps-hard-450",
-            "Path": "lungman_data/meshes/scaps-hard-450.stl",
+            "Label": "scaps-hard-550",
+            "Path": "lungman_data/meshes/scaps-hard-550.stl",
             "Unit": "mm",
-            "Material": ["HU", 1162.3333333333333],
+            "Material": ["HU", 709.09717],
             "Type" : "inner",
-            "Colour" : [190, 190, 95]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "scaps-soft-450",
-            "Path": "lungman_data/meshes/scaps-soft-450.stl",
+            "Label": "scaps-soft-550",
+            "Path": "lungman_data/meshes/scaps-soft-550.stl",
             "Unit": "mm",
-            "Material": ["HU", 354.61881064497715],
+            "Material": ["HU", 372.82138],
             "Type" : "inner",
-            "Colour" : [190, 190, 95]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "sternum-hard-450",
-            "Path": "lungman_data/meshes/sternum-hard-450.stl",
+            "Label": "sternum-hard-550",
+            "Path": "lungman_data/meshes/sternum-hard-550.stl",
             "Unit": "mm",
-            "Material": ["HU", 678.5925767503354],
+            "Material": ["HU", 789.6037],
             "Type" : "inner",
-            "Colour" : [200, 200, 100]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "sternum-soft-450",
-            "Path": "lungman_data/meshes/sternum-soft-450.stl",
+            "Label": "sternum-soft-550",
+            "Path": "lungman_data/meshes/sternum-soft-550.stl",
             "Unit": "mm",
-            "Material": ["HU", 372.6214082035534],
+            "Material": ["HU", 378.79736],
             "Type" : "inner",
-            "Colour" : [200, 200, 100]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "clavicle-hard-600",
-            "Path": "lungman_data/meshes/clavicle-hard-600.stl",
+            "Label": "clavicle-hard-700",
+            "Path": "lungman_data/meshes/clavicle-hard-700.stl",
             "Unit": "mm",
-            "Material": ["HU", 736.7709190672153],
+            "Material": ["HU", 778.28],
             "Type" : "inner",
-            "Colour" : [200, 200, 100]
+            "Colour" : [255, 255, 127, 1]
         },
-
+        
         {
-            "Label": "clavicle-soft-600",
-            "Path": "lungman_data/meshes/clavicle-soft-600.stl",
+            "Label": "clavicle-soft-700",
+            "Path": "lungman_data/meshes/clavicle-soft-700.stl",
             "Unit": "mm",
-            "Material": ["HU", 175.23925501432666],
+            "Material": ["HU", 261.89047],
             "Type" : "inner",
-            "Colour" : [38, 38, 19]
+            "Colour" : [255, 255, 127, 1]
         }
     ],
     
     "Scan": {
-        "NumberOfProjections": 1901,
+        "NumberOfProjections": 180,
         "FinalAngle": 360,
         "IncludeFinalAngle": false,
         "CenterOfRotation": [0,0,0],
