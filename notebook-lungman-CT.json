@@ -180,7 +180,7 @@
     ],
     
     "Scan": {
-        "NumberOfProjections": 180,
+        "NumberOfProjections": 1901,
         "FinalAngle": 360,
         "IncludeFinalAngle": false,
         "CenterOfRotation": [0,0,0],
