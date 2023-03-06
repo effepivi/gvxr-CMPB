@@ -39,10 +39,34 @@ Submitted to Computer Methods and Programs in Biomedicine
 conda  env create -f environment.yml
 ```
 
+## Content
+
+- [environment.yml](environment.yml):
+- [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb):
+- [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb):
+- [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb):
+- [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb):
+- [notebook-1.json](notebook-1.json):
+- [notebook-2.json](notebook-2.json):
+- [notebook-3.json](notebook-3.json):
+- [notebook-4.json](notebook-4.json):
+- [convertRaw.py](convertRaw.py):
+- [sitk2vtk.py](sitk2vtk.py):
+- [utils.py](utils.py):
+- [1-output_data](1-output_data):
+- [2-output_data](2-output_data):
+- [3-output_data](3-output_data):
+- [4-output_data](4-output_data):
+- [doc](doc):
+- [lungman_data](lungman_data):
+- [PDFs](PDFs):
+- [pediatric_phantom_data](pediatric_phantom_data):
+- [PediatricGate](PediatricGate):
+
 ## Related software projects
 
 - [gVirtualXray (gVXR)](http://gvirtualxray.sourceforge.io/) provides a programming framework for simulating X-ray images on the graphics processor unit (GPU) using OpenGL. In a nutshell, it computes the polychromatic version of the Beer-Lambert law (the mathematical model that relates the attenuation of X-ray photons to the properties of the material through which the photons are travelling) on the graphics card from polygon meshes.
-- [xraylib](https://github.com/tschoonj/xraylib) provides the mass attenuation coefficients used by gVXR. 
+- [xraylib](https://github.com/tschoonj/xraylib) provides the mass attenuation coefficients used by gVXR.
 - The [Core Imaging Library (CIL](https://ccpi.ac.uk/cil/) is an open-source mainly Python framework for tomographic imaging for cone and parallel beam geometries. It comes with tools for loading, preprocessing, reconstructing and visualising tomographic data.
 - [SpekPy](https://bitbucket.org/spekpy/spekpy_release/wiki/Home) is a free software toolkit for calculating and manipulating x-ray tube spectra.
 - [Gate](http://www.opengatecollaboration.org/) is an open-source software dedicated to numerical simulations in medical imaging and radiotherapy based on [Geant4](https://geant4.web.cern.ch/), the general-purpose Monte Carlo (MC) code by the European Organization for Nuclear Research (CERN).
