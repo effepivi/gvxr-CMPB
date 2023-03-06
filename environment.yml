@@ -1,6 +1,7 @@
-name: gvxr-validation
+name: gvxr-CMPB
 channels:
     - conda-forge
+    - ccpi
 dependencies:
     - python=3.9
     - ipython
@@ -19,7 +20,7 @@ dependencies:
 #    - tomopy
     - scikit-learn
     - scikit-image
-#    - scipy
+    - scipy
 #    - imageio
     - SimpleITK
     - numpy-stl
@@ -29,6 +30,7 @@ dependencies:
     - matplotlib
     - py-cpuinfo
     #- unlzw3
+    - cil
     - pip
     - pip:
 #        - viewscad
@@ -40,4 +42,3 @@ dependencies:
         - unlzw3
         - npm
         - git+https://github.com/K3D-tools/K3D-jupyter
-
