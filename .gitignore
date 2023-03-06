@@ -5,6 +5,8 @@ __pycache__
 *-crop.pdf
 *~
 
+Plastimatch_data/
+
 pediatric_phantom_data/Pediatric phantom.zip
 pediatric_phantom_data/Pediatric phantom/
 pediatric_phantom_data/meshes/
