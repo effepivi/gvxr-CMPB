@@ -1,16 +1,18 @@
 name: gvxr-CMPB
 channels:
     - conda-forge
+    - intel
+    - astra-toolbox
     - ccpi
 dependencies:
-    - python=3.9
+    - python=3.10
     - ipython
     - ipykernel
     #- npm
     - nodejs
     - ipympl
     - traittypes=0.2.1
-    - numpy
+    - numpy=1.21
     - pandas
     - libtiff
     - vtk
@@ -30,7 +32,8 @@ dependencies:
     - matplotlib
     - py-cpuinfo
     #- unlzw3
-    - cil
+    - cil=22.2.0
+    - tigre=2.2
     - pip
     - pip:
 #        - viewscad
