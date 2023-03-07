@@ -33,43 +33,79 @@ Submitted to Computer Methods and Programs in Biomedicine
 - Validation and benchmarking using Monte Carlo simulation, real radiographs and DRRs
 - Superior computational performance for VR and high-throughput data applications
 
+## Content
+
+- [environment.yml](environment.yml): Conda environment file.
+- [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb):
+
+![Corresponding results](1-output_data/full_comparison-paediatrics.png)
+MAPE: 3.12%, ZNCC: 99.96%, and SSIM: 0.99
+
+In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to images generated with the state-of-the-art Monte Caro simulation packages. An anthropomorphic phantom is used. It corresponds to a 5-year old boy. We take into account i) a realistic beam spectrum (tube voltage and filtration) and ii) the energy response of the detector.
+- [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb):
+
+![Corresponding results](2-output_data/lungman-compare-projs-plastimatch-rl.png)
+MAPE: 1.76%, ZNCC: 99.66%, SSIM: 0.98
+
+![](2-output_data/lungman-compare-projs-plastimatch-ap.png)
+MAPE: 2.43%, ZNCC: 99.31%, SSIM: 0.93.
+
+In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to digitally reconstructed radiographs (DRRs) of a real CT scan computed with [Plastimatch](https://plastimatch.org/). For this experiment, we attempt to recreate a X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) with gVirtualXRay.
+- [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb):
+
+![Corresponding results](3-output_data/CT-first-slice.png)
+MAPE: 5.50%, ZNCC: 98.96%, SSIM: 0.62
+
+![Corresponding results](3-output_data/CT-middle-slice.png)
+MAPE: 5.01%, ZNCC: 98.44%, SSIM: 0.78
+
+![Corresponding results](3-output_data/CT-last-slice.png)
+MAPE: 4.46%, ZNCC: 99.05%, SSIM: 0.82
+
+In this notebook, we demonstrate how to gVirtualXray can be used to generate CT data from polygon meshes. For this experiment, we attempt to recreate a CT volume from X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) simulated with gVirtualXRay. The CT volume is reconstructed with the [Core Imaging Library (CIL)](https://ccpi.ac.uk/cil/).
+- [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb):
+
+![Corresponding results](4-output_data/lungman-projection-harder.png)
+MAPE: 1.56%, ZNCC: 98.91%, and SSIM: 0.94.
+
+We aim to reproduce a real digital radiograph taken with a clinically utilised X-ray equipment.
+- [notebook-1.json](notebook-1.json): JSON file used to set the simulation in  [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb).
+- [notebook-2.json](notebook-2.json): JSON file used to set the simulation in  [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb).
+- [notebook-3.json](notebook-3.json): JSON file used to set the simulation in  [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb).
+- [notebook-4.json](notebook-4.json): JSON file used to set the simulation in  [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb).
+- [convertRaw.py](convertRaw.py): Python file to read a raw binary file and convert it into a [SimpleITK](https://simpleitk.org/) image.
+- [sitk2vtk.py](sitk2vtk.py): Python file to read an image with [SimpleITK](https://simpleitk.org/) and convert it into a [VTK](https://www.vtk.org/) image.
+- [utils.py](utils.py): Python file with a few functions developed for this study (mostly to generate the plots in a consistent manner).
+- [1-output_data](1-output_data): Directory that stores the files created with [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb).
+- [2-output_data](2-output_data): Directory that stores the files created with [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb).
+- [3-output_data](3-output_data): Directory that stores the files created with [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb).
+- [4-output_data](4-output_data): Directory that stores the files created with [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb).
+- [doc](doc): Some diagrams.
+- [lungman_data](lungman_data): Directory that contains files related to the Lungman phantom.
+- [PDFs](PDFs): Directory that contains the Jupyter notebooks saved as PDF files.
+- [pediatric_phantom_data](pediatric_phantom_data): Directory that contains files related to the pediatric phantom.
+- [PediatricGate](PediatricGate): Directory that contains files related to the Monte Carlo simulation of pediatric phantom.
+
+## Requirements
+
+You must install Conda. See [https://conda.io/projects/conda/en/latest/user-guide/install/index.html](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) for more information.
+
+
 ## Installation
 
 ```bash
 conda  env create -f environment.yml
 ```
 
-## Content
-
-- [environment.yml](environment.yml):
-- [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb):
-- [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb):
-- [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb):
-- [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb):
-- [notebook-1.json](notebook-1.json):
-- [notebook-2.json](notebook-2.json):
-- [notebook-3.json](notebook-3.json):
-- [notebook-4.json](notebook-4.json):
-- [convertRaw.py](convertRaw.py):
-- [sitk2vtk.py](sitk2vtk.py):
-- [utils.py](utils.py):
-- [1-output_data](1-output_data):
-- [2-output_data](2-output_data):
-- [3-output_data](3-output_data):
-- [4-output_data](4-output_data):
-- [doc](doc):
-- [lungman_data](lungman_data):
-- [PDFs](PDFs):
-- [pediatric_phantom_data](pediatric_phantom_data):
-- [PediatricGate](PediatricGate):
-
 ## Related software projects
 
 - [gVirtualXray (gVXR)](http://gvirtualxray.sourceforge.io/) provides a programming framework for simulating X-ray images on the graphics processor unit (GPU) using OpenGL. In a nutshell, it computes the polychromatic version of the Beer-Lambert law (the mathematical model that relates the attenuation of X-ray photons to the properties of the material through which the photons are travelling) on the graphics card from polygon meshes.
 - [xraylib](https://github.com/tschoonj/xraylib) provides the mass attenuation coefficients used by gVXR.
-- The [Core Imaging Library (CIL](https://ccpi.ac.uk/cil/) is an open-source mainly Python framework for tomographic imaging for cone and parallel beam geometries. It comes with tools for loading, preprocessing, reconstructing and visualising tomographic data.
+- The [Core Imaging Library (CIL)](https://ccpi.ac.uk/cil/) is an open-source mainly Python framework for tomographic imaging for cone and parallel beam geometries. It comes with tools for loading, preprocessing, reconstructing and visualising tomographic data.
 - [SpekPy](https://bitbucket.org/spekpy/spekpy_release/wiki/Home) is a free software toolkit for calculating and manipulating x-ray tube spectra.
 - [Gate](http://www.opengatecollaboration.org/) is an open-source software dedicated to numerical simulations in medical imaging and radiotherapy based on [Geant4](https://geant4.web.cern.ch/), the general-purpose Monte Carlo (MC) code by the European Organization for Nuclear Research (CERN).
+- [SimpleITK](https://simpleitk.org/) is an open-source multi-dimensional image analysis in Python, R, Java, C#, Lua, Ruby, TCL and C++. Developed by the [Insight Toolkit](https://www.itk.org/) community for the biomedical sciences and beyond.
+- The [Visualization Toolkit (VTK)](http://www.vtk.org/)  is open source software for manipulating and displaying scientific data. It comes with state-of-the-art tools for 3D rendering, a suite of widgets for 3D interaction, and extensive 2D plotting capability.
 
 ## References
 
