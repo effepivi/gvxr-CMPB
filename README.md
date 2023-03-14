@@ -36,13 +36,20 @@ Submitted to Computer Methods and Programs in Biomedicine
 ## Content
 
 - [environment.yml](environment.yml): Conda environment file.
-- [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb):
+- [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb): [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/effepivi/gvxr-CMPB/blob/main/1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb)
+
+In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to images generated with the state-of-the-art Monte Caro simulation packages. An anthropomorphic phantom is used. It corresponds to a 5-year old boy. We take into account i) a realistic beam spectrum (tube voltage and filtration) and ii) the energy response of the detector.
 
 ![Corresponding results](1-output_data/full_comparison-paediatrics.png)
 MAPE: 3.12%, ZNCC: 99.96%, and SSIM: 0.99
 
-In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to images generated with the state-of-the-art Monte Caro simulation packages. An anthropomorphic phantom is used. It corresponds to a 5-year old boy. We take into account i) a realistic beam spectrum (tube voltage and filtration) and ii) the energy response of the detector.
 - [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb):
+
+In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to digitally reconstructed radiographs (DRRs) of a real CT scan computed with [Plastimatch](https://plastimatch.org/).
+
+![Corresponding flowchart](doc/gvxr-flow-lungman-revised.png)
+
+ For this experiment, we attempt to recreate a X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) with gVirtualXRay.
 
 ![Corresponding results](2-output_data/lungman-compare-projs-plastimatch-rl.png)
 MAPE: 1.76%, ZNCC: 99.66%, SSIM: 0.98
@@ -50,25 +57,32 @@ MAPE: 1.76%, ZNCC: 99.66%, SSIM: 0.98
 ![](2-output_data/lungman-compare-projs-plastimatch-ap.png)
 MAPE: 2.43%, ZNCC: 99.31%, SSIM: 0.93.
 
-In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to digitally reconstructed radiographs (DRRs) of a real CT scan computed with [Plastimatch](https://plastimatch.org/). For this experiment, we attempt to recreate a X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) with gVirtualXRay.
-- [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb):
+- [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb):  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/effepivi/gvxr-CMPB/blob/main/3-gVirtualXRay_vs_CT-Lungman.ipynb)
 
-![Corresponding results](3-output_data/CT-first-slice.png)
+In this notebook, we demonstrate how to gVirtualXray can be used to generate CT data from polygon meshes. For this experiment, we attempt to recreate a CT volume from X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) simulated with gVirtualXRay.
+
+![Corresponding flowchart](doc/gVirtualXRay_vs_CT-crop.png)
+
+The CT volume is reconstructed with the [Core Imaging Library (CIL)](https://ccpi.ac.uk/cil/).
+
+![Corresponding results](3-output_data/CT-first-slice-crop.png)
 MAPE: 5.50%, ZNCC: 98.96%, SSIM: 0.62
 
-![Corresponding results](3-output_data/CT-middle-slice.png)
+![Corresponding results](3-output_data/CT-middle-slice-crop.png)
 MAPE: 5.01%, ZNCC: 98.44%, SSIM: 0.78
 
-![Corresponding results](3-output_data/CT-last-slice.png)
+![Corresponding results](3-output_data/CT-last-slice-crop.png)
 MAPE: 4.46%, ZNCC: 99.05%, SSIM: 0.82
 
-In this notebook, we demonstrate how to gVirtualXray can be used to generate CT data from polygon meshes. For this experiment, we attempt to recreate a CT volume from X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) simulated with gVirtualXRay. The CT volume is reconstructed with the [Core Imaging Library (CIL)](https://ccpi.ac.uk/cil/).
-- [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb):
+- [4-gVirtualXRay_vs_DR-Lungman.ipynb](4-gVirtualXRay_vs_DR-Lungman.ipynb): [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/effepivi/gvxr-CMPB/blob/main/4-gVirtualXRay_vs_DR-Lungman.ipynb)
+
+We aim to reproduce a real digital radiograph taken with a clinically utilised X-ray equipment. Image registration is used to make sure the same geometrical set up is used in both the real data acquisition and the virtual one.
+
+![Corresponding flowchart](doc/lungman_dr_abstract-crop.png)
 
 ![Corresponding results](4-output_data/lungman-projection-harder.png)
 MAPE: 1.56%, ZNCC: 98.91%, and SSIM: 0.94.
 
-We aim to reproduce a real digital radiograph taken with a clinically utilised X-ray equipment.
 - [notebook-1.json](notebook-1.json): JSON file used to set the simulation in  [1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb](1-gVirtualXRay_vs_Gate-detector_realistic_phantom.ipynb).
 - [notebook-2.json](notebook-2.json): JSON file used to set the simulation in  [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb).
 - [notebook-3.json](notebook-3.json): JSON file used to set the simulation in  [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb).
