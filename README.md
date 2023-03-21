@@ -1,8 +1,6 @@
 [![gVXR logo](https://github.com/effepivi/gvxr-CMPB/raw/main/doc/gvxr_logo.png)](https://gvirtualxray.sourceforge.io/)
 
-# gvxr-CMPB
-
-**Simulation of X-ray projections on GPU: benchmarking [gVirtualXray](https://gvirtualxray.sourceforge.io/) with clinically realistic phantoms**
+# Simulation of X-ray projections on GPU: benchmarking [gVirtualXray](https://gvirtualxray.sourceforge.io/) with clinically realistic phantoms
 
 Jamie Lea Pointon<sup>a</sup>, Tianci Wen<sup>a</sup>, Jenna Tugwell-Allsup<sup>b</sup>, Aaron S&uacute;jar<sup>c,a</sup>, Jean Michel Létang<sup>d</sup>, Franck Patrick Vidal<sup>a,*</sup>
 
