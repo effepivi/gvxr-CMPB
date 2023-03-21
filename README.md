@@ -10,7 +10,7 @@ Jamie Lea Pointon<sup>a</sup>, Tianci Wen<sup>a</sup>, Jenna Tugwell-Allsup<sup>
 <i><sup>d</sup> Univ Lyon, INSA-Lyon, Université Claude Bernard Lyon 1, UJM-Saint &Eacute;tienne, CNRS, Inserm, CREATIS UMR 5220, U1294, F-69373, LYON, France</i>
 <i><sup>*</sup> Corresponding author</i>
 
-Submitted to Computer Methods and Programs in Biomedicine
+Accepted for publication in [Computer Methods and Programs in Biomedicine](https://www.sciencedirect.com/journal/computer-methods-and-programs-in-biomedicine) (20 March 2023)
 
 ## Abstract
 
