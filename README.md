@@ -1,6 +1,8 @@
+[![gVXR logo](https://github.com/effepivi/gvxr-CMPB/raw/main/doc/gvxr_logo.png)](https://gvirtualxray.sourceforge.io/)
+
 # gvxr-CMPB
 
-**Simulation of X-ray projections on GPU: benchmarking gVirtualXray with clinically realistic phantoms**
+**Simulation of X-ray projections on GPU: benchmarking [gVirtualXray](https://gvirtualxray.sourceforge.io/) with clinically realistic phantoms**
 
 Jamie Lea Pointon<sup>a</sup>, Tianci Wen<sup>a</sup>, Jenna Tugwell-Allsup<sup>b</sup>, Aaron S&uacute;jar<sup>c,a</sup>, Jean Michel Létang<sup>d</sup>, Franck Patrick Vidal<sup>a,*</sup>
 
@@ -18,13 +20,13 @@ Accepted for publication in [Computer Methods and Programs in Biomedicine](https
 
 ## Abstract
 
-*Background and Objectives:* This study provides a quantitative comparison of images created using gVirtualXray (gVXR) to both Monte Carlo (MC) and real images of clinically realistic phantoms. gVirtualXray is an open-source framework that relies on the Beer-Lambert law to simulate X-ray images in realtime on a graphics processor unit (GPU) using triangular meshes.
+*Background and Objectives:* This study provides a quantitative comparison of images created using [gVirtualXray](https://gvirtualxray.sourceforge.io/) (gVXR) to both Monte Carlo (MC) and real images of clinically realistic phantoms. [gVirtualXray](https://gvirtualxray.sourceforge.io/) is an open-source framework that relies on the Beer-Lambert law to simulate X-ray images in realtime on a graphics processor unit (GPU) using triangular meshes.
 
-*Methods:* Images are generated with gVirtualXray and compared with a corresponding ground truth image of an anthropomorphic phantom: (i) an X-ray projection generated using a Monte Carlo simulation code, (ii) real digitally reconstructed radiographs (DRRs), (iii) computed tomography (CT) slices, and (iv) a real radiograph acquired with a clinical X-ray imaging system. When real images are involved, the simulations are used in an image registration framework so that the two images are aligned.
+*Methods:* Images are generated with [gVirtualXray](https://gvirtualxray.sourceforge.io/) and compared with a corresponding ground truth image of an anthropomorphic phantom: (i) an X-ray projection generated using a Monte Carlo simulation code, (ii) real digitally reconstructed radiographs (DRRs), (iii) computed tomography (CT) slices, and (iv) a real radiograph acquired with a clinical X-ray imaging system. When real images are involved, the simulations are used in an image registration framework so that the two images are aligned.
 
-*Results:* The mean absolute percentage error (MAPE) between the images simulated with gVirtualXray and MC is 3.12%, the zero-mean normalised cross-correlation (ZNCC) is 99.96% and the structural similarity index (SSIM) is 0.99. The run-time is 10 days for MC and 23 msec with gVirtualXray. Images simulated using surface models segmented from a CT scan of the Lungman chest phantom were similar to i) DRRs computed from the CT volume and ii) an actual digital radiograph. CT slices reconstructed from images simulated with gVirtualXray were comparable to the corresponding slices of the original CT volume.
+*Results:* The mean absolute percentage error (MAPE) between the images simulated with [gVirtualXray](https://gvirtualxray.sourceforge.io/) and MC is 3.12%, the zero-mean normalised cross-correlation (ZNCC) is 99.96% and the structural similarity index (SSIM) is 0.99. The run-time is 10 days for MC and 23 msec with [gVirtualXray](https://gvirtualxray.sourceforge.io/). Images simulated using surface models segmented from a CT scan of the Lungman chest phantom were similar to i) DRRs computed from the CT volume and ii) an actual digital radiograph. CT slices reconstructed from images simulated with [gVirtualXray](https://gvirtualxray.sourceforge.io/) were comparable to the corresponding slices of the original CT volume.
 
-*Conclusions:* When scattering can be ignored, accurate images that would take days using MC can be generated in milliseconds with gVirtualXray. This speed of execution enables the use of repetitive simulations with varying parameters, e.g. to generate training data for a deep-learning algorithm, and to minimise the objective function of an optimisation problem in image registration. The use of surface models enables the combination of X-ray simulation with real-time soft-tissue deformation and character animation, which can be deployed in virtual reality applications.
+*Conclusions:* When scattering can be ignored, accurate images that would take days using MC can be generated in milliseconds with [gVirtualXray](https://gvirtualxray.sourceforge.io/). This speed of execution enables the use of repetitive simulations with varying parameters, e.g. to generate training data for a deep-learning algorithm, and to minimise the objective function of an optimisation problem in image registration. The use of surface models enables the combination of X-ray simulation with real-time soft-tissue deformation and character animation, which can be deployed in virtual reality applications.
 
 ## Keywords
 
@@ -49,11 +51,11 @@ MAPE: 3.12%, ZNCC: 99.96%, and SSIM: 0.99
 
 - [2-gVirtualXRay_vs_DRRs-Lungman.ipynb](2-gVirtualXRay_vs_DRRs-Lungman.ipynb):
 
-In this notebook, we aim to demonstrate that gVirtualXRay is able to generate analytic simulations on GPU comparable to digitally reconstructed radiographs (DRRs) of a real CT scan computed with [Plastimatch](https://plastimatch.org/).
+In this notebook, we aim to demonstrate that [gVirtualXray](https://gvirtualxray.sourceforge.io/) is able to generate analytic simulations on GPU comparable to digitally reconstructed radiographs (DRRs) of a real CT scan computed with [Plastimatch](https://plastimatch.org/).
 
 ![Corresponding flowchart](doc/gvxr-flow-lungman-revised.png)
 
- For this experiment, we attempt to recreate a X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) with gVirtualXRay.
+ For this experiment, we attempt to recreate a X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) with [gVirtualXray](https://gvirtualxray.sourceforge.io/).
 
 ![Corresponding results](2-output_data/lungman-compare-projs-plastimatch-rl.png)
 MAPE: 1.76%, ZNCC: 99.66%, SSIM: 0.98
@@ -63,7 +65,7 @@ MAPE: 2.43%, ZNCC: 99.31%, SSIM: 0.93.
 
 - [3-gVirtualXRay_vs_CT-Lungman.ipynb](3-gVirtualXRay_vs_CT-Lungman.ipynb):  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/effepivi/gvxr-CMPB/blob/main/3-gVirtualXRay_vs_CT-Lungman.ipynb)
 
-In this notebook, we demonstrate how to gVirtualXray can be used to generate CT data from polygon meshes. For this experiment, we attempt to recreate a CT volume from X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) simulated with gVirtualXRay.
+In this notebook, we demonstrate how to [gVirtualXray](https://gvirtualxray.sourceforge.io/) can be used to generate CT data from polygon meshes. For this experiment, we attempt to recreate a CT volume from X-ray projections of the [Lungman chest phantom](https://www.kyotokagaku.com/en/products_data/ph-1_01/) simulated with [gVirtualXray](https://gvirtualxray.sourceforge.io/).
 
 ![Corresponding flowchart](doc/gVirtualXRay_vs_CT-crop.png)
 
