@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/377120958.svg)](https://zenodo.org/badge/latestdoi/377120958)
+
+
 [![gVXR logo](https://github.com/effepivi/gvxr-CMPB/raw/main/doc/gvxr_logo.png)](https://gvirtualxray.sourceforge.io/)
 
 # Simulation of X-ray projections on GPU: benchmarking [gVirtualXray](https://gvirtualxray.sourceforge.io/) with clinically realistic phantoms
