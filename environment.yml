@@ -34,6 +34,7 @@ dependencies:
     #- unlzw3
     - cil=22.2.0
     - tigre=2.2
+    - astra-toolbox
     - pip
     - pip:
 #        - viewscad
